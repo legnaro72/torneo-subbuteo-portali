@@ -16,6 +16,9 @@ const finalMusic='https://raw.githubusercontent.com/legnaro72/torneo-Subbuteo-we
 const swissMusic='https://raw.githubusercontent.com/legnaro72/torneo-Subbuteo-webapp/main/Appenzeller%20Jodler.mp3';
 const message = (error: unknown) => error instanceof Error ? error.message : 'Operazione non riuscita.';
 type Page='home'|'italiana'|'club'|'finali'|'svizzero';
+type FavouriteKind='italiana'|'finali'|'svizzero';
+type Favourite={id:string;name:string};
+type Favourites=Partial<Record<FavouriteKind,Favourite>>;
 const pageFromLocation=(): Page=>{const path=window.location.pathname;const direct=readTournamentRoute(window.location);if(direct&&(direct.type==='finali'||direct.type==='svizzero'))return direct.type;return path==='/club'?'club':path==='/italiana'?'italiana':path==='/finali'?'finali':path==='/svizzero'?'svizzero':'home';};
 
 function App() {
@@ -24,6 +27,9 @@ function App() {
   const [ready, setReady] = useState(false);
   const [active, setActive] = useState<Tournament | null>(null);
   const [list, setList] = useState<Summary[]>([]);
+  const [finalsList,setFinalsList]=useState<Favourite[]>([]);
+  const [swissList,setSwissList]=useState<Favourite[]>([]);
+  const [favourites,setFavourites]=useState<Favourites>({});
   const [page, setPage] = useState<Page>(pageFromLocation);
   const [search, setSearch] = useState('');
   const [creating, setCreating] = useState(false);
@@ -38,6 +44,8 @@ function App() {
   useEffect(() => { Promise.all([api<Config>('/config').then(setConfig), api<User>('/auth/me').then(setUser).catch(() => null)]).catch(e => setError(message(e))).finally(() => setReady(true)); }, []);
   const refresh = () => api<Summary[]>('/tournaments').then(setList).catch(e => setError(message(e)));
   useEffect(() => { if (user) void refresh(); }, [user]);
+  useEffect(()=>{if(!user)return;try{setFavourites(JSON.parse(localStorage.getItem(`superba-favourites:${user.id}`)||'{}'));}catch{setFavourites({});}Promise.all([api<Favourite[]>('/finals'),api<Favourite[]>('/swiss')]).then(([finals,swiss])=>{setFinalsList(finals);setSwissList(swiss);}).catch(()=>{});},[user?.id]);
+  useEffect(()=>{if(!user)return;try{localStorage.setItem(`superba-favourites:${user.id}`,JSON.stringify(favourites));}catch{}},[favourites,user?.id]);
   useEffect(()=>{const onPop=()=>{setActive(null);setDirty(false);setPage(pageFromLocation());const route=readTournamentRoute(window.location);setDirectRoute(route);setCompetitionName(route&&route.type!=='italiana'?route.name:'');};window.addEventListener('popstate',onPop);return()=>window.removeEventListener('popstate',onPop);},[]);
   useEffect(()=>{
     if(!user||!directRoute)return;
@@ -66,6 +74,16 @@ function App() {
     try { const tournament=await api<Tournament>('/tournaments/' + id);setActive(tournament); setPage('italiana'); setDirty(false); window.history.pushState({},'',tournamentPath(tournament.name)); }
     catch (e) { setError(message(e)); }
     finally { setBusy(false); }
+  }
+  function openFavourite(kind:FavouriteKind,favourite:Favourite){
+    if(!leave())return;
+    if(kind==='italiana'){void open(favourite.id);return;}
+    setActive(null);setDirty(false);setError('');setNotice('');setPage(kind);setCompetitionName(favourite.name);setDirectRoute(null);window.history.pushState({},'',tournamentPath(favourite.name,kind));
+  }
+  function setFavourite(kind:FavouriteKind,id:string){
+    const source=kind==='italiana'?list:kind==='finali'?finalsList:swissList;
+    const found=source.find(item=>item.id===id);
+    setFavourites(current=>{const next={...current};if(found)next[kind]={id:found.id,name:found.name};else delete next[kind];return next;});
   }
   async function external(destination: string, tournamentName?: string) {
     if (!leave()) return;
@@ -110,6 +128,7 @@ function App() {
           {page === 'home' && <>
             <section className="hero"><div><span className="hero-kicker"><span className="live-dot"/> IL GIOCO, AL CENTRO</span><h2>La passione è la stessa.<br/>Il campo è tutto nuovo.</h2><p>Organizza il campionato, segui le giornate<br className="desktop"/> e vivi ogni risultato insieme al tuo club.</p><button onClick={() => navigate('italiana')}>Vai ai tornei all’italiana<ArrowRight size={18}/></button></div><div className="pitch" aria-hidden="true"><div className="pitch-line"/><div className="center-circle"/><div className="box top"/><div className="box bottom"/><div className="player p1"/><div className="player p2"/><div className="player p3"/><div className="ball"/></div><span className="hero-number">01 / SUPERBA</span></section>
             <div className="stats"><Stat label="Tornei in archivio" value={list.length} icon={<Trophy/>}/><Stat label="Partite giocate" value={list.reduce((n,t) => n+t.played,0)} icon={<Check/>}/><Stat label="Tornei da completare" value={list.filter(t=>t.played<t.matches).length} icon={<CalendarDays/>}/></div>
+            <section className="favourites-panel"><div><span className="eyebrow">ACCESSO RAPIDO</span><h2>⭐ I tuoi preferiti</h2><p>Un torneo per formula, memorizzato solo su questo dispositivo.</p></div><div className="favourites-grid">{([{kind:'italiana',icon:'🇮🇹',label:'All’italiana',items:list},{kind:'finali',icon:'🏁',label:'Fasi finali',items:finalsList},{kind:'svizzero',icon:'🇨🇭',label:'Svizzero',items:swissList}] as {kind:FavouriteKind;icon:string;label:string;items:Favourite[]}[]).map(({kind,icon,label,items})=>{const favourite=favourites[kind];return <article key={kind}><span className="favourite-icon">{icon}</span><strong>{label}</strong>{favourite?<button className="favourite-open" onClick={()=>openFavourite(kind,favourite)}>★ {favourite.name}<ArrowUpRight size={15}/></button>:<p>Nessun preferito</p>}<label>Imposta preferito<select aria-label={`Preferito ${label}`} value={favourite?.id||''} onChange={e=>setFavourite(kind,e.target.value)}><option value="">Scegli un torneo…</option>{items.map(item=><option key={item.id} value={item.id}>{item.name}</option>)}</select></label></article>;})}</div></section>
           </>}
           <section className="archive"><div className="section-heading"><div><h2>{page === 'home' ? 'I tuoi tornei' : 'Archivio tornei'}</h2><p>Riprendi il gioco da dove lo hai lasciato.</p></div><label className="search"><Search size={17}/><input aria-label="Cerca torneo" value={search} onChange={e=>setSearch(e.target.value)} placeholder="Cerca un torneo…"/></label></div>
             <div className="tournament-list">{list.filter(t=>t.name.toLocaleLowerCase().includes(search.toLocaleLowerCase())).map(t=><button disabled={busy} className="tournament-row" key={t.id} onClick={()=>open(t.id)}><span className="tournament-icon"><Trophy size={22}/></span><span className="tournament-title"><strong>{t.name}</strong><small>{t.groups > 1 && <>{`${t.groups} gironi`}<span>·</span></>}{t.matches} partite</small></span><span className={'badge ' + (t.played === t.matches ? 'done' : '')}>{t.played === t.matches ? 'Completato' : 'In corso'}</span><span className="progress"><span>{t.played}/{t.matches} giocate</span><span className="track"><i style={{width:`${t.played/t.matches*100}%`}}/></span></span><ArrowRight size={18}/></button>)}
