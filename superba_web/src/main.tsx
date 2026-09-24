@@ -27,6 +27,7 @@ function App() {
   const [page, setPage] = useState<Page>(pageFromLocation);
   const [search, setSearch] = useState('');
   const [creating, setCreating] = useState(false);
+  const [creationChooser, setCreationChooser] = useState(false);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
   const [notice, setNotice] = useState('');
@@ -88,11 +89,11 @@ function App() {
       <button className="brand" onClick={() => navigate('home')}><img className="brand-logo" src="/logo-superba.jpg" alt="Logo Superba"/><span>SUPERBA<small>SUBBUTEO CLUB</small></span></button>
       <div className="nav-label">IL TUO MONDO</div>
       <nav>
-        <button className={page === 'home' ? 'selected' : ''} onClick={() => navigate('home')}><LayoutDashboard size={19}/>Panoramica</button>
-        <button className={page === 'club' ? 'selected' : ''} onClick={() => navigate('club')}><Users size={19}/>Gestione club</button>
-        <button className={page === 'italiana' ? 'selected' : ''} onClick={() => navigate('italiana')}><Trophy size={19}/>Torneo all’italiana<span className="nav-dot"/></button>
-        <button className={page === 'finali' ? 'selected' : ''} onClick={() => navigate('finali')}><Flag size={19}/>Fasi finali</button>
-        <button className={page === 'svizzero' ? 'selected' : ''} onClick={() => navigate('svizzero')}><span className="swiss">✚</span>Torneo svizzero</button>
+        <button className={page === 'home' ? 'selected' : ''} onClick={() => navigate('home')}><LayoutDashboard size={19}/>🏠 Panoramica</button>
+        <button className={page === 'club' ? 'selected' : ''} onClick={() => navigate('club')}><Users size={19}/>🛠️ Gestione club</button>
+        <button className={page === 'italiana' ? 'selected' : ''} onClick={() => navigate('italiana')}><Trophy size={19}/>🇮🇹 Torneo all’italiana<span className="nav-dot"/></button>
+        <button className={page === 'finali' ? 'selected' : ''} onClick={() => navigate('finali')}><Flag size={19}/>🏁 Fasi finali</button>
+        <button className={page === 'svizzero' ? 'selected' : ''} onClick={() => navigate('svizzero')}><span className="swiss">✚</span>🇨🇭 Torneo svizzero</button>
       </nav>
       <div className="sidebar-note"><ShieldCheck size={21}/><strong>Un club. Un solo accesso.</strong><p>Le tue competizioni, tutte da qui.</p></div>
       <div className="profile"><span className="avatar">{user.username.slice(0,1)}</span><span><strong>{user.username}</strong><small>{canWrite ? 'Gestione tornei' : 'Sola lettura'}</small></span><button title="Esci dal portale" aria-label="Esci dal portale" disabled={busy} onClick={logout}><LogOut size={18}/></button></div>
@@ -105,7 +106,7 @@ function App() {
         {error && <div role="alert" className="alert error">{error}<button aria-label="Chiudi messaggio" onClick={() => setError('')}><X size={16}/></button></div>}
         {notice && <div role="status" className="alert success">{notice}</div>}
         {page==='club' ? <ClubView user={user} canWrite={canWrite} onDirty={setDirty} onLegacy={()=>external('club')}/> : (page==='finali'||page==='svizzero')?<CompetitionArea key={page} kind={page} user={user} canWrite={canWrite} directName={competitionName} onDirty={setDirty} onLegacy={()=>external(page)}/> : active ? <TournamentView key={active.id + ':' + user.id} tournament={active} user={user} canWrite={canWrite} onBack={() => navigate('italiana')} onSaved={value => {setActive(value);window.history.replaceState({},'',tournamentPath(value.name));void refresh();}} onDirty={setDirty} onLegacy={() => external('italiana-classica')} onFinali={() => navigate('finali')}/> : <>
-          <section className="page-heading"><div><div className="eyebrow">SUPERBA CLUB · AREA TORNEI</div><h1>{page === 'home' ? `Bentornato, ${user.username}.` : 'Torneo all’italiana'}</h1><p>{page === 'home' ? 'Il prossimo incontro comincia da qui.' : 'Calendari, risultati e classifiche. Tutto sotto controllo.'}</p></div>{canWrite && <button className="primary" onClick={() => setCreating(true)}><Plus size={18}/>Nuovo torneo</button>}</section>
+          <section className="page-heading"><div><div className="eyebrow">SUPERBA CLUB · AREA TORNEI</div><h1>{page === 'home' ? `Bentornato, ${user.username}.` : 'Torneo all’italiana'}</h1><p>{page === 'home' ? 'Il prossimo incontro comincia da qui.' : 'Calendari, risultati e classifiche. Tutto sotto controllo.'}</p></div>{canWrite && <button className="primary" onClick={() => page==='home'?setCreationChooser(true):setCreating(true)}><Plus size={18}/>✨ Nuovo torneo</button>}</section>
           {page === 'home' && <>
             <section className="hero"><div><span className="hero-kicker"><span className="live-dot"/> IL GIOCO, AL CENTRO</span><h2>La passione è la stessa.<br/>Il campo è tutto nuovo.</h2><p>Organizza il campionato, segui le giornate<br className="desktop"/> e vivi ogni risultato insieme al tuo club.</p><button onClick={() => navigate('italiana')}>Vai ai tornei all’italiana<ArrowRight size={18}/></button></div><div className="pitch" aria-hidden="true"><div className="pitch-line"/><div className="center-circle"/><div className="box top"/><div className="box bottom"/><div className="player p1"/><div className="player p2"/><div className="player p3"/><div className="ball"/></div><span className="hero-number">01 / SUPERBA</span></section>
             <div className="stats"><Stat label="Tornei in archivio" value={list.length} icon={<Trophy/>}/><Stat label="Partite giocate" value={list.reduce((n,t) => n+t.played,0)} icon={<Check/>}/><Stat label="Tornei da completare" value={list.filter(t=>t.played<t.matches).length} icon={<CalendarDays/>}/></div>
@@ -121,6 +122,7 @@ function App() {
         <footer>SUPERBA SUBBUTEO CLUB<span>La partita continua.</span></footer>
       </div>
     </main>
+    {creationChooser && <div className="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="creation-choice-title"><section className="modal creation-choice"><div className="section-heading"><div><span className="eyebrow">SCEGLI IL FORMATO</span><h2 id="creation-choice-title">✨ Che torneo vuoi creare?</h2><p>Seleziona consapevolmente la formula prima di iniziare.</p></div><button aria-label="Chiudi" onClick={()=>setCreationChooser(false)}><X/></button></div><div className="creation-choice-grid"><button type="button" onClick={()=>{setCreationChooser(false);setCreating(true);}}><span>🇮🇹</span><strong>All’italiana</strong><small>Gironi, giornate, andata e ritorno.</small></button><button type="button" onClick={()=>{setCreationChooser(false);navigate('finali');}}><span>🏁</span><strong>Fasi finali</strong><small>Tabellone a eliminazione o fase a gironi.</small></button><button type="button" onClick={()=>{setCreationChooser(false);navigate('svizzero');}}><span>🇨🇭</span><strong>Torneo svizzero</strong><small>Accoppiamenti progressivi per turno.</small></button></div><div className="modal-actions"><button className="secondary" onClick={()=>setCreationChooser(false)}>Annulla</button></div></section></div>}
     {creating && <CreateTournament onClose={()=>setCreating(false)} onCreated={t=>{setActive(t); setPage('italiana'); setCreating(false);window.history.pushState({},'',tournamentPath(t.name));void refresh();}}/>}
   </div>;
 }
