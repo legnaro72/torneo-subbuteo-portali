@@ -3,7 +3,7 @@ export type Match = {index: number; group: string; day: number; home: string; aw
 export type Standing = {Squadra: string; Girone: string; Punti: number; G: number; V: number; P: number; S: number; GF: number; GS: number; DR: number; Ritirato: boolean};
 export type Tournament = {id: string; name: string; version: string; matches: Match[]; standings: Standing[]; complete: boolean; closed: boolean; archived: boolean; withdrawals: string[]; badges?: import('./TeamBadges').BadgeMap; completion_warnings?: string[]};
 export type Summary = {id: string; name: string; matches: number; played: number; groups: number};
-export type Player = {id: string; name: string; team: string; potential: string};
+export type Player = {id: string; name: string; team: string; potential: string; badge?: import('./TeamBadges').TeamBadge};
 export class ApiError extends Error { constructor(public status: number, message: string) { super(message); } }
 export async function api<T>(path: string, method = 'GET', data?: unknown): Promise<T> {
   let response: Response;

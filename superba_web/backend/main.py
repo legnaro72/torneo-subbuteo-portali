@@ -229,8 +229,9 @@ def handoff(destination: str, user=Depends(current_user), store: Store = Depends
 
 @app.get('/api/players')
 def players(user=Depends(current_user), store: Store = Depends(store_dep)):
-    return [{'id': str(p['_id']), 'name': p.get('Giocatore', ''), 'team': p.get('Squadra', ''), 'potential': str(p.get('Potenziale', ''))}
-            for p in store.players.find({}, {'Giocatore': 1, 'Squadra': 1, 'Potenziale': 1}).sort('Giocatore', 1)]
+    return [{'id': str(p['_id']), 'name': p.get('Giocatore', ''), 'team': p.get('Squadra', ''), 'potential': str(p.get('Potenziale', '')),
+             'badge': p.get('_superba_badge')}
+            for p in store.players.find({}, {'Giocatore': 1, 'Squadra': 1, 'Potenziale': 1, '_superba_badge': 1}).sort('Giocatore', 1)]
 
 
 @app.get('/api/tournaments')
