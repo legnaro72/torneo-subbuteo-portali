@@ -5,6 +5,7 @@ import TournamentView from './TournamentView';
 import {tournamentPath} from './routes';
 import {BadgeEditor, TeamMark, type BadgeMap} from './TeamBadges';
 import PlayerMultiSelect from './PlayerMultiSelect';
+import {preferredViewMode, type ViewMode} from './viewModePreference';
 
 type Kind='finali'|'svizzero';
 type Entry={id:string;name:string;mode?:'ko'|'groups';finished:boolean;rounds?:number};
@@ -13,7 +14,6 @@ type Standing={Squadra:string;Punti:number;G:number;V:number;N:number;P:number;G
 type Competition={id:string;name:string;version:string;matches:Match[];active_round:number;finished:boolean;winner?:string;standings?:Standing[];participants?:{Giocatore:string;Squadra:string;Potenziale:number}[];byes?:{team:string;round:number}[];mode?:string;max_rounds?:number;badges?:BadgeMap};
 type Source={id:string;name:string;ranking:{team:string;points:number;difference:number;gf:number}[]};
 type Draft={home:number;away:number;valid:boolean};
-type ViewMode='compact'|'premium'|'standard';
 const err=(e:unknown)=>e instanceof Error?e.message:'Operazione non riuscita.';
 const format=(name:string,mode:string)=>{if(mode==='complete')return name;const sep=name.includes(' - ')?' - ':'-';const i=name.indexOf(sep);return i<0?name:mode==='teams'?name.slice(0,i).trim():name.slice(i+sep.length).trim();};
 const title=(name:string)=>{const clean=name.replace(/^finito_/, '');return clean.startsWith('fasefinaleEliminazionediretta_')?'Eliminazione diretta · '+clean.slice('fasefinaleEliminazionediretta_'.length):clean.startsWith('fasefinaleAGironi_')?'Fase a gironi · '+clean.slice('fasefinaleAGironi_'.length):clean;};
@@ -66,11 +66,11 @@ function SwissCreate({onClose,onCreated}:{onClose:()=>void;onCreated:(id:string)
 function CompetitionView({kind,data:t,writable,user,onBack,onSaved,onDirty,onLegacy}:{kind:Kind;data:Competition;writable:boolean;user:User;onBack:()=>void;onSaved:(t:Competition)=>void;onDirty:(v:boolean)=>void;onLegacy:()=>void}){
   const storageKey=`tigullio-drafts:${user.id}:${t.id}`;const [drafts,setDrafts]=useState<Record<number,Draft>>(()=>{try{return JSON.parse(localStorage.getItem(storageKey)||'{}').drafts||{};}catch{return {};}});const [draftVersion,setDraftVersion]=useState(()=>{try{return JSON.parse(localStorage.getItem(storageKey)||'{}').version||t.version;}catch{return t.version;}});
   const preferenceKey=`tigullio-view:${user.id}`;
-  const [round,setRound]=useState(t.active_round);const [all,setAll]=useState(false);const [status,setStatus]=useState('all');const [player,setPlayer]=useState('');const [tab,setTab]=useState('matches');const [settingsOpen,setSettingsOpen]=useState(false);const [nameMode,setNameMode]=useState(()=>{try{return JSON.parse(localStorage.getItem(preferenceKey)||'{}').nameMode||'teams';}catch{return 'teams';}});const [viewMode,setViewMode]=useState<ViewMode>(()=>{try{const value=JSON.parse(localStorage.getItem(preferenceKey)||'{}').viewMode;return ['compact','premium','standard'].includes(value)?value:'compact';}catch{return 'compact';}});const [busy,setBusy]=useState(false);const [error,setError]=useState('');const [notice,setNotice]=useState('');
+  const [round,setRound]=useState(t.active_round);const [all,setAll]=useState(false);const [status,setStatus]=useState('all');const [player,setPlayer]=useState('');const [tab,setTab]=useState('matches');const [settingsOpen,setSettingsOpen]=useState(false);const [nameMode,setNameMode]=useState(()=>{try{return JSON.parse(localStorage.getItem(preferenceKey)||'{}').nameMode||'teams';}catch{return 'teams';}});const [viewMode,setViewMode]=useState<ViewMode>(()=>preferredViewMode(preferenceKey));const [busy,setBusy]=useState(false);const [error,setError]=useState('');const [notice,setNotice]=useState('');
   const [celebrating,setCelebrating]=useState(false);const [badgeEditorOpen,setBadgeEditorOpen]=useState(false);const victoryAudio=useRef<HTMLAudioElement>(null);
   const base=kind==='finali'?'/finals':'/swiss';const dirty=Object.keys(drafts).length>0;const conflict=dirty&&draftVersion!==t.version;const rounds=[...new Set(t.matches.map(r=>r.round))].sort((a,b)=>a-b);const shownRound=rounds.includes(round)?round:t.active_round;const players=[...new Set(t.matches.flatMap(r=>[r.home,r.away]))].sort();const rows=t.matches.filter(r=>all?(status==='all'||(status==='played')===r.valid)&&(!player||r.home===player||r.away===player):r.round===shownRound);
   useEffect(()=>{onDirty(dirty);try{if(dirty)localStorage.setItem(storageKey,JSON.stringify({drafts,version:draftVersion}));else localStorage.removeItem(storageKey);}catch{}},[drafts,draftVersion]);
-  useEffect(()=>{try{localStorage.setItem(preferenceKey,JSON.stringify({nameMode,viewMode}));}catch{}},[preferenceKey,nameMode,viewMode]);
+  useEffect(()=>{try{localStorage.setItem(preferenceKey,JSON.stringify({nameMode,viewMode,viewModeVersion:2}));}catch{}},[preferenceKey,nameMode,viewMode]);
   useEffect(()=>{const handler=(e:BeforeUnloadEvent)=>{if(dirty){e.preventDefault();e.returnValue='';}};window.addEventListener('beforeunload',handler);return()=>window.removeEventListener('beforeunload',handler);},[dirty]);
   function change(row:Match,patch:Partial<Draft>){if(!dirty)setDraftVersion(t.version);setDrafts(old=>{const next={...old};next[row.index]={...(old[row.index]||{home:row.home_goals,away:row.away_goals,valid:row.valid}),...patch};if(next[row.index].home===row.home_goals&&next[row.index].away===row.away_goals&&next[row.index].valid===row.valid)delete next[row.index];return next;});}
   async function action(endpoint:string){setBusy(true);setError('');setNotice('');try{const data=await api<Competition>(`${base}/${t.id}/${endpoint}`,'POST',{version:t.version});onSaved(data);setRound(data.active_round);setNotice(data.finished?'🏆 Torneo concluso!':'Nuovo turno pronto.');}catch(e){setError(err(e));}finally{setBusy(false);}}

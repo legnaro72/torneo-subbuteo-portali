@@ -3,13 +3,13 @@ import {ArrowLeft, ArrowRight, ArrowUpRight, ChevronDown, Copy, Download, Refres
 import {api, type Match, type Tournament, type User} from './api';
 import {tournamentPath} from './routes';
 import {BadgeEditor, TeamMark, type BadgeMap} from './TeamBadges';
+import {preferredViewMode, type ViewMode} from './viewModePreference';
 
 type Draft = {home:number;away:number;valid:boolean};
 type Drafts = Record<number,Draft>;
 type NameMode = 'complete'|'teams'|'players';
 type Status = 'all'|'played'|'unplayed';
 type Leg = 'both'|'first'|'return';
-type ViewMode = 'compact'|'premium'|'standard';
 
 function shownName(value:string,mode:NameMode){
   if(mode==='complete')return value;
@@ -39,7 +39,7 @@ export default function TournamentView({tournament:t,user,canWrite,onBack,onSave
   const [filterGroup,setFilterGroup]=useState('');
   const [settingsOpen,setSettingsOpen]=useState(false);
   const [nameMode,setNameMode]=useState<NameMode>(()=>{try{return JSON.parse(localStorage.getItem(preferenceKey)||'{}').nameMode||'teams';}catch{return 'teams';}});
-  const [viewMode,setViewMode]=useState<ViewMode>(()=>{try{const value=JSON.parse(localStorage.getItem(preferenceKey)||'{}').viewMode;return ['compact','premium','standard'].includes(value)?value:'compact';}catch{return 'compact';}});
+  const [viewMode,setViewMode]=useState<ViewMode>(()=>preferredViewMode(preferenceKey));
   const [retiring,setRetiring]=useState<string[]>([]);
   const [busy,setBusy]=useState(false);
   const [error,setError]=useState('');
@@ -61,7 +61,7 @@ export default function TournamentView({tournament:t,user,canWrite,onBack,onSave
   const winners=groups.map(g=>{const winner=t.standings.find(s=>s.Girone===g);return winner?`${groups.length>1?g+': ':''}${winner.Squadra}`:'';}).filter(Boolean).join(' · ');
 
   useEffect(()=>{onDirty(dirty);try{if(dirty)localStorage.setItem(draftKey,JSON.stringify({drafts,version:draftVersion}));else localStorage.removeItem(draftKey);}catch{setError('Il browser non può conservare le bozze. Salva prima di uscire.');}},[drafts,draftVersion,draftKey]);
-  useEffect(()=>{try{localStorage.setItem(preferenceKey,JSON.stringify({nameMode,viewMode}));}catch{}},[nameMode,viewMode,preferenceKey]);
+  useEffect(()=>{try{localStorage.setItem(preferenceKey,JSON.stringify({nameMode,viewMode,viewModeVersion:2}));}catch{}},[nameMode,viewMode,preferenceKey]);
   useEffect(()=>{const handler=(e:BeforeUnloadEvent)=>{if(dirty){e.preventDefault();e.returnValue='';}};window.addEventListener('beforeunload',handler);return()=>window.removeEventListener('beforeunload',handler);},[dirty]);
 
   function change(row:Match,patch:Partial<Draft>){
