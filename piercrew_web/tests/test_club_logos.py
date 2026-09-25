@@ -2,7 +2,13 @@ import unittest
 from unittest.mock import patch
 
 from backend.club_logos import lookup, search_club_logos
-from backend.badge_sources import search_football_logos, search_football_data, search_sportmonks
+from backend.badge_sources import (
+    search_football_logos,
+    search_football_data,
+    search_seeklogo,
+    search_sportmonks,
+    search_thesportsdb,
+)
 from backend.models import TeamBadge
 from pydantic import ValidationError
 
@@ -39,22 +45,43 @@ class ClubLogoLookupTests(unittest.TestCase):
         with patch('backend.club_logos.search_club_logos', return_value=[wiki]), \
              patch('backend.club_logos.search_football_logos', return_value=[archive]), \
              patch('backend.club_logos.search_football_data', side_effect=TimeoutError), \
-             patch('backend.club_logos.search_sportmonks', return_value=[]):
+             patch('backend.club_logos.search_sportmonks', return_value=[]), \
+             patch('backend.club_logos.search_thesportsdb', return_value=[]), \
+             patch('backend.club_logos.search_seeklogo', return_value=[]):
             self.assertEqual([row['ref'] for row in lookup('Genoa CFC')], [wiki['ref'], archive['ref']])
 
     def test_optional_api_sources_and_url_validation(self):
-        with patch.dict('os.environ', {'FOOTBALL_DATA_TOKEN': 'dummy', 'SPORTMONKS_TOKEN': 'dummy'}), \
+        with patch.dict('os.environ', {'FOOTBALL_DATA_TOKEN': 'dummy', 'SPORTMONKS_TOKEN': 'dummy',
+                                       'THESPORTSDB_API_KEY': 'dummy'}), \
              patch('backend.badge_sources._football_data_teams', return_value=[{'id': 123, 'name': 'Genoa CFC', 'crest': 'https://crests.football-data.org/123.svg', 'area': None}]), \
-             patch('backend.badge_sources._sportmonks_search', return_value=[{'id': 456, 'name': 'Genoa CFC', 'image_path': 'https://cdn.sportmonks.com/images/soccer/teams/456.png'}]):
-            rows = search_football_data('Genoa') + search_sportmonks('Genoa')
-        self.assertEqual(len(rows), 2)
+             patch('backend.badge_sources._sportmonks_search', return_value=[{'id': 456, 'name': 'Genoa CFC', 'image_path': 'https://cdn.sportmonks.com/images/soccer/teams/456.png'}]), \
+             patch('backend.badge_sources._thesportsdb_search', return_value=[{'idTeam': '789', 'strTeam': 'Genoa CFC', 'strSport': 'Soccer',
+                    'strBadge': 'https://www.thesportsdb.com/images/media/team/badge/genoa.png'}]):
+            rows = search_football_data('Genoa') + search_sportmonks('Genoa') + search_thesportsdb('Genoa')
+        self.assertEqual(len(rows), 3)
         for row in rows:
             TeamBadge(kind='club', ref=row['ref'], url=row['url'])
         for ref, url in [('football-logos:logos/italy/Genoa.svg', 'https://evil.example/Genoa.svg'),
                          ('sportmonks:456', 'https://cdn.sportmonks.com/evil/456.png'),
-                         ('football-data:123', 'https://crests.football-data.org/123.svg?tracking=1')]:
+                         ('football-data:123', 'https://crests.football-data.org/123.svg?tracking=1'),
+                         ('thesportsdb:789', 'https://www.thesportsdb.com/images/media/player/badge/genoa.png'),
+                         ('seeklogo:547389', 'https://cdn.seeklogo.com/logo-png/54/2/rimini-fc-logo.png')]:
             with self.assertRaises(ValidationError):
                 TeamBadge(kind='club', ref=ref, url=url)
+
+    def test_seeklogo_extends_lookup_for_rimini(self):
+        html = '''
+        <a href="/vector-logo/547389/rimini-fc"><img
+          src="https://images.seeklogo.com/logo-png/54/2/rimini-fc-logo-png_seeklogo-547389.png"
+          alt="Rimini FC Logo PNG Vector"></a>
+        <a href="/vector-logo/16924/basket-rimini"><img
+          src="https://images.seeklogo.com/logo-png/1/2/basket-rimini-logo-png_seeklogo-16924.png"
+          alt="Basket Rimini Logo PNG Vector"></a>
+        '''
+        with patch('backend.badge_sources._seeklogo_search', return_value=html):
+            rows = search_seeklogo('Rimini')
+        self.assertEqual([row['ref'] for row in rows], ['seeklogo:547389'])
+        TeamBadge(kind='club', ref=rows[0]['ref'], url=rows[0]['url'])
 
 
 if __name__ == '__main__':

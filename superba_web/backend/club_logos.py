@@ -8,7 +8,13 @@ from urllib.request import Request, urlopen
 
 from fastapi import HTTPException
 
-from .badge_sources import search_football_data, search_football_logos, search_sportmonks
+from .badge_sources import (
+    search_football_data,
+    search_football_logos,
+    search_seeklogo,
+    search_sportmonks,
+    search_thesportsdb,
+)
 
 
 def _json(host, params):
@@ -72,7 +78,8 @@ def lookup(query):
     query = query.strip()
     if len(query) < 3 or len(query) > 80:
         raise HTTPException(422, 'Inserisci da 3 a 80 caratteri per cercare un club.')
-    providers = (search_club_logos, search_football_logos, search_football_data, search_sportmonks)
+    providers = (search_club_logos, search_football_logos, search_football_data,
+                 search_sportmonks, search_thesportsdb, search_seeklogo)
     found, successful = [], 0
     with ThreadPoolExecutor(max_workers=len(providers)) as pool:
         futures = [pool.submit(provider, query) for provider in providers]

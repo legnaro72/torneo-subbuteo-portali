@@ -3,6 +3,7 @@ import json
 import os
 import re
 import unicodedata
+from html import unescape
 from functools import lru_cache
 from pathlib import Path
 from urllib.parse import quote, urlsplit
@@ -44,6 +45,12 @@ def _fetch(url, headers=None):
     request = Request(url, headers={'User-Agent': USER_AGENT, **(headers or {})})
     with urlopen(request, timeout=5) as response:
         return json.load(response)
+
+
+def _fetch_text(url):
+    request = Request(url, headers={'User-Agent': USER_AGENT})
+    with urlopen(request, timeout=5) as response:
+        return response.read().decode('utf-8', errors='replace')
 
 
 @lru_cache(maxsize=1)
@@ -110,3 +117,63 @@ def search_sportmonks(query):
                             'credit': 'Sportmonks', 'license': 'Verifica presso la fonte'})
     results.sort(key=lambda row: _score(query, row['name']))
     return results
+
+
+@lru_cache(maxsize=128)
+def _thesportsdb_search(query, key):
+    url = 'https://www.thesportsdb.com/api/v1/json/' + quote(key, safe='') + '/searchteams.php?t=' + quote(query, safe='')
+    return _fetch(url).get('teams') or []
+
+
+def search_thesportsdb(query):
+    key = os.getenv('THESPORTSDB_API_KEY', '123').strip()
+    if not key:
+        return []
+    results = []
+    for team in _thesportsdb_search(query, key):
+        if team.get('strSport') and team.get('strSport') != 'Soccer':
+            continue
+        if not _matches(query, team.get('strTeam'), team.get('strAlternate'), team.get('strTeamShort')):
+            continue
+        url = _image_url(team.get('strBadge'), {'www.thesportsdb.com'})
+        team_id = str(team.get('idTeam') or '')
+        if url and team_id.isdigit() and urlsplit(url).path.startswith('/images/media/team/'):
+            results.append({'ref': 'thesportsdb:' + team_id, 'name': team.get('strTeam', ''),
+                            'description': team.get('strCountry') or team.get('strLeague') or '',
+                            'type': 'logo', 'source': 'TheSportsDB', 'url': url,
+                            'credit': 'TheSportsDB', 'license': 'Verifica presso la fonte'})
+    results.sort(key=lambda row: _score(query, row['name']))
+    return results
+
+
+@lru_cache(maxsize=128)
+def _seeklogo_search(query):
+    return _fetch_text('https://seeklogo.com/search?q=' + quote(query, safe=''))
+
+
+def search_seeklogo(query):
+    html = _seeklogo_search(query)
+    results = []
+    seen = set()
+    pattern = re.compile(
+        r'<a[^>]+href="(?P<href>/vector-logo/(?P<id>[0-9]+)/[^"]+)"[\s\S]{0,900}?'
+        r'<img[^>]+src="(?P<src>https://(?:images\.)?seeklogo\.com/[^"]+)"[^>]+alt="(?P<alt>[^"]+)"',
+        re.I,
+    )
+    for match in pattern.finditer(html):
+        name = re.sub(r'\s+Logo PNG Vector$', '', unescape(match.group('alt')), flags=re.I).strip()
+        if not re.search(r'\b(fc|calcio|football|soccer|club)\b', name, re.I):
+            continue
+        if not _matches(query, name):
+            continue
+        url = _image_url(unescape(match.group('src')), {'images.seeklogo.com', 'seeklogo.com'})
+        logo_id = match.group('id')
+        if not url or logo_id in seen:
+            continue
+        seen.add(logo_id)
+        results.append({'ref': 'seeklogo:' + logo_id, 'name': name,
+                        'description': 'Risultato SeekLogo', 'type': 'logo',
+                        'source': 'SeekLogo', 'url': url,
+                        'credit': 'SeekLogo', 'license': 'Verifica presso la fonte'})
+    results.sort(key=lambda row: _score(query, row['name']))
+    return results[:8]

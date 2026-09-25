@@ -90,6 +90,14 @@ class TeamBadge(Input):
             elif self.ref.startswith('football-data:'):
                 valid = (self.ref.removeprefix('football-data:').isdigit() and
                          parsed.hostname in ('crests.football-data.org', 'upload.wikimedia.org'))
+            elif self.ref.startswith('thesportsdb:'):
+                valid = (self.ref.removeprefix('thesportsdb:').isdigit() and
+                         parsed.hostname == 'www.thesportsdb.com' and
+                         parsed.path.startswith('/images/media/team/'))
+            elif self.ref.startswith('seeklogo:'):
+                valid = (self.ref.removeprefix('seeklogo:').isdigit() and
+                         parsed.hostname in ('images.seeklogo.com', 'seeklogo.com') and
+                         parsed.path.startswith(('/logo-png/', '/images/')))
             else:
                 valid = False
             if not valid:
