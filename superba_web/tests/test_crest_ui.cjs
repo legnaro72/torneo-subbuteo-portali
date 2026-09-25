@@ -39,7 +39,10 @@ test('common team mark supports custom, flag, club and no-image modes', () => {
 
 test('recognised clubs receive an automatic crest without overriding manual choices', () => {
   assert.equal(automaticClub('Genoa CFC - Mario')?.ref, 'football-logos:logos/italy/Genoa.svg');
+  assert.equal(automaticClub('Genoa CFC-Mario')?.ref, 'football-logos:logos/italy/Genoa.svg');
   assert.equal(automaticClub('AS Roma')?.ref, 'football-logos:logos/italy/Roma.svg');
+  assert.equal(automaticClub('Paris Saint-Germain - Mario')?.ref,
+    'football-logos:logos/france/Paris_Saint-Germain_(PSG).svg');
   assert.equal(automaticClub('Club sconosciuto'), undefined);
   assert.match(render(React.createElement(TeamMark, {name: 'Genoa CFC'})), /Genoa\.svg/);
   assert.match(render(React.createElement(TeamMark, {name: 'Italia'})), /flagcdn\.com\/it\.svg/);

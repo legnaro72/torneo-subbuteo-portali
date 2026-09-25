@@ -18,6 +18,14 @@ const flagAliases:Record<string,string>={
 };
 const flagLabels:Record<string,string>={'GB-ENG':'Inghilterra','GB-SCT':'Scozia','GB-WLS':'Galles','GB-NIR':'Irlanda del Nord'};
 const flagLabel=(code:string)=>flagLabels[code]||regionNames.of(code)||code;
+function labelCandidates(name:string){
+  const candidates=[name.trim()];
+  for(let index=name.lastIndexOf('-');index>=0;index=name.lastIndexOf('-',index-1)){
+    const team=name.slice(0,index).trim();
+    if(team)candidates.push(team);
+  }
+  return candidates;
+}
 const clubKey=(value:string)=>normalized(value).replace(/[^a-z0-9]+/g,' ').replace(/^(?:ac|as|us|ssc|fc|cf|afc|cfc|sc)\s+/,'').replace(/\s+(?:ac|as|us|ssc|fc|cf|afc|cfc|sc)$/,'').trim();
 const clubLogos=new Map<string,string[]>();
 for(const path of logoPaths){
@@ -28,9 +36,10 @@ for(const path of logoPaths){
 }
 const clubAliases:Record<string,string>={
   'inter milano':'inter','bayern monaco':'bayern munchen',
+  'paris saint germain':'paris saint germain psg',
 };
 export function automaticFlag(name:string):TeamBadge|undefined{
-  const possible=[name.trim(),name.split(' - ')[0].trim(),name.includes('-')?name.slice(0,name.lastIndexOf('-')).trim():name.trim()];
+  const possible=labelCandidates(name);
   const alias=possible.map(team=>flagAliases[normalized(team)]).find(Boolean);
   if(alias)return {kind:'flag',ref:alias};
   const country=countries.find(item=>possible.some(team=>normalized(item.name)===normalized(team)));
@@ -38,12 +47,14 @@ export function automaticFlag(name:string):TeamBadge|undefined{
 }
 
 export function automaticClub(name:string):TeamBadge|undefined{
-  const team=name.includes(' - ')?name.split(' - ')[0].trim():name.trim();
-  const key=clubAliases[clubKey(team)]||clubKey(team);
-  const matches=clubLogos.get(key);
-  if(!matches||matches.length!==1)return undefined;
-  const path=matches[0];
-  return {kind:'club',ref:`football-logos:${path}`,url:`https://raw.githubusercontent.com/JoseArroyave/football-logos/main/${path.split('/').map(encodeURIComponent).join('/')}`,credit:'Jose Arroyave · football-logos',license:'MIT (repository)'};
+  for(const team of labelCandidates(name)){
+    const key=clubAliases[clubKey(team)]||clubKey(team);
+    const matches=clubLogos.get(key);
+    if(matches?.length!==1)continue;
+    const path=matches[0];
+    return {kind:'club',ref:`football-logos:${path}`,url:`https://raw.githubusercontent.com/JoseArroyave/football-logos/main/${path.split('/').map(encodeURIComponent).join('/')}`,credit:'Jose Arroyave · football-logos',license:'MIT (repository)'};
+  }
+  return undefined;
 }
 
 export function automaticBadge(name:string):TeamBadge|undefined{
