@@ -11,6 +11,12 @@ import {readTournamentRoute,tournamentPath} from './routes';
 import './style.css';
 import './theme.css';
 
+// The worker only caches versioned static assets. API calls and authenticated
+// requests always continue to reach the server.
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => { void navigator.serviceWorker.register('/sw.js'); });
+}
+
 type Config = {demo: boolean; writes_enabled: boolean};
 const finalMusic='https://raw.githubusercontent.com/legnaro72/torneo-Subbuteo-webapp/main/'+encodeURIComponent('⚽️ UEFA Champions League 🏆 [TESTO originale + traduzione HQ] - NEW VERSION.mp3');
 const swissMusic='https://raw.githubusercontent.com/legnaro72/torneo-Subbuteo-webapp/main/Appenzeller%20Jodler.mp3';

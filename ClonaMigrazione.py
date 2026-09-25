@@ -14,6 +14,8 @@ import json
 import shutil
 from pathlib import Path
 
+from PIL import Image, ImageOps
+
 
 ROOT = Path(__file__).resolve().parent
 SOURCE = ROOT / "superba_web"
@@ -22,6 +24,9 @@ TEXT_SUFFIXES = {".py", ".ts", ".tsx", ".css", ".html", ".json", ".md", ".txt", 
 SYNC_PRESERVE = {
     Path("backend/store.py"), Path("src/theme.css"), Path(".env.example"),
     Path("README.md"), Path("CLONE_INFO.json"), Path("public/logo-superba.jpg"),
+    Path("public/manifest.webmanifest"), Path("public/pwa-192.png"),
+    Path("public/pwa-512.png"), Path("public/pwa-maskable-192.png"),
+    Path("public/pwa-maskable-512.png"),
 }
 
 CLUBS = {
@@ -51,6 +56,12 @@ CLUBS = {
     },
 }
 
+PWA = {
+    "superba": {"name": "Superba Subbuteo Club", "short_name": "Superba", "primary": "#173f72", "paper": "#fffdf6"},
+    "piercrew": {"name": "PierCrew Subbuteo Club", "short_name": "PierCrew", "primary": "#187442", "paper": "#fffdf1"},
+    "tigullio": {"name": "Tigullio Subbuteo Club", "short_name": "Tigullio", "primary": "#de6626", "paper": "#fffaf4"},
+}
+
 
 def _ignored(_directory: str, names: list[str]) -> set[str]:
     return {name for name in names if name in EXCLUDE or name.endswith(".pyc")}
@@ -60,6 +71,8 @@ def _club_text(content: str, relative: Path, club: dict) -> str:
     if relative.name == "theme.css":
         for old, new in club["colors"].items():
             content = content.replace(old, new)
+    if relative == Path("index.html"):
+        content = content.replace('content="#173f72"', f'content="{PWA[club["key"]]["primary"]}"')
     content = content.replace("SUPERBA", club["name"].upper())
     content = content.replace("Superba", club["name"])
     content = content.replace("superba", club["key"])
@@ -76,6 +89,50 @@ def _club_text(content: str, relative: Path, club: dict) -> str:
             "}"
         ) + content[end:]
     return content
+
+
+def _write_pwa_assets(target: Path, club_key: str) -> int:
+    """Create club-specific PWA metadata and icons without copying Superba branding."""
+    spec = PWA[club_key]
+    public = target / "public"
+    logo_name = f"logo-{club_key}.jpg"
+    if not (public / logo_name).is_file():
+        raise FileNotFoundError(f"Logo PWA mancante: {public / logo_name}")
+    manifest = {
+        "id": "/", "name": spec["name"], "short_name": spec["short_name"],
+        "description": f"Tornei e club del mondo {spec['short_name']}.", "lang": "it",
+        "start_url": "/", "scope": "/", "display": "standalone",
+        "background_color": spec["paper"], "theme_color": spec["primary"],
+        "icons": [
+            {"src": "/pwa-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any"},
+            {"src": "/pwa-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any"},
+            {"src": "/pwa-maskable-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable"},
+            {"src": "/pwa-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable"},
+        ],
+    }
+    updated = 0
+    manifest_path = public / "manifest.webmanifest"
+    manifest_content = json.dumps(manifest, ensure_ascii=False, indent=2) + "\n"
+    if not manifest_path.exists() or manifest_path.read_text(encoding="utf-8") != manifest_content:
+        manifest_path.write_text(manifest_content, encoding="utf-8")
+        updated += 1
+    with Image.open(public / logo_name) as source:
+        source = ImageOps.exif_transpose(source).convert("RGBA")
+        for size, maskable in ((192, False), (512, False), (192, True), (512, True)):
+            inset = 0.62 if maskable else 0.82
+            image = Image.new("RGBA", (size, size), spec["paper"])
+            logo = ImageOps.contain(source, (round(size * inset), round(size * inset)), Image.Resampling.LANCZOS)
+            image.alpha_composite(logo, ((size - logo.width) // 2, (size - logo.height) // 2))
+            suffix = f"pwa-{'maskable-' if maskable else ''}{size}.png"
+            destination = public / suffix
+            previous = destination.read_bytes() if destination.exists() else None
+            from io import BytesIO
+            encoded = BytesIO()
+            image.save(encoded, format="PNG", optimize=True)
+            if previous != encoded.getvalue():
+                destination.write_bytes(encoded.getvalue())
+                updated += 1
+    return updated
 
 
 def clone(club_key: str) -> Path:
@@ -112,6 +169,7 @@ def clone(club_key: str) -> Path:
         # Old Superba image is replaced with the corresponding legacy club logo.
         (target / "public" / "logo-superba.jpg").unlink()
         shutil.copy2(logo, target / "public" / f"logo-{club_key}.jpg")
+        _write_pwa_assets(target, club_key)
         (target / "CLONE_INFO.json").write_text(json.dumps({
             "club": club["name"], "source": "superba_web", "deployment": "not-configured",
             "mongo_writes_by_script": False,
@@ -148,6 +206,7 @@ def sync(club_key: str) -> int:
         elif not destination.exists() or source_file.read_bytes() != destination.read_bytes():
             shutil.copy2(source_file, destination)
             updated += 1
+    updated += _write_pwa_assets(target, club_key)
     return updated
 
 
