@@ -23,15 +23,29 @@ I file legacy `.streamlit/secrets.toml` e `pathWebApp e secure .txt` non devono 
 
 Il repository `legnaro72/torneo-subbuteo-portali` resta un **monorepo**: è la scelta più sicura perché le tre app condividono React, FastAPI, test e lo script di sincronizzazione, ma mantengono tema, logo, collezioni MongoDB e variabili Vercel separati. Creare tre repository ora renderebbe più facile perdere correzioni condivise e richiederebbe tre serie di pull request.
 
-In GitHub Desktop aggiungi una sola volta il repository dalla cartella che contiene `superba_web`, `piercrew_web` e `tigullio_web`. Vedrai un unico cambiamento con i file raggruppati per cartella: `superba_web/`, `piercrew_web/` e `tigullio_web/`. Per pubblicare un miglioramento Superba anche negli altri club:
+In GitHub Desktop aggiungi una sola volta il repository dalla cartella che contiene `superba_web`, `piercrew_web` e `tigullio_web`. Vedrai un unico cambiamento con i file raggruppati per cartella: `superba_web/`, `piercrew_web/` e `tigullio_web/`.
+
+### 1. Allinea portali — prepara, non pubblica
+
+Apri `main`, fai **Fetch origin** e **Pull origin** in GitHub Desktop, poi esegui:
 
 ```powershell
-superba_web\.venv\Scripts\python.exe ClonaMigrazione.py sync all
+py AllineaPortali.py
 ```
 
-Poi in GitHub Desktop: **Fetch origin** → verifica i file nelle tre cartelle → scrivi il riepilogo → **Commit to main** (oppure prima a un branch) → **Push origin**. Un push su `main` attiva il deploy dei tre progetti Vercel se il collegamento Git è configurato. Il comando `sync` non fa commit, push, deploy, login né scritture MongoDB: rende soltanto le modifiche visibili nella lista Changes di GitHub Desktop.
+Questo esegue `ClonaMigrazione.py sync all` e si ferma: non crea commit, non fa push, non avvia Vercel e non accede a MongoDB. I file restano non committati, quindi puoi esaminarli in GitHub Desktop prima di qualunque pubblicazione.
 
-Per un intervento destinato soltanto a un club non eseguire `sync all`: modifica direttamente la sua cartella e fai il normale commit/push. Per una nuova funzione comune, sviluppala e testala in `superba_web`, esegui `sync all`, poi committa tutte e tre le cartelle nello stesso commit.
+### 2. Deploy Allineamenti — pubblica solo quanto hai verificato
+
+Dopo aver controllato gli stessi file in GitHub Desktop, esegui:
+
+```powershell
+py DeployAllineamenti.py
+```
+
+Lo script legge esclusivamente il piano creato da **Allinea portali**; non riesegue l'allineamento. Mostra l'elenco, chiede conferma, crea il commit su `main`, fa push e avvia i deploy Vercel di PierCrew e Tigullio. Se compaiono file estranei, se `main` è cambiato oppure se manca il piano, si ferma senza fare commit. Per un uso non interattivo esiste `py DeployAllineamenti.py --yes`; per diagnosticare soltanto Git senza deploy, `py DeployAllineamenti.py --no-vercel`.
+
+Per un intervento destinato soltanto a un club non eseguire **Allinea portali**: modifica direttamente la sua cartella e fai il normale commit/push. Per una nuova funzione comune, sviluppala e testala in `superba_web`, esegui **Allinea portali**, controlla in GitHub Desktop, poi usa **Deploy Allineamenti**.
 
 ## PWA installabile
 
