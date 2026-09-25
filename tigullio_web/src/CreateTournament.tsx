@@ -18,6 +18,7 @@ export default function CreateTournament({onClose,onCreated}:{onClose:()=>void;o
   const [overrides,setOverrides]=useState<Record<string,Override>>({});
   const [badgesByKey,setBadgesByKey]=useState<BadgeMap>({});
   const [badgeEditorOpen,setBadgeEditorOpen]=useState(false);
+  const [badgeTarget,setBadgeTarget]=useState('');
   const [groupCount,setGroupCount]=useState(1);
   const [assignment,setAssignment]=useState<'auto'|'manual'>('auto');
   const [manualGroups,setManualGroups]=useState<Record<string,number>>({});
@@ -35,7 +36,7 @@ export default function CreateTournament({onClose,onCreated}:{onClose:()=>void;o
       team:overrides[`guest:${i}`]?.team??guest,potential:overrides[`guest:${i}`]?.potential??4,guest:true}))
   ];
   const labels=entries.map(e=>e.team.trim()?`${e.team.trim()} - ${e.name}`:e.name);
-  const badges=Object.fromEntries(entries.flatMap((entry,i)=>badgesByKey[entry.key]?[[labels[i],badgesByKey[entry.key]]]:[])) as BadgeMap;
+  const badges=Object.fromEntries(entries.flatMap((entry,i)=>{const badge=badgesByKey[entry.key]??players.find(p=>p.id===entry.source_id)?.badge;return badge?[[labels[i],badge]]:[];})) as BadgeMap;
   const duplicateNames=new Set(entries.map(e=>e.name.toLocaleLowerCase())).size!==entries.length;
   const duplicateLabels=new Set(labels.map(x=>x.toLocaleLowerCase())).size!==labels.length;
   const validEntries=entries.length>=3&&entries.length<=64&&!duplicateNames&&!duplicateLabels&&entries.every(e=>Number.isInteger(e.potential)&&e.potential>=1&&e.potential<=10);
@@ -79,7 +80,7 @@ export default function CreateTournament({onClose,onCreated}:{onClose:()=>void;o
       {step===2&&<>
         <p>Puoi modificare squadra e potenziale per questo torneo. L’anagrafica del Club non cambia.</p>
         <label className="checkbox"><input type="checkbox" checked={usePlayerNames} onChange={e=>togglePlayerNames(e.target.checked)}/>Usa i nomi dei giocatori come nomi delle squadre</label>
-        <div className="participant-editor">{entries.map(entry=><div className="participant-row" key={entry.key}><strong>{entry.name}{entry.guest&&<small> ospite</small>}</strong><label>Squadra<input value={entry.team} maxLength={100} onChange={e=>update(entry,{team:e.target.value})}/></label><label>Potenziale<input type="number" min={1} max={10} value={entry.potential} onChange={e=>update(entry,{potential:Number(e.target.value)})}/></label></div>)}</div>
+        <div className="participant-editor">{entries.map(entry=><div className="participant-row" key={entry.key}><strong>{entry.name}{entry.guest&&<small> ospite</small>}</strong><label>Squadra<input value={entry.team} maxLength={100} onChange={e=>update(entry,{team:e.target.value})}/></label><label>Potenziale<input type="number" min={1} max={10} value={entry.potential} onChange={e=>update(entry,{potential:Number(e.target.value)})}/></label><button type="button" className="secondary compact" onClick={()=>{setBadgeTarget(entry.team.trim()?`${entry.team.trim()} - ${entry.name}`:entry.name);setBadgeEditorOpen(true);}}>🛡️ Scegli stemma</button></div>)}</div>
         <button type="button" className="secondary" onClick={()=>setBadgeEditorOpen(true)}>🛡️ Immagini per la vista Premium</button>
         {duplicateLabels&&<div role="alert" className="alert error">Due partecipanti avrebbero lo stesso nome nel calendario. Modifica le squadre.</div>}{entries.some(e=>e.potential<1||e.potential>10||!Number.isInteger(e.potential))&&<div role="alert" className="alert error">Il potenziale deve essere un numero intero tra 1 e 10.</div>}
       </>}
@@ -91,6 +92,6 @@ export default function CreateTournament({onClose,onCreated}:{onClose:()=>void;o
       </>}
       <div className="modal-actions"><button type="button" className="secondary" disabled={busy} onClick={step===1?onClose:()=>setStep(step-1)}>{step===1?'Annulla':<><ArrowLeft size={16}/>Indietro</>}</button>{step<3?<button type="button" className="primary" disabled={step===1?(!name.trim()||!validEntries||entries.length<groupCount*2):!validEntries} onClick={()=>setStep(step+1)}>Continua<ArrowRight size={17}/></button>:<button type="button" className="primary" disabled={!canGenerate} onClick={()=>void submit()}>{busy?'Creazione…':<>Genera calendario<Plus size={17}/></>}</button>}</div>
     </form>
-    {badgeEditorOpen&&<BadgeEditor participants={labels} badges={badges} busy={busy} onClose={()=>setBadgeEditorOpen(false)} onSave={async selected=>{setBadgesByKey(Object.fromEntries(entries.flatMap((entry,i)=>selected[labels[i]]?[[entry.key,selected[labels[i]]]]:[])));setBadgeEditorOpen(false);}}/>}
+    {badgeEditorOpen&&<BadgeEditor participants={labels} badges={badges} busy={busy} initialSelected={badgeTarget} onClose={()=>setBadgeEditorOpen(false)} onSave={async selected=>{setBadgesByKey(Object.fromEntries(entries.flatMap((entry,i)=>selected[labels[i]]?[[entry.key,selected[labels[i]]]]:[])));setBadgeEditorOpen(false);}}/>}
   </section></div>;
 }

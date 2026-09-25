@@ -1,4 +1,4 @@
-from typing import Annotated
+from typing import Annotated, Literal
 from pydantic import BaseModel, ConfigDict, Field, StrictBool, StringConstraints, model_validator
 from urllib.parse import urlsplit, quote
 
@@ -33,15 +33,40 @@ class CreateParticipant(Input):
     guest: bool = False
 
 
+class CrestConfig(Input):
+    schema_version: Literal[1] = 1
+    shape: Literal['shield', 'circle', 'rounded', 'badge'] = 'shield'
+    primary: str = Field(default='#173b67', pattern=r'^#[0-9a-fA-F]{6}$')
+    secondary: str = Field(default='#f4e8cb', pattern=r'^#[0-9a-fA-F]{6}$')
+    border: str = Field(default='#d5a83d', pattern=r'^#[0-9a-fA-F]{6}$')
+    text: str = Field(default='#ffffff', pattern=r'^#[0-9a-fA-F]{6}$')
+    title: str = Field(default='', max_length=22)
+    initials: str = Field(default='', max_length=4)
+    subtitle: str = Field(default='', max_length=18)
+    year: str = Field(default='', pattern=r'^(|1[8-9][0-9]{2}|20[0-9]{2})$')
+    icon: Literal['none', 'initials', 'ball', 'star', 'trophy', 'crown', 'flag', 'sport'] = 'ball'
+    stripe: Literal['none', 'horizontal', 'vertical'] = 'none'
+    double_border: bool = False
+
+
 class TeamBadge(Input):
-    kind: str = Field(pattern='^(flag|club)$')
-    ref: str = Field(min_length=2, max_length=240)
+    kind: Literal['none', 'flag', 'club', 'custom']
+    ref: str | None = Field(default=None, max_length=240)
     url: str | None = Field(default=None, max_length=500)
     credit: str | None = Field(default=None, max_length=240)
     license: str | None = Field(default=None, max_length=100)
+    config: CrestConfig | None = None
 
     @model_validator(mode='after')
     def valid_source(self):
+        if self.kind in ('none', 'custom'):
+            if any((self.ref, self.url, self.credit, self.license)) or (self.kind == 'none' and self.config) or (self.kind == 'custom' and not self.config):
+                raise ValueError('Configurazione stemma non valida.')
+            return self
+        if self.config:
+            raise ValueError('Configurazione stemma non valida.')
+        if not self.ref or len(self.ref) < 2:
+            raise ValueError('Riferimento immagine non valido.')
         if self.kind == 'flag':
             if len(self.ref) != 2 or not self.ref.isascii() or not self.ref.isalpha() or self.ref != self.ref.upper() or self.url:
                 raise ValueError('Codice bandiera non valido.')

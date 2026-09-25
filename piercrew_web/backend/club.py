@@ -11,6 +11,7 @@ from typing import Annotated
 from pymongo.errors import PyMongoError
 
 from .club_report import render_club_pdf
+from .models import TeamBadge
 from .security import verify_password
 from .tournaments import version
 
@@ -29,6 +30,7 @@ class PlayerInput(Input):
     team: Team = ''
     potential: StrictInt = Field(ge=1, le=10)
     role: Role | None = None
+    badge: TeamBadge | None = None
 
 
 class PlayerEdit(PlayerInput):
@@ -83,7 +85,7 @@ def player_view(doc):
     return {'id': str(doc['_id']), 'version': version(doc), 'name': str(doc.get('Giocatore') or ''),
             'team': str(doc.get('Squadra') or ''), 'potential': potential,
             'role': doc.get('Ruolo') if doc.get('Ruolo') in ('R', 'W', 'A') else 'R',
-            'password_set': doc.get('SetPwd') == 1, **trophies}
+            'password_set': doc.get('SetPwd') == 1, 'badge': doc.get('_piercrew_badge'), **trophies}
 
 
 def audit(store, user, action, details):
@@ -118,6 +120,8 @@ def update_one(store, original, data, user):
     if str(original['_id']) == user['id'] and data.role is not None and data.role != 'A' and user['role'] == 'A':
         raise HTTPException(409, 'Non puoi rimuovere il tuo ruolo amministratore mentre sei connesso.')
     changes = {'Giocatore': data.name, 'Squadra': data.team, 'Potenziale': data.potential}
+    if data.badge is not None:
+        changes['_piercrew_badge'] = data.badge.model_dump(exclude_none=True)
     if data.role is not None:
         changes['Ruolo'] = data.role
     conditions = [{field: {'$eq': value, '$exists': True}} for field, value in original.items() if field != '_id']
@@ -149,6 +153,8 @@ def install(app, current_user, writer, store_dep):
         role = data.role or 'R'
         doc = {'Giocatore': data.name, 'Squadra': data.team, 'Potenziale': data.potential,
                'Ruolo': role, 'Password': None, 'SetPwd': 0, '_club_revision': 0}
+        if data.badge is not None:
+            doc['_piercrew_badge'] = data.badge.model_dump(exclude_none=True)
         for count, names in TROPHIES:
             doc[count], doc[names] = 0, []
         result = store.players.insert_one(doc)

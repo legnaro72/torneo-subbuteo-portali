@@ -11,11 +11,20 @@ import {readTournamentRoute,tournamentPath} from './routes';
 import './style.css';
 import './theme.css';
 
+// The worker only caches versioned static assets. API calls and authenticated
+// requests always continue to reach the server.
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => { void navigator.serviceWorker.register('/sw.js'); });
+}
+
 type Config = {demo: boolean; writes_enabled: boolean};
 const finalMusic='https://raw.githubusercontent.com/legnaro72/torneo-Subbuteo-webapp/main/'+encodeURIComponent('⚽️ UEFA Champions League 🏆 [TESTO originale + traduzione HQ] - NEW VERSION.mp3');
 const swissMusic='https://raw.githubusercontent.com/legnaro72/torneo-Subbuteo-webapp/main/Appenzeller%20Jodler.mp3';
 const message = (error: unknown) => error instanceof Error ? error.message : 'Operazione non riuscita.';
 type Page='home'|'italiana'|'club'|'finali'|'svizzero';
+type FavouriteKind='italiana'|'finali'|'svizzero';
+type Favourite={id:string;name:string};
+type Favourites=Partial<Record<FavouriteKind,Favourite>>;
 const pageFromLocation=(): Page=>{const path=window.location.pathname;const direct=readTournamentRoute(window.location);if(direct&&(direct.type==='finali'||direct.type==='svizzero'))return direct.type;return path==='/club'?'club':path==='/italiana'?'italiana':path==='/finali'?'finali':path==='/svizzero'?'svizzero':'home';};
 
 function App() {
@@ -24,9 +33,13 @@ function App() {
   const [ready, setReady] = useState(false);
   const [active, setActive] = useState<Tournament | null>(null);
   const [list, setList] = useState<Summary[]>([]);
+  const [finalsList,setFinalsList]=useState<Favourite[]>([]);
+  const [swissList,setSwissList]=useState<Favourite[]>([]);
+  const [favourites,setFavourites]=useState<Favourites>({});
   const [page, setPage] = useState<Page>(pageFromLocation);
   const [search, setSearch] = useState('');
   const [creating, setCreating] = useState(false);
+  const [creationChooser, setCreationChooser] = useState(false);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
   const [notice, setNotice] = useState('');
@@ -37,6 +50,8 @@ function App() {
   useEffect(() => { Promise.all([api<Config>('/config').then(setConfig), api<User>('/auth/me').then(setUser).catch(() => null)]).catch(e => setError(message(e))).finally(() => setReady(true)); }, []);
   const refresh = () => api<Summary[]>('/tournaments').then(setList).catch(e => setError(message(e)));
   useEffect(() => { if (user) void refresh(); }, [user]);
+  useEffect(()=>{if(!user)return;try{setFavourites(JSON.parse(localStorage.getItem(`tigullio-favourites:${user.id}`)||'{}'));}catch{setFavourites({});}Promise.all([api<Favourite[]>('/finals'),api<Favourite[]>('/swiss')]).then(([finals,swiss])=>{setFinalsList(finals);setSwissList(swiss);}).catch(()=>{});},[user?.id]);
+  useEffect(()=>{if(!user)return;try{localStorage.setItem(`tigullio-favourites:${user.id}`,JSON.stringify(favourites));}catch{}},[favourites,user?.id]);
   useEffect(()=>{const onPop=()=>{setActive(null);setDirty(false);setPage(pageFromLocation());const route=readTournamentRoute(window.location);setDirectRoute(route);setCompetitionName(route&&route.type!=='italiana'?route.name:'');};window.addEventListener('popstate',onPop);return()=>window.removeEventListener('popstate',onPop);},[]);
   useEffect(()=>{
     if(!user||!directRoute)return;
@@ -66,6 +81,16 @@ function App() {
     catch (e) { setError(message(e)); }
     finally { setBusy(false); }
   }
+  function openFavourite(kind:FavouriteKind,favourite:Favourite){
+    if(!leave())return;
+    if(kind==='italiana'){void open(favourite.id);return;}
+    setActive(null);setDirty(false);setError('');setNotice('');setPage(kind);setCompetitionName(favourite.name);setDirectRoute(null);window.history.pushState({},'',tournamentPath(favourite.name,kind));
+  }
+  function setFavourite(kind:FavouriteKind,id:string){
+    const source=kind==='italiana'?list:kind==='finali'?finalsList:swissList;
+    const found=source.find(item=>item.id===id);
+    setFavourites(current=>{const next={...current};if(found)next[kind]={id:found.id,name:found.name};else delete next[kind];return next;});
+  }
   async function external(destination: string, tournamentName?: string) {
     if (!leave()) return;
     setBusy(true); setError('');
@@ -88,11 +113,11 @@ function App() {
       <button className="brand" onClick={() => navigate('home')}><img className="brand-logo" src="/logo-tigullio.jpg" alt="Logo Tigullio"/><span>TIGULLIO<small>TIGULLIO · SUBBUTEO</small></span></button>
       <div className="nav-label">IL TUO MONDO</div>
       <nav>
-        <button className={page === 'home' ? 'selected' : ''} onClick={() => navigate('home')}><LayoutDashboard size={19}/>Panoramica</button>
-        <button className={page === 'club' ? 'selected' : ''} onClick={() => navigate('club')}><Users size={19}/>Gestione club</button>
-        <button className={page === 'italiana' ? 'selected' : ''} onClick={() => navigate('italiana')}><Trophy size={19}/>Torneo all’italiana<span className="nav-dot"/></button>
-        <button className={page === 'finali' ? 'selected' : ''} onClick={() => navigate('finali')}><Flag size={19}/>Fasi finali</button>
-        <button className={page === 'svizzero' ? 'selected' : ''} onClick={() => navigate('svizzero')}><span className="swiss">✚</span>Torneo svizzero</button>
+        <button className={page === 'home' ? 'selected' : ''} onClick={() => navigate('home')}><LayoutDashboard size={19}/>🏠 Panoramica</button>
+        <button className={page === 'club' ? 'selected' : ''} onClick={() => navigate('club')}><Users size={19}/>🛠️ Gestione club</button>
+        <button className={page === 'italiana' ? 'selected' : ''} onClick={() => navigate('italiana')}><Trophy size={19}/>🇮🇹 Torneo all’italiana<span className="nav-dot"/></button>
+        <button className={page === 'finali' ? 'selected' : ''} onClick={() => navigate('finali')}><Flag size={19}/>🏁 Fasi finali</button>
+        <button className={page === 'svizzero' ? 'selected' : ''} onClick={() => navigate('svizzero')}><span className="swiss">✚</span>🇨🇭 Torneo svizzero</button>
       </nav>
       <div className="sidebar-note"><ShieldCheck size={21}/><strong>Un club. Un solo accesso.</strong><p>Le tue competizioni, tutte da qui.</p></div>
       <div className="profile"><span className="avatar">{user.username.slice(0,1)}</span><span><strong>{user.username}</strong><small>{canWrite ? 'Gestione tornei' : 'Sola lettura'}</small></span><button title="Esci dal portale" aria-label="Esci dal portale" disabled={busy} onClick={logout}><LogOut size={18}/></button></div>
@@ -105,10 +130,11 @@ function App() {
         {error && <div role="alert" className="alert error">{error}<button aria-label="Chiudi messaggio" onClick={() => setError('')}><X size={16}/></button></div>}
         {notice && <div role="status" className="alert success">{notice}</div>}
         {page==='club' ? <ClubView user={user} canWrite={canWrite} onDirty={setDirty} onLegacy={()=>external('club')}/> : (page==='finali'||page==='svizzero')?<CompetitionArea key={page} kind={page} user={user} canWrite={canWrite} directName={competitionName} onDirty={setDirty} onLegacy={()=>external(page)}/> : active ? <TournamentView key={active.id + ':' + user.id} tournament={active} user={user} canWrite={canWrite} onBack={() => navigate('italiana')} onSaved={value => {setActive(value);window.history.replaceState({},'',tournamentPath(value.name));void refresh();}} onDirty={setDirty} onLegacy={() => external('italiana-classica')} onFinali={() => navigate('finali')}/> : <>
-          <section className="page-heading"><div><div className="eyebrow">TIGULLIO CLUB · AREA TORNEI</div><h1>{page === 'home' ? `Bentornato, ${user.username}.` : 'Torneo all’italiana'}</h1><p>{page === 'home' ? 'Il prossimo incontro comincia da qui.' : 'Calendari, risultati e classifiche. Tutto sotto controllo.'}</p></div>{canWrite && <button className="primary" onClick={() => setCreating(true)}><Plus size={18}/>Nuovo torneo</button>}</section>
+          <section className="page-heading"><div><div className="eyebrow">TIGULLIO CLUB · AREA TORNEI</div><h1>{page === 'home' ? `Bentornato, ${user.username}.` : 'Torneo all’italiana'}</h1><p>{page === 'home' ? 'Il prossimo incontro comincia da qui.' : 'Calendari, risultati e classifiche. Tutto sotto controllo.'}</p></div>{canWrite && <button className="primary" onClick={() => page==='home'?setCreationChooser(true):setCreating(true)}><Plus size={18}/>✨ Nuovo torneo</button>}</section>
           {page === 'home' && <>
             <section className="hero"><div><span className="hero-kicker"><span className="live-dot"/> IL GIOCO, AL CENTRO</span><h2>La passione è la stessa.<br/>Il campo è tutto nuovo.</h2><p>Organizza il campionato, segui le giornate<br className="desktop"/> e vivi ogni risultato insieme al tuo club.</p><button onClick={() => navigate('italiana')}>Vai ai tornei all’italiana<ArrowRight size={18}/></button></div><div className="pitch" aria-hidden="true"><div className="pitch-line"/><div className="center-circle"/><div className="box top"/><div className="box bottom"/><div className="player p1"/><div className="player p2"/><div className="player p3"/><div className="ball"/></div><span className="hero-number">01 / TIGULLIO</span></section>
             <div className="stats"><Stat label="Tornei in archivio" value={list.length} icon={<Trophy/>}/><Stat label="Partite giocate" value={list.reduce((n,t) => n+t.played,0)} icon={<Check/>}/><Stat label="Tornei da completare" value={list.filter(t=>t.played<t.matches).length} icon={<CalendarDays/>}/></div>
+            <section className="favourites-panel"><div><span className="eyebrow">ACCESSO RAPIDO</span><h2>⭐ I tuoi preferiti</h2><p>Un torneo per formula, memorizzato solo su questo dispositivo.</p></div><div className="favourites-grid">{([{kind:'italiana',icon:'🇮🇹',label:'All’italiana',items:list},{kind:'finali',icon:'🏁',label:'Fasi finali',items:finalsList},{kind:'svizzero',icon:'🇨🇭',label:'Svizzero',items:swissList}] as {kind:FavouriteKind;icon:string;label:string;items:Favourite[]}[]).map(({kind,icon,label,items})=>{const favourite=favourites[kind];return <article key={kind}><span className="favourite-icon">{icon}</span><strong>{label}</strong>{favourite?<button className="favourite-open" onClick={()=>openFavourite(kind,favourite)}>★ {favourite.name}<ArrowUpRight size={15}/></button>:<p>Nessun preferito</p>}<label>Imposta preferito<select aria-label={`Preferito ${label}`} value={favourite?.id||''} onChange={e=>setFavourite(kind,e.target.value)}><option value="">Scegli un torneo…</option>{items.map(item=><option key={item.id} value={item.id}>{item.name}</option>)}</select></label></article>;})}</div></section>
           </>}
           <section className="archive"><div className="section-heading"><div><h2>{page === 'home' ? 'I tuoi tornei' : 'Archivio tornei'}</h2><p>Riprendi il gioco da dove lo hai lasciato.</p></div><label className="search"><Search size={17}/><input aria-label="Cerca torneo" value={search} onChange={e=>setSearch(e.target.value)} placeholder="Cerca un torneo…"/></label></div>
             <div className="tournament-list">{list.filter(t=>t.name.toLocaleLowerCase().includes(search.toLocaleLowerCase())).map(t=><button disabled={busy} className="tournament-row" key={t.id} onClick={()=>open(t.id)}><span className="tournament-icon"><Trophy size={22}/></span><span className="tournament-title"><strong>{t.name}</strong><small>{t.groups > 1 && <>{`${t.groups} gironi`}<span>·</span></>}{t.matches} partite</small></span><span className={'badge ' + (t.played === t.matches ? 'done' : '')}>{t.played === t.matches ? 'Completato' : 'In corso'}</span><span className="progress"><span>{t.played}/{t.matches} giocate</span><span className="track"><i style={{width:`${t.played/t.matches*100}%`}}/></span></span><ArrowRight size={18}/></button>)}
@@ -121,6 +147,7 @@ function App() {
         <footer>TIGULLIO TIGULLIO · SUBBUTEO<span>La partita continua.</span></footer>
       </div>
     </main>
+    {creationChooser && <div className="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="creation-choice-title"><section className="modal creation-choice"><div className="section-heading"><div><span className="eyebrow">SCEGLI IL FORMATO</span><h2 id="creation-choice-title">✨ Che torneo vuoi creare?</h2><p>Seleziona consapevolmente la formula prima di iniziare.</p></div><button aria-label="Chiudi" onClick={()=>setCreationChooser(false)}><X/></button></div><div className="creation-choice-grid"><button type="button" onClick={()=>{setCreationChooser(false);setCreating(true);}}><span>🇮🇹</span><strong>All’italiana</strong><small>Gironi, giornate, andata e ritorno.</small></button><button type="button" onClick={()=>{setCreationChooser(false);navigate('finali');}}><span>🏁</span><strong>Fasi finali</strong><small>Tabellone a eliminazione o fase a gironi.</small></button><button type="button" onClick={()=>{setCreationChooser(false);navigate('svizzero');}}><span>🇨🇭</span><strong>Torneo svizzero</strong><small>Accoppiamenti progressivi per turno.</small></button></div><div className="modal-actions"><button className="secondary" onClick={()=>setCreationChooser(false)}>Annulla</button></div></section></div>}
     {creating && <CreateTournament onClose={()=>setCreating(false)} onCreated={t=>{setActive(t); setPage('italiana'); setCreating(false);window.history.pushState({},'',tournamentPath(t.name));void refresh();}}/>}
   </div>;
 }
