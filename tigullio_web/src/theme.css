@@ -39,3 +39,24 @@ input,textarea,select,.score input{background:#fffefa;color:var(--club-ink);bord
 .tournament-toolbar .tabs.club-tabs button:not(.active):hover{background:var(--club-soft);color:var(--club-primary)}
 .club-table-wrap:after{content:none;display:none}
 @media(max-width:700px){.club-table-hint{white-space:normal;border-radius:14px;line-height:1.35}.tournament-toolbar .tabs.club-tabs{gap:7px}.tournament-toolbar .tabs.club-tabs button{padding:11px 14px;font-size:14px}}
+
+/* Tournament theme polish: remove legacy green residues from Italian, finals and Swiss pages. */
+.tournament-toolbar .tabs button{color:var(--club-muted);border-color:transparent}
+.tournament-toolbar .tabs button.active,.tabs button.active{background:linear-gradient(115deg,var(--club-primary),var(--club-dark));border-color:var(--club-primary);color:#fff;box-shadow:0 6px 16px #102b4e24;border-radius:12px;padding-left:14px;padding-right:14px;font-weight:800}
+.segmented{border-color:var(--club-border);background:var(--club-soft)}
+.segmented button{color:var(--club-muted);font-weight:800}
+.segmented button.active,.badge-tabs button.active{background:linear-gradient(115deg,var(--club-primary),var(--club-dark));color:#fff;border-color:var(--club-primary);box-shadow:0 6px 16px #102b4e22}
+.filter-panel,.match-settings,.competition-create,.competition-bracket,.favourites-panel{border-color:var(--club-border);background:var(--club-paper);box-shadow:0 8px 25px #102b4e0d}
+.filter-head h3,.filter-toggle,.settings-toggle,.settings-section-head,.favourites-panel h2,.favourites-grid article>strong,.creation-choice-grid button strong{color:var(--club-primary)}
+.creation-choice-grid button{border-color:var(--club-border);background:var(--club-paper);color:var(--club-primary);box-shadow:0 8px 18px #102b4e0b}
+.creation-choice-grid button:hover{border-color:var(--club-primary);box-shadow:0 12px 25px #102b4e1f}
+.competition-create .group-preview,.competition-bracket>div,.crest-preview,.club-badge-choice,.badge-current{background:var(--club-soft);border-color:var(--club-border)}
+.competition-bracket p strong,.competition-bracket p span,.points,.validate.valid{color:var(--club-primary)}
+.tournament-results .validate.valid{background:color-mix(in srgb,var(--club-primary) 12%,#fff);color:var(--club-primary)}
+.validate input,.checkbox input,.tournament-results .matches.compact .validate input,.tournament-results .matches.premium .validate input{accent-color:var(--club-primary)}
+.share-link,.favourite-open{background:var(--club-accent);border-color:var(--club-accent);color:var(--club-dark)}
+.share-link:hover{background:color-mix(in srgb,var(--club-accent) 84%,#fff)}
+.badge-results button:hover,.badge-results button.selected,.player-multiselect-options .checkbox:hover{background:var(--club-soft)}
+.player-multiselect-toggle{border-color:var(--club-border);background:var(--club-paper);color:var(--club-primary)}
+.player-multiselect-menu,.player-multiselect-search{border-color:var(--club-border)}
+@media(max-width:760px){.tournament-toolbar .tabs button.active,.tabs button.active{padding-left:11px;padding-right:11px}.filter-toggle,.settings-toggle{font-size:14px}.creation-choice-grid button{border-radius:15px}}
