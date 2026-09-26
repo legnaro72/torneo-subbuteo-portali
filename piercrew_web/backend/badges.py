@@ -1,4 +1,5 @@
 from datetime import datetime
+from .automatic_badges import automatic_badge
 
 
 def team_from_label(label):
@@ -14,11 +15,11 @@ def team_key(value):
 
 def badge_for_team(store, team):
     key = team_key(team)
-    if not key or not hasattr(store, 'team_badges'):
+    if not key:
         return None
-    doc = store.team_badges.find_one({'team_key': key}, {'badge': 1})
+    doc = store.team_badges.find_one({'team_key': key}, {'badge': 1}) if hasattr(store, 'team_badges') else None
     badge = doc.get('badge') if doc else None
-    return badge if isinstance(badge, dict) else None
+    return badge if isinstance(badge, dict) else automatic_badge(team)
 
 
 def club_badge_defaults(store, participants):

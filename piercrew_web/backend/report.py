@@ -41,8 +41,9 @@ def remote_image_url(badge):
     if not isinstance(badge, dict):
         return None
     if badge.get('kind') == 'flag' and badge.get('ref'):
-        return f"https://flagcdn.com/w80/{str(badge['ref']).lower()}.png"
-    if badge.get('kind') == 'club' and str(badge.get('url') or '').lower().endswith(('.png', '.jpg', '.jpeg', '.webp')):
+        code = str(badge['ref']).lower()
+        return f'https://flagcdn.com/{code}.svg' if '-' in code else f'https://flagcdn.com/w80/{code}.png'
+    if badge.get('kind') == 'club' and str(badge.get('url') or '').lower().endswith(('.svg', '.png', '.jpg', '.jpeg', '.webp')):
         return badge.get('url')
     return None
 
@@ -103,7 +104,7 @@ class GazzettaPDF(FPDF):
             with urlopen(request, timeout=3) as response:
                 content_type = response.headers.get('content-type', '').lower()
                 raw = response.read(180000)
-            suffix = '.png' if 'png' in content_type else '.jpg' if 'jpeg' in content_type or 'jpg' in content_type else '.webp'
+            suffix = '.svg' if 'svg' in content_type or url.lower().endswith('.svg') else '.png' if 'png' in content_type or url.lower().endswith('.png') else '.jpg' if 'jpeg' in content_type or 'jpg' in content_type else '.webp'
             tmp = NamedTemporaryFile(delete=False, suffix=suffix)
             tmp.write(raw)
             tmp.close()
