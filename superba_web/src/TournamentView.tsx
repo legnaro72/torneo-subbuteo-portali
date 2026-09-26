@@ -69,6 +69,7 @@ export default function TournamentView({tournament:t,user,canWrite,onBack,onSave
   useEffect(()=>{onDirty(dirty);try{if(dirty)localStorage.setItem(draftKey,JSON.stringify({drafts,version:draftVersion}));else localStorage.removeItem(draftKey);}catch{setError('Il browser non può conservare le bozze. Salva prima di uscire.');}},[drafts,draftVersion,draftKey]);
   useEffect(()=>{try{localStorage.setItem(preferenceKey,JSON.stringify({nameMode,viewMode,viewModeVersion:2}));}catch{}},[nameMode,viewMode,preferenceKey]);
   useEffect(()=>{const handler=(e:BeforeUnloadEvent)=>{if(dirty){e.preventDefault();e.returnValue='';}};window.addEventListener('beforeunload',handler);return()=>window.removeEventListener('beforeunload',handler);},[dirty]);
+  useEffect(()=>{if(tab!=='matches'||allMatches)return;const track=document.querySelector<HTMLElement>('.round-track');const current=track?.querySelector<HTMLElement>('.active');if(track&&current)track.scrollLeft+=current.getBoundingClientRect().left-track.getBoundingClientRect().left-(track.clientWidth-current.clientWidth)/2;},[selectedDay,tab,allMatches]);
 
   function change(row:Match,patch:Partial<Draft>){
     if(!dirty)setDraftVersion(t.version);
