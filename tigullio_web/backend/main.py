@@ -19,7 +19,7 @@ from .report import render_tournament_pdf
 from .security import generate_token, hash_password, hash_token, password_needs_upgrade, verify_password
 from .store import Store, get_store
 from .tournaments import is_italiana, load, save, view
-from .badges import persist_club_badges, with_club_badges
+from .badges import badge_for_team, persist_club_badges, with_club_badges
 
 app = FastAPI(title='Tigullio', docs_url='/api/docs', openapi_url='/api/openapi.json')
 COOKIE = 'tigullio_portal_session'
@@ -231,7 +231,7 @@ def handoff(destination: str, user=Depends(current_user), store: Store = Depends
 @app.get('/api/players')
 def players(user=Depends(current_user), store: Store = Depends(store_dep)):
     return [{'id': str(p['_id']), 'name': p.get('Giocatore', ''), 'team': p.get('Squadra', ''), 'potential': str(p.get('Potenziale', '')),
-             'badge': p.get('_tigullio_badge')}
+             'badge': badge_for_team(store, p.get('Squadra'))}
             for p in store.players.find({}, {'Giocatore': 1, 'Squadra': 1, 'Potenziale': 1, '_tigullio_badge': 1}).sort('Giocatore', 1)]
 
 
@@ -423,7 +423,7 @@ def export_csv(tournament_id: str, user=Depends(current_user), store: Store = De
 
 @app.get('/api/tournaments/{tournament_id}/export.pdf')
 def export_pdf(tournament_id: str, user=Depends(current_user), store: Store = Depends(store_dep)):
-    data = view(load(store, tournament_id))
+    data = with_club_badges(store, view(load(store, tournament_id)))
     return Response(render_tournament_pdf(data), media_type='application/pdf', headers={'Content-Disposition': 'attachment; filename="gazzettino-tigullio.pdf"'})
 
 
@@ -463,3 +463,6 @@ def save_badges(kind: str, tournament_id: str, data: SaveBadges, user=Depends(wr
     saved_badges = {key: badge.model_dump(exclude_none=True) for key, badge in data.badges.items()}
     persist_club_badges(store, saved_badges)
     return with_club_badges(store, render(save(store, doc, data.version, {'_tigullio_badges': saved_badges}, collection=collection)))
+
+
+

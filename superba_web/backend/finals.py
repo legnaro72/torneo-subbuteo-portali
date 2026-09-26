@@ -254,5 +254,7 @@ def install(app, current_user, writer, store_dep, require_tournament_write):
 
     @app.get('/api/finals/{tournament_id}/export.pdf')
     def pdf(tournament_id: str, user=Depends(current_user), store=Depends(store_dep)):
-        data = view(load(store, tournament_id))
+        data = with_club_badges(store, view(load(store, tournament_id)))
         return Response(render_knockout_pdf(data), media_type='application/pdf', headers={'Content-Disposition': 'attachment; filename="gazzettino-finali.pdf"'})
+
+

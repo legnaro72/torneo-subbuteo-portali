@@ -1,23 +1,35 @@
-def candidate_keys(player):
-    name = str(player.get('Giocatore') or '').strip()
-    team = str(player.get('Squadra') or '').strip()
-    values = [value for value in (name, team, f'{team} - {name}' if team and name else '') if value]
-    return {value.casefold() for value in values}
+from datetime import datetime
+
+
+def team_from_label(label):
+    value = str(label or '').strip()
+    if ' - ' in value:
+        value = value.split(' - ', 1)[0].strip()
+    return value
+
+
+def team_key(value):
+    return str(value or '').strip().casefold()
+
+
+def badge_for_team(store, team):
+    key = team_key(team)
+    if not key or not hasattr(store, 'team_badges'):
+        return None
+    doc = store.team_badges.find_one({'team_key': key}, {'badge': 1})
+    badge = doc.get('badge') if doc else None
+    return badge if isinstance(badge, dict) else None
 
 
 def club_badge_defaults(store, participants):
-    wanted = {str(value).casefold(): str(value) for value in participants if value}
-    if not wanted:
-        return {}
     result = {}
-    for player in store.players.find({'_superba_badge': {'$exists': True}}, {'Giocatore': 1, 'Squadra': 1, '_superba_badge': 1}):
-        badge = player.get('_superba_badge')
-        if not isinstance(badge, dict):
+    for participant in participants:
+        label = str(participant or '').strip()
+        if not label:
             continue
-        for key in candidate_keys(player):
-            label = wanted.get(key)
-            if label and label not in result:
-                result[label] = badge
+        badge = badge_for_team(store, team_from_label(label))
+        if badge and label not in result:
+            result[label] = badge
     return result
 
 
@@ -44,25 +56,21 @@ def with_club_badges(store, rendered):
 
 def persist_club_badges(store, badges):
     for label, badge in badges.items():
-        normalized = str(label).casefold()
+        team = team_from_label(label)
+        if not team or not isinstance(badge, dict):
+            continue
+        if hasattr(store, 'team_badges'):
+            store.team_badges.update_one(
+                {'team_key': team_key(team)},
+                {'$set': {'team': team, 'team_key': team_key(team), 'badge': badge, 'updated_at': datetime.utcnow()}},
+                upsert=True,
+            )
         store.players.update_many(
-            {'$or': [
-                {'Giocatore': {'$regex': f'^{_escape_regex(str(label))}$', '$options': 'i'}},
-                {'Squadra': {'$regex': f'^{_escape_regex(str(label))}$', '$options': 'i'}},
-            ]},
+            {'Squadra': {'$regex': f'^{_escape_regex(team)}$', '$options': 'i'}},
             {'$set': {'_superba_badge': badge}},
         )
-        if ' - ' in str(label):
-            team, name = [part.strip() for part in str(label).split(' - ', 1)]
-            store.players.update_many(
-                {'$or': [
-                    {'Giocatore': {'$regex': f'^{_escape_regex(name)}$', '$options': 'i'}},
-                    {'Squadra': {'$regex': f'^{_escape_regex(team)}$', '$options': 'i'}},
-                ]},
-                {'$set': {'_superba_badge': badge}},
-            )
 
 
 def _escape_regex(value):
     import re
-    return re.escape(value)
+    return re.escape(str(value or ''))

@@ -11,6 +11,7 @@ from typing import Annotated
 from pymongo.errors import PyMongoError
 
 from .club_report import render_club_pdf
+from .badges import badge_for_team, persist_club_badges
 from .models import TeamBadge
 from .security import verify_password
 from .tournaments import version
@@ -69,7 +70,7 @@ TROPHIES = (
 )
 
 
-def player_view(doc):
+def player_view(doc, store=None):
     trophies = {}
     for count, names in TROPHIES:
         try:
@@ -85,7 +86,7 @@ def player_view(doc):
     return {'id': str(doc['_id']), 'version': version(doc), 'name': str(doc.get('Giocatore') or ''),
             'team': str(doc.get('Squadra') or ''), 'potential': potential,
             'role': doc.get('Ruolo') if doc.get('Ruolo') in ('R', 'W', 'A') else 'R',
-            'password_set': doc.get('SetPwd') == 1, 'badge': doc.get('_tigullio_badge'), **trophies}
+            'password_set': doc.get('SetPwd') == 1, 'badge': badge_for_team(store, doc.get('Squadra')) if store else doc.get('_tigullio_badge'), **trophies}
 
 
 def audit(store, user, action, details):
@@ -131,8 +132,10 @@ def update_one(store, original, data, user):
     result = store.players.update_one({'_id': original['_id'], '$and': conditions}, {'$set': changes})
     if result.matched_count != 1:
         raise HTTPException(409, 'Modifica concorrente: ricarica l’anagrafica.')
+    if data.badge is not None:
+        persist_club_badges(store, {data.team: changes['_tigullio_badge']})
     audit(store, user, 'club_player_edit', {'id': str(original['_id']), 'fields': list(changes)})
-    return player_view({**original, **changes})
+    return player_view({**original, **changes}, store)
 
 
 def install(app, current_user, writer, store_dep):
@@ -142,7 +145,7 @@ def install(app, current_user, writer, store_dep):
 
     @app.get('/api/club/players')
     def club_players(user=Depends(current_user), store=Depends(store_dep)):
-        return [player_view(p) for p in store.players.find({}).sort('Giocatore', 1)]
+        return [player_view(p, store) for p in store.players.find({}).sort('Giocatore', 1)]
 
     @app.post('/api/club/players')
     def create_player(data: PlayerInput, user=Depends(writer), store=Depends(store_dep)):
@@ -159,8 +162,10 @@ def install(app, current_user, writer, store_dep):
             doc[count], doc[names] = 0, []
         result = store.players.insert_one(doc)
         doc['_id'] = result.inserted_id
+        if data.badge is not None:
+            persist_club_badges(store, {data.team: doc['_tigullio_badge']})
         audit(store, user, 'club_player_create', {'id': str(doc['_id'])})
-        return player_view(doc)
+        return player_view(doc, store)
 
     @app.patch('/api/club/players/{player_id}')
     def edit_player(player_id: str, data: PlayerEdit, user=Depends(writer), store=Depends(store_dep)):
@@ -284,8 +289,11 @@ def install(app, current_user, writer, store_dep):
 
     @app.get('/api/club/export.pdf')
     def club_pdf(user=Depends(current_user), store=Depends(store_dep)):
-        players = [player_view(doc) for doc in store.players.find({}).sort('Giocatore', 1)]
+        players = [player_view(doc, store) for doc in store.players.find({}).sort('Giocatore', 1)]
         italian = [str(doc.get('nome_torneo') or '') for doc in store.tournaments.find({}, {'nome_torneo': 1}).sort('nome_torneo', 1)]
         swiss = [str(doc.get('nome_torneo') or '') for doc in store.swiss_tournaments.find({}, {'nome_torneo': 1}).sort('nome_torneo', 1)]
         return Response(render_club_pdf(players, italian, swiss), media_type='application/pdf',
                         headers={'Content-Disposition': 'attachment; filename="Gazzetta-Club-Tigullio.pdf"'})
+
+
+

@@ -22,6 +22,7 @@ class Store:
         self.handoffs = auth['auth_handoffs']
         self.attempts = auth['portal_login_attempts']
         self.audit = auth['portal_audit']
+        self.team_badges = auth['piercrew_team_badges']
         self.system_passwords = auth_client['Password']['auth_password']
 
     def user(self, name):
@@ -62,3 +63,4 @@ def get_store():
     auth_uri = os.getenv('MONGO_URI_AUTH') or uri
     tournaments_uri = os.getenv('MONGO_URI_TOURNEMENTS') or uri
     return Store(players, connect(tournaments_uri), connect(auth_uri))
+

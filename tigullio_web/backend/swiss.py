@@ -257,7 +257,9 @@ def install(app, current_user, writer, store_dep, require_tournament_write):
 
     @app.get('/api/swiss/{tournament_id}/export.pdf')
     def pdf(tournament_id: str, user=Depends(current_user), store=Depends(store_dep)):
-        data = view(load(store, tournament_id))
-        adapted = dict(name=data['name'], standings=[{**r, 'Girone':'Classifica', 'P':r['N'], 'S':r['P']} for r in data['standings']],
+        data = with_club_badges(store, view(load(store, tournament_id)))
+        adapted = dict(name=data['name'], badges=data.get('badges', {}), standings=[{**r, 'Girone':'Classifica', 'P':r['N'], 'S':r['P']} for r in data['standings']],
                        matches=[dict(group='Classifica', day=r['round'], **{k:r[k] for k in ('home', 'away', 'home_goals', 'away_goals', 'valid')}) for r in data['matches']])
         return Response(render_tournament_pdf(adapted), media_type='application/pdf', headers={'Content-Disposition': 'attachment; filename="gazzettino-svizzero.pdf"'})
+
+

@@ -2,6 +2,8 @@
 from collections import Counter
 from datetime import datetime
 from pathlib import Path
+from tempfile import NamedTemporaryFile
+from urllib.request import Request, urlopen
 
 from fpdf import FPDF
 
@@ -16,12 +18,33 @@ def printable(value, limit=None):
     return result if limit is None or len(result) <= limit else result[:limit - 3] + '...'
 
 
+def hex_color(value, fallback):
+    value = str(value or '')
+    if len(value) == 7 and value.startswith('#'):
+        try:
+            return tuple(int(value[i:i+2], 16) for i in (1, 3, 5))
+        except ValueError:
+            pass
+    return fallback
+
+
+def remote_image_url(badge):
+    if not isinstance(badge, dict):
+        return None
+    if badge.get('kind') == 'flag' and badge.get('ref'):
+        return f"https://flagcdn.com/w80/{str(badge['ref']).lower()}.png"
+    if badge.get('kind') == 'club' and str(badge.get('url') or '').lower().endswith(('.png', '.jpg', '.jpeg', '.webp')):
+        return badge.get('url')
+    return None
+
+
 class ClubPDF(FPDF):
     def __init__(self):
         super().__init__(orientation='P', unit='mm', format='A4')
         self.set_margins(10, 40, 10)
         self.set_auto_page_break(True, 12)
         self.logo = Path(__file__).resolve().parents[1] / 'public' / 'logo-superba.jpg'
+        self._badge_cache = {}
 
     def header(self):
         self.set_fill_color(*NAVY)
@@ -59,6 +82,57 @@ class ClubPDF(FPDF):
         self.cell(190, 11, printable(value), border=1, fill=True, align='C', new_x='LMARGIN', new_y='NEXT')
         self.ln(4)
 
+    def badge_image_path(self, badge):
+        url = remote_image_url(badge)
+        if not url:
+            return None
+        if url in self._badge_cache:
+            return self._badge_cache[url]
+        try:
+            request = Request(url, headers={'User-Agent': 'SuperbaPortalPDF/1.0'})
+            with urlopen(request, timeout=3) as response:
+                content_type = response.headers.get('content-type', '').lower()
+                raw = response.read(180000)
+            suffix = '.png' if 'png' in content_type else '.jpg' if 'jpeg' in content_type or 'jpg' in content_type else '.webp'
+            tmp = NamedTemporaryFile(delete=False, suffix=suffix)
+            tmp.write(raw)
+            tmp.close()
+            self._badge_cache[url] = tmp.name
+            return tmp.name
+        except Exception:
+            self._badge_cache[url] = None
+            return None
+
+    def draw_badge(self, badge, label, x, y, size=5.0):
+        if not isinstance(badge, dict) or badge.get('kind') == 'none':
+            return
+        image = self.badge_image_path(badge)
+        if image:
+            try:
+                self.image(image, x=x, y=y, w=size, h=size)
+                return
+            except Exception:
+                pass
+        config = badge.get('config') if badge.get('kind') == 'custom' else None
+        primary = hex_color((config or {}).get('primary'), NAVY)
+        secondary = hex_color((config or {}).get('secondary'), GOLD)
+        self.set_fill_color(*primary)
+        self.set_draw_color(*secondary)
+        self.ellipse(x, y, size, size, style='DF')
+        self.set_text_color(255, 255, 255)
+        self.set_font('Helvetica', 'B', 4.5)
+        initials = str((config or {}).get('initials') or ''.join(part[0] for part in str(label or '').split()[:2]) or str(label or '')[:1]).upper()[:3]
+        self.set_xy(x, y + size * 0.23)
+        self.cell(size, size * 0.5, printable(initials), align='C')
+
+    def team_cell(self, width, height, team, badge, *, border=1, fill=True):
+        x, y = self.get_x(), self.get_y()
+        self.cell(width, height, '', border=border, fill=fill)
+        self.draw_badge(badge, team, x + 1.4, y + 1.1, min(5.2, height - 1.8))
+        self.set_xy(x + 7.5, y)
+        self.cell(width - 7.5, height, printable(team, 35), align='L')
+        self.set_xy(x + width, y)
+
 
 def draw_roster(pdf, players):
     pdf.section_title('ROSA GIOCATORI')
@@ -80,8 +154,10 @@ def draw_roster(pdf, players):
         pdf.set_fill_color(*(245, 248, 250) if index % 2 == 0 else (255, 255, 255))
         pdf.set_text_color(0, 0, 0)
         pdf.set_font('Helvetica', '', 9)
-        for width, value in zip(widths, [str(index + 1), printable(p['name'], 32), printable(p['team'], 38), str(p['potential'])]):
-            pdf.cell(width, 7, ' ' + value, border=1, fill=True, align='C' if width in (10, 18) else 'L')
+        pdf.cell(widths[0], 7, str(index + 1), border=1, fill=True, align='C')
+        pdf.cell(widths[1], 7, ' ' + printable(p['name'], 32), border=1, fill=True)
+        pdf.team_cell(widths[2], 7, p['team'], p.get('badge'))
+        pdf.cell(widths[3], 7, str(p['potential']), border=1, fill=True, align='C')
         pdf.ln()
     if not players:
         pdf.set_text_color(90, 90, 90)
