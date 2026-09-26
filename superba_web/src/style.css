@@ -307,6 +307,28 @@ body{background:radial-gradient(circle at 85% 0,#fff1d4 0,transparent 27%),radia
 @media(max-width:760px){.tournament-results .matches.premium{padding:0 7px}.tournament-results .matches.premium .match-row{grid-template-columns:minmax(0,1fr) 80px minmax(0,1fr) 30px;gap:4px;padding:7px 0;min-height:50px}.tournament-results .matches.premium .team{font-size:11px}.tournament-results .matches.premium .score input{width:33px;height:37px;min-height:37px;font-size:16px}.tournament-results .matches.premium .validate{width:30px;height:36px}.tournament-results .matches.premium .validate input{width:20px;height:20px;min-width:20px}}
 @media(max-width:390px){.tournament-results .matches.premium .match-row{grid-template-columns:minmax(0,1fr) 72px minmax(0,1fr) 27px;gap:3px}.tournament-results .matches.premium .score input{width:30px;height:35px;min-height:35px;font-size:15px}.tournament-results .matches.premium .team{font-size:10px;gap:2px}.tournament-results .matches.premium .team-mark{flex-basis:20px;width:20px;min-width:20px;height:20px;font-size:8px}.tournament-results .matches.premium .validate{width:27px}.tournament-results .matches.premium .validate input{width:19px;height:19px;min-width:19px}}
 
+/* Mobile polish: one icon language in the main nav and slightly clearer match rows. */
+@media(max-width:760px){
+  .sidebar nav button{gap:7px;padding:12px 13px;font-size:11px}
+  .sidebar nav button svg{width:16px;height:16px}
+  .sidebar nav .swiss{width:16px;min-width:16px;font-size:18px}
+  .tournament-results .matches.compact .match-row,
+  .tournament-results .matches.premium .match-row{grid-template-columns:minmax(0,1fr) 76px minmax(0,1fr) 30px;gap:5px;min-height:52px}
+  .tournament-results .matches.compact .team,
+  .tournament-results .matches.premium .team{font-size:12px;line-height:1.25}
+  .tournament-results .matches.standard .team{font-size:14px;line-height:1.35}
+  .tournament-results .matches.premium .team-mark{flex-basis:21px;width:21px;min-width:21px;height:21px}
+}
+@media(max-width:390px){
+  .sidebar nav button{padding:11px 11px;font-size:10px}
+  .tournament-results .matches.compact .match-row,
+  .tournament-results .matches.premium .match-row{grid-template-columns:minmax(0,1fr) 70px minmax(0,1fr) 27px;gap:3px}
+  .tournament-results .matches.compact .team,
+  .tournament-results .matches.premium .team{font-size:11px}
+  .tournament-results .matches.standard .team{font-size:13px}
+  .tournament-results .matches.premium .team-mark{flex-basis:20px;width:20px;min-width:20px;height:20px}
+}
+
 .player-multiselect{position:relative;min-width:0}
 .player-multiselect-toggle{width:100%;min-height:42px;justify-content:space-between;padding:10px 12px;border:1px solid #cbdcc8;border-radius:7px;background:#f8fbf6;font-size:12px;font-weight:700;color:#28513b}
 .player-multiselect-menu{position:absolute;z-index:12;top:calc(100% + 4px);left:0;right:0;padding:10px;border:1px solid #cadbc6;border-radius:9px;background:#fff;box-shadow:0 12px 30px #183d2b26}
