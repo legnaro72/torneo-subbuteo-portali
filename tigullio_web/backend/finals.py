@@ -128,7 +128,8 @@ def install(app, current_user, writer, store_dep, require_tournament_write):
     @app.get('/api/finals/sources')
     def sources(user=Depends(current_user), store=Depends(store_dep)):
         result = []
-        for doc in store.tournaments.find({'nome_torneo': {'$regex': '^completato_'}}, {'nome_torneo': 1, 'calendario': 1}):
+        query = {'$or': [{'nome_torneo': {'$regex': '^completato_'}}, {'_tigullio_closed': True}]}
+        for doc in store.tournaments.find(query, {'nome_torneo': 1, 'calendario': 1, '_tigullio_closed': 1}):
             if not is_italiana(doc) or doc['nome_torneo'].startswith('completato_fasefinale'):
                 continue
             try:
@@ -157,8 +158,8 @@ def install(app, current_user, writer, store_dep, require_tournament_write):
     def create(data: CreateFinals, user=Depends(writer), store=Depends(store_dep)):
         source = load_italiana(store, data.source_id)
         require_tournament_write(user, source['nome_torneo'])
-        if not source['nome_torneo'].startswith('completato_'):
-            raise HTTPException(422, 'Seleziona una copia preliminare completata.')
+        if not source['nome_torneo'].startswith('completato_') and not source.get('_tigullio_closed'):
+            raise HTTPException(422, 'Seleziona un preliminare completato.')
         ranked = preliminary_ranking(source)
         if data.qualifiers > len(ranked):
             raise HTTPException(422, 'Qualificati superiori ai partecipanti.')

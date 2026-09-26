@@ -108,6 +108,19 @@ class CompetitionTests(unittest.TestCase):
         final = self.client.get(f"/api/finals/{created.json()['id']}").json()
         self.assertEqual(final['badges'][team]['ref'], 'IT')
 
+    def test_final_sources_accept_closed_original_without_completed_clone(self):
+        calendar = genera_calendario_from_list([[f"{p['team']}-{p['name']}" for p in self.players]]).to_dict('records')
+        for row in calendar:
+            row.update(GolCasa=1, GolOspite=0, Valida=True)
+        original_id = str(self.store.tournaments.insert_one({'nome_torneo': 'Originale Chiuso',
+            'calendario': calendar, 'data_creazione': datetime.utcnow(), '_piercrew_closed': True}).inserted_id)
+        sources = self.client.get('/api/finals/sources')
+        self.assertEqual(sources.status_code, 200, sources.text)
+        self.assertIn(original_id, {row['id'] for row in sources.json()})
+        created = self.client.post('/api/finals', json={'source_id': original_id, 'mode': 'ko',
+            'qualifiers': 4, 'request_id': str(uuid4())})
+        self.assertEqual(created.status_code, 200, created.text)
+
     def test_final_single_group_is_italiana_and_preliminary_preserved(self):
         response = self.client.post('/api/finals', json={'source_id':self.source_id, 'mode':'groups', 'qualifiers':4,
             'group_count':1, 'request_id':str(uuid4())})
