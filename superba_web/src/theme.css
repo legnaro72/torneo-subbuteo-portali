@@ -40,3 +40,10 @@ input,textarea,select,.score input{background:#fffefa;color:var(--club-ink);bord
 .club-edit-inline{background:#eaf0f7;color:var(--club-primary);border-color:var(--club-border)}
 .club-table-hint{background:#f3f5f6;color:var(--club-muted);border-color:var(--club-border)}
 .club-table-hint:after,.club-table-wrap:after{color:var(--club-primary)}
+
+/* Superba club mobile polish: keep club tabs in theme and avoid table overlays over names. */
+.tournament-toolbar .tabs.club-tabs button{background:#fffdf6;border-color:var(--club-border);color:var(--club-primary);font-size:14px;min-height:46px}
+.tournament-toolbar .tabs.club-tabs button.active{background:linear-gradient(115deg,var(--club-primary),var(--club-dark));border-color:var(--club-primary);color:#fff;box-shadow:0 8px 20px #102b4e2b}
+.tournament-toolbar .tabs.club-tabs button:not(.active):hover{background:#edf3f9;color:var(--club-primary)}
+.club-table-wrap:after{content:none;display:none}
+@media(max-width:700px){.club-table-hint{white-space:normal;border-radius:14px;line-height:1.35}.tournament-toolbar .tabs.club-tabs{gap:7px}.tournament-toolbar .tabs.club-tabs button{padding:11px 14px;font-size:14px}}
