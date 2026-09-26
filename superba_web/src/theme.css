@@ -32,3 +32,5 @@ input,textarea,select,.score input{background:#fffefa;color:var(--club-ink);bord
 .tournament-results .match-row{border-color:var(--club-border);box-shadow:0 10px 24px #102b4e13}
 .tournament-results .match-row:hover{border-color:var(--club-primary);box-shadow:0 14px 30px #102b4e24}
 @media(max-width:760px){.topbar{background:var(--club-paper)}}
+.other-worlds button{border-color:#d9c37d;background:linear-gradient(135deg,var(--club-primary),var(--club-dark));color:#fffaf0;box-shadow:0 10px 24px #0e315b22;font-weight:800}
+.other-worlds button>svg:first-child,.other-worlds button .swiss,.other-worlds button>svg:last-child{color:#f3d778}
