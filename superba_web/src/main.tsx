@@ -119,6 +119,7 @@ function App() {
         <button className={page === 'finali' ? 'selected' : ''} onClick={() => navigate('finali')}><Flag size={19}/>Fasi finali</button>
         <button className={page === 'svizzero' ? 'selected' : ''} onClick={() => navigate('svizzero')}><span className="swiss">✚</span>Svizzero</button>
       </nav>
+      <div className="nav-position" aria-hidden="true"><span className={page==='home'?'active':''}/><span className={page==='club'?'active':''}/><span className={page==='italiana'?'active':''}/><span className={page==='finali'?'active':''}/><span className={page==='svizzero'?'active':''}/></div>
       <div className="sidebar-note"><ShieldCheck size={21}/><strong>Un club. Un solo accesso.</strong><p>Le tue competizioni, tutte da qui.</p></div>
       <div className="profile"><span className="avatar">{user.username.slice(0,1)}</span><span><strong>{user.username}</strong><small>{canWrite ? 'Gestione tornei' : 'Sola lettura'}</small></span><button title="Esci dal portale" aria-label="Esci dal portale" disabled={busy} onClick={logout}><LogOut size={18}/></button></div>
     </aside>
