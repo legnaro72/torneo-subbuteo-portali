@@ -312,6 +312,9 @@ body{background:radial-gradient(circle at 85% 0,#fff1d4 0,transparent 27%),radia
   .sidebar nav button{gap:7px;padding:12px 13px;font-size:11px}
   .sidebar nav button svg{width:16px;height:16px}
   .sidebar nav .swiss{width:16px;min-width:16px;font-size:18px}
+  .sidebar{position:relative;overflow:hidden}
+  .sidebar nav{padding-right:34px;scroll-padding-right:34px}
+  .sidebar:after{content:'›';position:absolute;right:0;bottom:0;width:42px;height:57px;display:flex;align-items:center;justify-content:flex-end;padding-right:10px;background:linear-gradient(90deg,#123d3300,#123d33 70%);color:#f4df9d;font-size:28px;font-weight:800;pointer-events:none}
   .tournament-results .matches.compact .match-row,
   .tournament-results .matches.premium .match-row{grid-template-columns:minmax(0,1fr) 76px minmax(0,1fr) 30px;gap:5px;min-height:52px}
   .tournament-results .matches.compact .team,
