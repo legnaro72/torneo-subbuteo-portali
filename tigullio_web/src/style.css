@@ -68,6 +68,7 @@
 @keyframes victory-fall{0%{transform:translateY(-40px);opacity:0}30%{opacity:1}100%{transform:translateY(115px);opacity:0}}
 @media(max-width:650px){.victory-panel{align-items:flex-start;flex-direction:column}.victory-button{white-space:normal}}
 .club-section{padding:24px;margin-top:18px}.club-section .section-heading{margin-bottom:18px}.club-actions,.club-delete-actions,.club-save,.club-admin-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.club-role-note{display:flex;align-items:center;gap:8px;font-size:11px;margin-bottom:18px}.club-table{width:100%}.club-table input,.club-table select,.club-modal input,.club-modal select,.club-detail-select select{width:100%;min-width:90px;padding:8px;border:1px solid var(--border);border-radius:5px;background:#fff;font-size:12px}.club-table th,.club-table td{white-space:nowrap}.club-table td:first-child input{min-width:145px}.club-save{border-top:1px solid var(--border);padding-top:15px;margin-top:15px}.club-save span{margin-right:auto;font-size:12px;color:var(--muted)}.club-detail-select{display:grid;gap:8px;max-width:340px;margin-top:24px;font-size:12px}.club-trophies{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:18px}.club-trophies>div{background:#f5f8f2;border:1px solid var(--border);padding:17px;border-radius:7px}.club-trophies strong{font-size:26px;color:var(--green)}.club-trophies span{display:block;font-size:11px;font-weight:700;margin-top:5px}.club-trophies p{font-size:11px;margin-top:7px}.club-tournament-group{padding:16px 0;border-top:1px solid var(--border)}.club-tournament-group h3{margin-bottom:12px}.club-tournament-group h3 small{font-weight:400;color:var(--muted)}.club-tournament-list{display:grid;gap:5px;max-height:270px;overflow:auto}.club-tournament-list .checkbox{justify-content:flex-start;gap:10px;padding:7px;margin:0;font-size:12px}.club-tournament-list small{color:#ab8532;margin-left:auto}.club-delete-actions{border-top:1px solid var(--border);padding-top:17px}.club-modal{max-width:560px}.club-modal form{display:grid;gap:13px}.club-modal form label,.club-modal>label{display:grid;gap:6px;font-size:12px}.club-modal>p{margin-bottom:12px}.club-modal>label{margin:12px 0}.club-admin-actions{justify-content:space-between;border-top:1px solid var(--border);padding-top:16px;margin-top:16px}.danger{border-color:#c96969!important;color:#932b2b!important}.primary.danger{background:#a43c3c!important;color:#fff!important}
+.club-toolbar{align-items:flex-start}.club-tabs{gap:8px;border:0;overflow-x:auto;padding-bottom:2px}.club-tabs button{min-height:42px;padding:11px 17px;border:1px solid var(--border);border-radius:12px;background:#fffefa;color:#506779;font-size:13px;font-weight:800;box-shadow:0 6px 16px #142b4910}.club-tabs button.active{background:#173f72;border-color:#173f72;color:#fff;box-shadow:0 8px 20px #102b4e2b}.club-tabs button:not(.active):hover{background:#edf3f9;color:#173f72}.club-table-hint{display:inline-flex;align-items:center;gap:8px;margin:0 0 10px;padding:8px 11px;border:1px solid var(--border);border-radius:999px;background:#f4f7fb;color:var(--muted);font-size:12px;font-weight:700}.club-table-hint:after{content:'→';color:#173f72;font-size:15px}.club-table-wrap{position:relative;border:1px solid var(--border);border-radius:12px}.club-table-wrap:after{content:'›';position:absolute;right:0;top:0;bottom:0;width:38px;display:flex;align-items:center;justify-content:flex-end;padding-right:9px;background:linear-gradient(90deg,#fffdf600,#fffdf6 70%);color:#173f72;font-size:29px;font-weight:900;pointer-events:none}.club-player-name{display:flex;align-items:center;gap:8px;min-width:0}.club-edit-inline{flex:0 0 34px;width:34px;height:34px;border:1px solid var(--border);border-radius:10px;background:#eaf0f7;color:#173f72}.club-edit-inline:hover{background:#dce9f5}
 @media(max-width:700px){.club-section{padding:15px}.club-trophies{grid-template-columns:1fr}.club-actions{width:100%}.club-actions .search{flex:1}.club-delete-actions{display:grid}.club-table{min-width:710px}}
 
 /* Calendario compatto: stessa vista per ogni dispositivo, con giornate navigabili. */
@@ -125,6 +126,7 @@ body{background:radial-gradient(circle at 85% 0,#fff1d4 0,transparent 27%),radia
 .sidebar nav button.selected{background:linear-gradient(100deg,#f9d96f,#fff0b2);color:#1c4231;border-color:#ffe69d;box-shadow:0 6px 20px #031d14aa}
 .sidebar nav button.selected svg{color:#1c4231}
 .sidebar nav button:not(.selected):hover{background:#ffffff19;color:#fff}
+.nav-position{display:none}
 .topbar{background:#ffffffb8;backdrop-filter:blur(12px);border-bottom:1px solid #dae7da}
 .content{max-width:1460px}
 .primary{background:linear-gradient(115deg,#1c614c,#123d35);box-shadow:0 5px 14px #184b3525;border-radius:11px;font-weight:700}
@@ -226,7 +228,10 @@ body{background:radial-gradient(circle at 85% 0,#fff1d4 0,transparent 27%),radia
 .creation-choice-grid button>span{font-size:30px}.creation-choice-grid button strong{font-size:16px}.creation-choice-grid button small{font-size:11px;line-height:1.5;color:#668071}
 .favourites-panel{margin:0 0 30px;padding:23px;border:1px solid #dce8d9;border-radius:18px;background:linear-gradient(135deg,#fffdf4,#f1f7ec);box-shadow:0 10px 27px #244d3510}
 .favourites-panel h2{margin:5px 0 5px;font-size:21px;color:#244735}.favourites-panel>div>p{font-size:11px;color:#6a8170}
-.favourites-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px}.favourites-grid article{display:grid;gap:9px;align-content:start;padding:15px;border:1px solid #d9e6d6;border-radius:13px;background:#fffefa}.favourites-grid article>strong{font-size:14px;color:#254735}.favourite-icon{font-size:24px}.favourites-grid p{min-height:20px;margin:0;font-size:11px;color:#829384}.favourite-open{display:flex;align-items:center;justify-content:space-between;gap:7px;padding:9px 10px;border-radius:8px;background:#f4e6a9;color:#514115;font-size:11px;font-weight:800;text-align:left}.favourite-open svg{flex-shrink:0}.favourites-grid label{font-size:10px;color:#6c8071}.favourites-grid select{width:100%;margin-top:4px;padding:8px;font-size:11px}
+.favourites-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px}.favourites-grid article{display:grid;gap:9px;align-content:start;min-width:0;overflow:hidden;padding:15px;border:1px solid #d9e6d6;border-radius:13px;background:#fffefa}.favourites-grid article>strong{font-size:14px;color:#254735}.favourite-icon{font-size:24px}.favourites-grid p{min-height:20px;margin:0;font-size:11px;color:#829384}.favourite-open{display:flex;align-items:flex-start;justify-content:space-between;gap:7px;width:100%;min-width:0;max-width:100%;overflow:hidden;overflow-wrap:anywhere;white-space:normal;line-height:1.35;padding:9px 10px;border-radius:8px;background:#f4e6a9;color:#514115;font-size:11px;font-weight:800;text-align:left}.favourite-open svg{flex-shrink:0;margin-top:1px}.favourites-grid label{font-size:10px;color:#6c8071}.favourites-grid select{width:100%;max-width:100%;margin-top:4px;padding:8px;font-size:11px}
+.other-worlds button{border-color:#d9c37d;background:linear-gradient(135deg,#153f70,#0d2d55);color:#fffaf0;box-shadow:0 10px 24px #0e315b22;font-weight:800}
+.other-worlds button>svg:first-child,.other-worlds button .swiss{color:#f3d778}
+.other-worlds button>svg:last-child{color:#f3d778}
 .tournament-results .matches.compact{gap:7px}
 .tournament-results .matches.compact .match-row{padding:12px 16px;border-radius:10px;box-shadow:none;gap:8px 13px}
 .tournament-results .matches.compact .team{font-size:13px}
@@ -306,6 +311,31 @@ body{background:radial-gradient(circle at 85% 0,#fff1d4 0,transparent 27%),radia
 .tournament-results .matches.premium .results-note,.tournament-results .matches.premium .empty{grid-column:1/-1}
 @media(max-width:760px){.tournament-results .matches.premium{padding:0 7px}.tournament-results .matches.premium .match-row{grid-template-columns:minmax(0,1fr) 80px minmax(0,1fr) 30px;gap:4px;padding:7px 0;min-height:50px}.tournament-results .matches.premium .team{font-size:11px}.tournament-results .matches.premium .score input{width:33px;height:37px;min-height:37px;font-size:16px}.tournament-results .matches.premium .validate{width:30px;height:36px}.tournament-results .matches.premium .validate input{width:20px;height:20px;min-width:20px}}
 @media(max-width:390px){.tournament-results .matches.premium .match-row{grid-template-columns:minmax(0,1fr) 72px minmax(0,1fr) 27px;gap:3px}.tournament-results .matches.premium .score input{width:30px;height:35px;min-height:35px;font-size:15px}.tournament-results .matches.premium .team{font-size:10px;gap:2px}.tournament-results .matches.premium .team-mark{flex-basis:20px;width:20px;min-width:20px;height:20px;font-size:8px}.tournament-results .matches.premium .validate{width:27px}.tournament-results .matches.premium .validate input{width:19px;height:19px;min-width:19px}}
+
+/* Mobile polish: one icon language in the main nav and slightly clearer match rows. */
+@media(max-width:760px){
+  .sidebar nav button{gap:7px;padding:12px 13px;font-size:11px}
+  .sidebar nav button svg{width:16px;height:16px}
+  .sidebar nav .swiss{width:16px;min-width:16px;font-size:18px}
+  .nav-position{display:flex;gap:5px;padding:8px 0 10px}
+  .nav-position span{height:4px;flex:1;border-radius:999px;background:#ffffff30}
+  .nav-position span.active{background:#f4df9d}
+  .tournament-results .matches.compact .match-row,
+  .tournament-results .matches.premium .match-row{grid-template-columns:minmax(0,1fr) 76px minmax(0,1fr) 30px;gap:5px;min-height:52px}
+  .tournament-results .matches.compact .team,
+  .tournament-results .matches.premium .team{font-size:12px;line-height:1.25}
+  .tournament-results .matches.standard .team{font-size:14px;line-height:1.35}
+  .tournament-results .matches.premium .team-mark{flex-basis:21px;width:21px;min-width:21px;height:21px}
+}
+@media(max-width:390px){
+  .sidebar nav button{padding:11px 11px;font-size:10px}
+  .tournament-results .matches.compact .match-row,
+  .tournament-results .matches.premium .match-row{grid-template-columns:minmax(0,1fr) 70px minmax(0,1fr) 27px;gap:3px}
+  .tournament-results .matches.compact .team,
+  .tournament-results .matches.premium .team{font-size:11px}
+  .tournament-results .matches.standard .team{font-size:13px}
+  .tournament-results .matches.premium .team-mark{flex-basis:20px;width:20px;min-width:20px;height:20px}
+}
 
 .player-multiselect{position:relative;min-width:0}
 .player-multiselect-toggle{width:100%;min-height:42px;justify-content:space-between;padding:10px 12px;border:1px solid #cbdcc8;border-radius:7px;background:#f8fbf6;font-size:12px;font-weight:700;color:#28513b}

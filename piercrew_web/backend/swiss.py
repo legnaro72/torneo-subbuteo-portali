@@ -7,6 +7,7 @@ from fastapi import Depends, HTTPException, Response
 from pydantic import BaseModel, Field, ConfigDict
 from pymongo.errors import DuplicateKeyError
 
+from .badges import with_club_badges
 from .models import CreateParticipant, Result, TeamBadge
 from .report import render_tournament_pdf
 from .tournaments import save, version
@@ -162,7 +163,7 @@ def install(app, current_user, writer, store_dep, require_tournament_write):
 
     @app.get('/api/swiss/{tournament_id}')
     def get(tournament_id: str, user=Depends(current_user), store=Depends(store_dep)):
-        return view(load(store, tournament_id))
+        return with_club_badges(store, view(load(store, tournament_id)))
 
     @app.post('/api/swiss')
     def create(data: CreateSwiss, user=Depends(writer), store=Depends(store_dep)):
@@ -189,7 +190,7 @@ def install(app, current_user, writer, store_dep, require_tournament_write):
         if existing:
             if existing.get('_piercrew_create_hash') != digest:
                 raise HTTPException(409, 'Richiesta di creazione già utilizzata.')
-            return view(existing)
+            return with_club_badges(store, view(existing))
         now = datetime.utcnow()
         teams = [dict(Giocatore=p.name, Squadra=label, Potenziale=p.potential) for p, label in zip(data.participants, labels)]
         doc = dict(_id=object_id, nome_torneo=name, df_torneo=[], df_squadre=teams, turno_attivo=1,
@@ -202,8 +203,8 @@ def install(app, current_user, writer, store_dep, require_tournament_write):
         try:
             store.swiss_tournaments.insert_one(doc)
         except DuplicateKeyError:
-            return view(load(store, str(object_id)))
-        return view(doc)
+            return with_club_badges(store, view(load(store, str(object_id))))
+        return with_club_badges(store, view(doc))
 
     @app.patch('/api/swiss/{tournament_id}/results')
     def results(tournament_id: str, data: SaveSwiss, user=Depends(writer), store=Depends(store_dep)):
@@ -220,7 +221,7 @@ def install(app, current_user, writer, store_dep, require_tournament_write):
             if row.get('Turno') != doc.get('turno_attivo') or row.get('Ospite') == 'RIPOSA':
                 raise HTTPException(422, 'Puoi modificare solo le partite del turno attivo.')
             row.update(GolCasa=change.home, GolOspite=change.away, Validata=change.valid)
-        return view(save(store, doc, data.version, {'df_torneo': rows}, collection=store.swiss_tournaments))
+        return with_club_badges(store, view(save(store, doc, data.version, {'df_torneo': rows}, collection=store.swiss_tournaments)))
 
     @app.post('/api/swiss/{tournament_id}/advance')
     def advance(tournament_id: str, data: SwissAction, user=Depends(writer), store=Depends(store_dep)):
@@ -240,7 +241,7 @@ def install(app, current_user, writer, store_dep, require_tournament_write):
         saved = save(store, doc, data.version, changes, collection=store.swiss_tournaments)
         if not more:
             award(store, saved)
-        return view(saved)
+        return with_club_badges(store, view(saved))
 
     @app.post('/api/swiss/{tournament_id}/finish')
     def finish(tournament_id: str, data: SwissAction, user=Depends(writer), store=Depends(store_dep)):
@@ -252,7 +253,7 @@ def install(app, current_user, writer, store_dep, require_tournament_write):
             raise HTTPException(422, 'Valida tutte le partite prima di concludere.')
         saved = save(store, doc, data.version, {'torneo_finito': True}, collection=store.swiss_tournaments)
         award(store, saved)
-        return view(saved)
+        return with_club_badges(store, view(saved))
 
     @app.get('/api/swiss/{tournament_id}/export.pdf')
     def pdf(tournament_id: str, user=Depends(current_user), store=Depends(store_dep)):

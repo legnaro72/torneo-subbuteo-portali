@@ -19,6 +19,7 @@ from .report import render_tournament_pdf
 from .security import generate_token, hash_password, hash_token, password_needs_upgrade, verify_password
 from .store import Store, get_store
 from .tournaments import is_italiana, load, save, view
+from .badges import persist_club_badges, with_club_badges
 
 app = FastAPI(title='PierCrew', docs_url='/api/docs', openapi_url='/api/openapi.json')
 COOKIE = 'piercrew_portal_session'
@@ -248,7 +249,7 @@ def tournaments(user=Depends(current_user), store: Store = Depends(store_dep)):
 
 @app.get('/api/tournaments/{tournament_id}')
 def tournament(tournament_id: str, user=Depends(current_user), store: Store = Depends(store_dep)):
-    return view(load(store, tournament_id))
+    return with_club_badges(store, view(load(store, tournament_id)))
 
 
 @app.post('/api/tournaments')
@@ -289,7 +290,7 @@ def create(data: CreateTournament, user=Depends(writer), store: Store = Depends(
     if existing:
         if existing.get('_piercrew_create_hash') != payload_hash:
             raise HTTPException(409, 'Questa richiesta è già stata usata per un altro torneo.')
-        return view(existing)
+        return with_club_badges(store, view(existing))
     calendar = genera_calendario_from_list(data.groups, 'Andata e ritorno' if data.return_matches else 'Solo andata')
     doc = {'_id': new_id, 'nome_torneo': data.name, 'calendario': calendar.to_dict('records'), 'data_creazione': datetime.utcnow(),
            'data_modifica': datetime.utcnow(), '_piercrew_revision': 0, '_piercrew_create_hash': payload_hash,
@@ -304,8 +305,8 @@ def create(data: CreateTournament, user=Depends(writer), store: Store = Depends(
         existing = store.tournaments.find_one({'_id': new_id})
         if not existing or existing.get('_piercrew_create_hash') != payload_hash:
             raise HTTPException(409, 'Creazione concorrente. Ricarica l’archivio.')
-        return view(existing)
-    return view(load(store, str(new_id)))
+        return with_club_badges(store, view(existing))
+    return with_club_badges(store, view(load(store, str(new_id))))
 
 
 @app.patch('/api/tournaments/{tournament_id}/results')
@@ -326,7 +327,7 @@ def results(tournament_id: str, data: SaveResults, user=Depends(writer), store: 
         store.audit.insert_one({'at': datetime.utcnow(), 'user_id': user['id'], 'tournament_id': tournament_id, 'action': 'results', 'indices': indices})
     except PyMongoError:
         pass
-    return view(saved)
+    return with_club_badges(store, view(saved))
 
 
 @app.patch('/api/tournaments/{tournament_id}/name')
@@ -336,7 +337,7 @@ def rename(tournament_id: str, data: Rename, user=Depends(writer), store: Store 
     require_tournament_write(user, data.name)
     if view(doc)['closed'] or data.name.lower().startswith(('fasefinale', 'finito_', 'completato_')):
         raise HTTPException(422, 'Rinomina non consentita per questo nome o stato.')
-    return view(save(store, doc, data.version, {'nome_torneo': data.name}))
+    return with_club_badges(store, view(save(store, doc, data.version, {'nome_torneo': data.name})))
 
 
 @app.post('/api/tournaments/{tournament_id}/withdrawals')
@@ -354,7 +355,7 @@ def withdrawal(tournament_id: str, data: Withdrawal, user=Depends(writer), store
         home, away = row['Casa'] in retired, row['Ospite'] in retired
         if home or away:
             row.update(GolCasa=3 if away and not home else 0, GolOspite=3 if home and not away else 0, Valida=True)
-    return view(save(store, doc, data.version, {'calendario': rows, '_piercrew_withdrawals': sorted(retired)}))
+    return with_club_badges(store, view(save(store, doc, data.version, {'calendario': rows, '_piercrew_withdrawals': sorted(retired)})))
 
 
 @app.post('/api/tournaments/{tournament_id}/complete')
@@ -404,7 +405,7 @@ def complete(tournament_id: str, data: Complete, user=Depends(writer), store: St
         award_id = f'{tournament_id}:{group}'
         store.players.update_one({'_id': player['_id'], '_piercrew_award_ids': {'$ne': award_id}, list_field: {'$ne': name}},
                                  {'$addToSet': {list_field: name, '_piercrew_award_ids': award_id}, '$inc': {count_field: 1}})
-    return {**view(doc), 'completion_warnings': warnings}
+    return {**with_club_badges(store, view(doc)), 'completion_warnings': warnings}
 
 
 @app.get('/api/tournaments/{tournament_id}/export.csv')
@@ -459,4 +460,6 @@ def save_badges(kind: str, tournament_id: str, data: SaveBadges, user=Depends(wr
     participants = {name for row in shown['matches'] for name in (row['home'], row['away'])}
     if not set(data.badges) <= participants:
         raise HTTPException(422, 'Associa immagini solo ai partecipanti di questo torneo.')
-    return render(save(store, doc, data.version, {'_piercrew_badges': {key: badge.model_dump(exclude_none=True) for key, badge in data.badges.items()}}, collection=collection))
+    saved_badges = {key: badge.model_dump(exclude_none=True) for key, badge in data.badges.items()}
+    persist_club_badges(store, saved_badges)
+    return with_club_badges(store, render(save(store, doc, data.version, {'_piercrew_badges': saved_badges}, collection=collection)))

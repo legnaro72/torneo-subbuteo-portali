@@ -7,6 +7,7 @@ from fastapi import Depends, HTTPException, Response
 from pydantic import BaseModel, ConfigDict, Field
 from pymongo.errors import DuplicateKeyError
 
+from .badges import with_club_badges
 from .domain import genera_calendario_from_list
 from .models import Result
 from .report import render_knockout_pdf
@@ -152,7 +153,7 @@ def install(app, current_user, writer, store_dep, require_tournament_write):
 
     @app.get('/api/finals/{tournament_id}')
     def get(tournament_id: str, user=Depends(current_user), store=Depends(store_dep)):
-        return view(load(store, tournament_id))
+        return with_club_badges(store, view(load(store, tournament_id)))
 
     @app.post('/api/finals')
     def create(data: CreateFinals, user=Depends(writer), store=Depends(store_dep)):
@@ -229,7 +230,7 @@ def install(app, current_user, writer, store_dep, require_tournament_write):
                 raise HTTPException(422, 'In eliminazione diretta il risultato validato non può essere pari.')
             row.update(GolCasa=change.home, GolOspite=change.away, Valida=change.valid,
                        Vincitore=(row['Casa'] if change.home > change.away else row['Ospite']) if change.valid else None)
-        return view(save(store, doc, data.version, {'calendario': rows}))
+        return with_club_badges(store, view(save(store, doc, data.version, {'calendario': rows})))
 
     @app.post('/api/finals/{tournament_id}/advance')
     def advance(tournament_id: str, data: FinalAction, user=Depends(writer), store=Depends(store_dep)):
@@ -245,11 +246,11 @@ def install(app, current_user, writer, store_dep, require_tournament_write):
         if len(winners) == 1:
             saved = save(store, doc, data.version, {'nome_torneo': 'finito_'+doc['nome_torneo'], '_piercrew_closed': True})
             award(store, saved, winners[0])
-            return view(saved)
+            return with_club_badges(store, view(saved))
         player_map = {r['Casa']: r.get('GiocatoreCasa') for r in current} | {r['Ospite']: r.get('GiocatoreOspite') for r in current}
         phase = doc.get('phase_metadata', {}).get('phase_id', str(doc['_id']))
         new_rows = ko_rows(winners, active+1, phase, player_map)
-        return view(save(store, doc, data.version, {'calendario': doc['calendario'] + new_rows}))
+        return with_club_badges(store, view(save(store, doc, data.version, {'calendario': doc['calendario'] + new_rows})))
 
     @app.get('/api/finals/{tournament_id}/export.pdf')
     def pdf(tournament_id: str, user=Depends(current_user), store=Depends(store_dep)):
