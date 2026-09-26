@@ -168,3 +168,92 @@ input,textarea,select,.score input{background:#fffefa;color:var(--club-ink);bord
 }
 @keyframes superba-enter{from{opacity:.45;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 @keyframes superba-pop{from{transform:scale(.72)}to{transform:scale(1)}}
+
+/* A signed masthead, clear scroll affordances and touch-friendly controls. */
+.brand-heading{display:flex;align-items:center;justify-content:space-between;gap:16px}
+.sidebar .brand-heading{flex-wrap:wrap}
+.header-credit{color:#f0d48b;line-height:1.5;white-space:nowrap;text-align:right;flex-shrink:0}
+.header-credit small{display:block;font-size:7px;letter-spacing:.11em;color:#dbc58f}
+.header-credit strong{font-size:12px;font-weight:700;letter-spacing:.02em}
+.sidebar .header-credit{padding-left:2px;text-align:left}
+.login-story .brand-heading{flex-wrap:wrap}
+.swiss-flag{display:inline-block;position:relative;flex:0 0 20px;width:20px;height:20px;border-radius:3px;background:#da291c;box-shadow:0 0 0 1px #ffffff65}
+.swiss-flag:before,.swiss-flag:after{content:'';position:absolute;background:white;left:50%;top:50%;transform:translate(-50%,-50%)}
+.swiss-flag:before{width:12px;height:4px}.swiss-flag:after{width:4px;height:12px}
+.music-control{color:var(--club-primary);background:var(--club-soft);border-color:var(--club-border)}
+.music-control[aria-pressed="true"]{background:var(--club-accent);border-color:#d8bc78}
+.table-scroll-controls{display:grid;grid-template-columns:minmax(0,1fr) 40px 40px;align-items:center;gap:6px;margin-bottom:10px;color:var(--club-muted);font-size:12px;font-weight:600}
+.table-scroll-controls button{width:40px;min-height:40px;background:var(--club-soft);border:1px solid var(--club-border);border-radius:11px;color:var(--club-primary)}
+.table-scroll-controls button:disabled{opacity:.3}
+.table-scroll-progress{grid-column:1/-1;position:relative;height:4px;overflow:hidden;background:var(--club-border);border-radius:4px}
+.table-scroll-progress i{position:absolute;width:25%;height:100%;background:var(--club-primary);border-radius:4px}
+.club-table-wrap:focus-visible{outline:2px solid #b18a36;outline-offset:3px}
+.tournament-results .matches .match-row:focus-within{background:#edf3fa;box-shadow:inset 3px 0 var(--club-primary)}
+.score input:focus{outline:2px solid #b18a36;outline-offset:2px;background:#fff9e7}
+.arena-copy h1,.page-heading h1{overflow-wrap:anywhere}
+.club-tournament-list .checkbox>span{min-width:0;overflow-wrap:anywhere}
+@media(max-width:760px){
+  .sidebar .brand-heading,.login-story .brand-heading{flex-wrap:nowrap;gap:8px}
+  .sidebar .header-credit{padding:0;text-align:right}
+  .header-credit strong{font-size:11px}
+  .header-credit small{font-size:6px;letter-spacing:.08em}
+  .sidebar{border-bottom:2px solid #d8bc784d}
+  .sidebar nav button.selected{color:var(--club-dark)}
+  .login-story .brand-logo{width:40px;height:40px}
+  .login-story .brand{font-size:17px;gap:10px}
+  .club-table{table-layout:fixed;min-width:790px}
+  .club-table th:first-child,.club-table td:first-child{width:156px;max-width:156px;padding:12px 8px}
+  .club-player-name{width:139px;gap:5px;white-space:normal;overflow-wrap:anywhere;font-size:13px;line-height:1.3}
+  .club-table td:first-child input{width:100%;min-width:0;font-size:14px;padding:9px 5px}
+  .club-edit-inline{flex:0 0 32px;width:32px;height:42px;border-radius:8px}
+  .club-table th:nth-child(2),.club-table td:nth-child(2){width:195px;min-width:0}
+  .club-table th:nth-child(3){width:108px}
+  .club-table th:nth-child(4){width:140px}
+  .club-table th:nth-child(5){width:100px}
+  .club-table th:nth-child(6){width:91px}
+  .club-table td,.club-table th{padding:12px 9px;font-size:13px}
+  .club-table input,.club-table select{min-width:0;min-height:42px}
+  .club-team-cell{min-width:0}
+  .club-team-cell input{width:100%;min-width:0}
+  .club-role-note{font-size:12px;line-height:1.55;align-items:flex-start}
+  .tournament-toolbar .toolbar-actions{gap:6px}
+  .tournament-toolbar .toolbar-actions .icon-button{min-width:42px;min-height:42px;border:1px solid var(--club-border);border-radius:10px}
+  .topbar .mobile-logout,.music-control{min-height:40px;min-width:40px}
+  .settings-content .filter-grid label{min-width:0}
+  .settings-content{grid-template-columns:minmax(0,1fr)}
+  .settings-content .settings-section,.settings-content .settings-section-head,.settings-content .filter-grid,.settings-content .segmented{min-width:0;max-width:100%}
+  .settings-content .segmented button{min-width:0;padding:9px 5px;white-space:normal;line-height:1.3}
+  .settings-content select{max-width:100%;min-width:0}
+  .modal .section-heading>button{min-width:40px;min-height:40px}
+  .modal .section-heading{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:start}
+  .modal .section-heading h2{font-size:20px;overflow-wrap:anywhere}
+  .modal{overscroll-behavior:contain}
+  .club-modal input,.club-modal select{font-size:16px}
+  .modal-actions{flex-wrap:wrap}
+  .modal-actions button{flex:1;min-width:90px}
+  .player-picker .checkbox,.withdrawal-options .checkbox{min-height:44px;font-size:13px}
+  .participant-row input{min-width:0;max-width:100%}
+  .hero:after{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 100% 0,#f4d78821,transparent 60%)}
+  .arena-hero{min-height:0;padding-bottom:24px}
+  .favourites-grid article{border-left:3px solid #d8bc78}
+  .savebar{border-top:3px solid #b18a36}
+}
+@media(max-width:370px){
+  .sidebar .brand{gap:9px;font-size:15px;letter-spacing:1.4px}
+  .sidebar .brand-logo{width:34px;height:34px}
+  .header-credit strong{font-size:10px}
+  .header-credit small{font-size:5.5px}
+  .login-story{padding:20px 16px}
+  .login-story .brand{font-size:15px;letter-spacing:1.4px}
+  .settings-content .filter-grid{grid-template-columns:1fr}
+  .tournament-toolbar .toolbar-actions .secondary{padding:9px 10px;font-size:11px}
+  .page-heading:not(.arena-hero){flex-wrap:wrap}
+  .page-heading:not(.arena-hero)>div:first-child{flex-basis:100%}
+  .club-table th:first-child,.club-table td:first-child{width:140px;max-width:140px}
+  .club-player-name{width:123px}
+}
+@media(prefers-reduced-motion:no-preference){
+  .table-scroll-progress i{transition:left .12s ease-out}
+  .score input{transition:background .18s,box-shadow .18s}
+  .brand-heading .header-credit{animation:superba-enter .5s ease-out both}
+}
