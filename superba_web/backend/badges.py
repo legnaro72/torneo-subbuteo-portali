@@ -51,7 +51,10 @@ def participant_names(rendered):
 def with_club_badges(store, rendered):
     participants = participant_names(rendered)
     badges = dict(club_badge_defaults(store, participants))
-    badges.update(rendered.get('badges') or {})
+    # A participant can change team in a tournament. Do not expose a stored
+    # badge whose old label is no longer a participant of this tournament.
+    badges.update({label: badge for label, badge in (rendered.get('badges') or {}).items()
+                   if label in participants})
     return {**rendered, 'badges': badges}
 
 
