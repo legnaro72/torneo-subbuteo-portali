@@ -290,3 +290,17 @@ input,textarea,select,.score input{background:#fffefa;color:var(--club-ink);bord
   .music-control{width:42px;min-width:42px;padding:0}
   .manual-control{padding:8px 10px;font-size:12px}
 }
+
+
+/* Compact manual action and application information. */
+.manual-control{min-height:36px;padding:6px 9px;font-size:11px}
+.info-control{display:inline-flex;align-items:center;justify-content:center;width:36px;min-width:36px;min-height:36px;padding:0;border:1px solid var(--club-border);border-radius:10px;background:var(--club-soft);color:var(--club-primary);box-shadow:0 4px 12px #0001}
+.info-control:hover{background:var(--club-paper)}
+.info-control:focus-visible{outline:3px solid var(--club-accent);outline-offset:2px}
+.app-info-modal{width:min(430px,calc(100vw - 28px));text-align:center}
+.app-info-modal .section-heading{align-items:start;text-align:left}
+.app-info-logo{width:144px;height:144px;object-fit:contain;margin:4px auto 2px;filter:drop-shadow(0 8px 14px #164d3230)}
+.app-info-details{display:grid;grid-template-columns:auto 1fr;gap:9px 16px;text-align:left;padding:16px;border:1px solid var(--club-border);border-radius:12px;background:var(--club-soft);font-size:13px}
+.app-info-details dt{font-weight:800;color:var(--club-primary)}
+.app-info-details dd{margin:0;color:var(--club-ink)}
+@media(max-width:760px){.manual-control{min-height:38px;padding:7px 9px}.info-control{width:38px;min-width:38px;min-height:38px}.app-info-logo{width:124px;height:124px}}

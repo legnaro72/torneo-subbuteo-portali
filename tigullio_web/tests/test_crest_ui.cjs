@@ -14,7 +14,7 @@ require.extensions['.tsx'] = (module, filename) => {
 };
 
 const {CustomCrest, defaultCrest} = require('../src/CustomCrest.tsx');
-const {TeamMark, automaticClub} = require('../src/TeamBadges.tsx');
+const {TeamMark, automaticClub, tournamentBadge} = require('../src/TeamBadges.tsx');
 const render = component => renderToStaticMarkup(React.createElement(component.type, component.props));
 
 test('editing crest configuration updates the SVG without interpreting team text as markup', () => {
@@ -49,4 +49,11 @@ test('recognised clubs receive an automatic crest without overriding manual choi
   assert.match(render(React.createElement(TeamMark, {name: 'Olanda'})), /flagcdn\.com\/nl\.svg/);
   assert.match(render(React.createElement(TeamMark, {name: 'Inghilterra'})), /flagcdn\.com\/gb-eng\.svg/);
   assert.equal(render(React.createElement(TeamMark, {name: 'Genoa CFC', badge: {kind: 'none'}})), 'G');
+});
+
+test('a tournament uses its current team automatically and falls back to a chosen image', () => {
+  assert.deepEqual(tournamentBadge('Italia - Mario'), {kind: 'flag', ref: 'IT'});
+  assert.deepEqual(tournamentBadge('Genoa CFC - Mario')?.ref, 'football-logos:logos/italy/Genoa.svg');
+  const chosen = {kind: 'flag', ref: 'CH'};
+  assert.equal(tournamentBadge('Squadra sconosciuta - Mario', chosen), chosen);
 });

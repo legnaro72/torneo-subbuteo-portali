@@ -61,6 +61,11 @@ export function automaticBadge(name:string):TeamBadge|undefined{
   return automaticFlag(name)||automaticClub(name);
 }
 
+/** The tournament's current team is authoritative; a manual image is a fallback. */
+export function tournamentBadge(name:string, selected?:TeamBadge):TeamBadge|undefined{
+  return automaticBadge(name)??selected;
+}
+
 export function TeamMark({name,badge}:{name:string;badge?:TeamBadge}){
   const [failed,setFailed]=useState(false);
   const shown=badge||automaticBadge(name);
@@ -85,12 +90,14 @@ async function searchClubLogos(query:string,signal:AbortSignal):Promise<ClubResu
 }
 
 export function BadgeEditor({participants,badges,busy,error,initialSelected,onClose,onSave}:{participants:string[];badges:BadgeMap;busy:boolean;error?:string;initialSelected?:string;onClose:()=>void;onSave:(badges:BadgeMap)=>Promise<void>}){
-  const [draft,setDraft]=useState<BadgeMap>({...badges});
+  const allowedBadges=useMemo(()=>Object.fromEntries(Object.entries(badges).filter(([label])=>participants.includes(label))) as BadgeMap,[badges,participants]);
+  const [draft,setDraft]=useState<BadgeMap>(allowedBadges);
   const [selected,setSelected]=useState(initialSelected&&participants.includes(initialSelected)?initialSelected:participants[0]||'');
   const [kind,setKind]=useState<TeamBadge['kind']>(draft[selected]?.kind||automaticBadge(selected)?.kind||'flag');
   const [flagQuery,setFlagQuery]=useState('');const [clubQuery,setClubQuery]=useState('');
   const [clubs,setClubs]=useState<ClubResult[]>([]);const [searchError,setSearchError]=useState('');const [searching,setSearching]=useState(false);
   const visibleCountries=useMemo(()=>countries.filter(c=>`${c.name} ${c.code}`.toLocaleLowerCase('it').includes(flagQuery.toLocaleLowerCase('it'))).slice(0,40),[flagQuery]);
+  useEffect(()=>setDraft(allowedBadges),[allowedBadges]);
   useEffect(()=>{
     if(kind!=='club'||clubQuery.trim().length<3){setClubs([]);setSearchError('');return;}
     const controller=new AbortController();const timer=window.setTimeout(()=>{

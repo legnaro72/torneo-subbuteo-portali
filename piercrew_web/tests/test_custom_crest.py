@@ -75,6 +75,27 @@ class CrestPersistenceTests(unittest.TestCase):
         self.assertEqual(changed.status_code, 200, changed.text)
         self.assertEqual(self.client.get(f"/api/tournaments/{value['id']}").json()['badges'][names[0]]['config']['title'], 'Roma FC')
 
+    def test_stale_badge_label_is_not_returned_or_sent_back_to_a_tournament(self):
+        names = ['Casale - Lord Sinclair', 'Roma - Ada', 'Genoa - Bruno']
+        tournament = self.client.post('/api/tournaments', json={'name': 'Squadra corrente', 'groups': [names],
+                      'participants': [{'source_id': None, 'name': 'Lord Sinclair', 'team': 'Casale', 'potential': 5, 'guest': True},
+                                       {'source_id': None, 'name': 'Ada', 'team': 'Roma', 'potential': 5, 'guest': True},
+                                       {'source_id': None, 'name': 'Bruno', 'team': 'Genoa', 'potential': 5, 'guest': True}],
+                      'badges': {'Squadra precedente - Lord Sinclair': crest('Vecchio')}, 'request_id': str(uuid4())})
+        self.assertEqual(tournament.status_code, 422)
+        created = self.client.post('/api/tournaments', json={'name': 'Squadra corrente', 'groups': [names],
+                      'participants': [{'source_id': None, 'name': 'Lord Sinclair', 'team': 'Casale', 'potential': 5, 'guest': True},
+                                       {'source_id': None, 'name': 'Ada', 'team': 'Roma', 'potential': 5, 'guest': True},
+                                       {'source_id': None, 'name': 'Bruno', 'team': 'Genoa', 'potential': 5, 'guest': True}],
+                      'badges': {'Casale - Lord Sinclair': crest('Casale')}, 'request_id': str(uuid4())})
+        self.assertEqual(created.status_code, 200, created.text)
+        self.store.tournaments.update_one({'_id': __import__('bson').ObjectId(created.json()['id'])},
+                                          {'$set': {'_piercrew_badges.Squadra precedente - Lord Sinclair': crest('Vecchio')}})
+        loaded = self.client.get(f"/api/tournaments/{created.json()['id']}").json()
+        self.assertNotIn('Squadra precedente - Lord Sinclair', loaded['badges'])
+        saved = self.client.patch(f"/api/tournaments/{created.json()['id']}/badges", json={'version': loaded['version'], 'badges': loaded['badges']})
+        self.assertEqual(saved.status_code, 200, saved.text)
+
 
 if __name__ == '__main__':
     unittest.main()
