@@ -257,3 +257,23 @@ input,textarea,select,.score input{background:#fffefa;color:var(--club-ink);bord
   .score input{transition:background .18s,box-shadow .18s}
   .brand-heading .header-credit{animation:superba-enter .5s ease-out both}
 }
+
+/* One visual language for the five Superba destinations, also in archives. */
+.portal-icon{display:inline-grid;position:relative;place-items:center;flex:0 0 20px;width:20px;height:20px;border-radius:4px;overflow:hidden;box-shadow:0 0 0 1px #ffffff65;vertical-align:middle}
+.portal-icon--home{background:#408dc7;color:#fff}
+.portal-icon--club{background:#ad6590;color:#fff}
+.portal-icon--finali{background:linear-gradient(145deg,#f6d77e,#c88b31);color:#543a15}
+.portal-icon--finali svg{fill:#fff5d9}
+.italian-flag{background:linear-gradient(90deg,#009246 0 33.333%,#fff 33.333% 66.667%,#ce2b37 66.667%)}
+.sidebar nav button.selected .portal-icon--home,.sidebar nav button.selected .portal-icon--club{color:#fff}
+.tournament-icon:has(.portal-icon){background:transparent;box-shadow:none}
+.tournament-icon .portal-icon{width:29px;height:29px;border-radius:5px}
+.tournament-icon .portal-icon svg{width:21px;height:21px}
+.favourite-icon .portal-icon,.creation-choice-grid .portal-icon{width:30px;height:30px;border-radius:6px}
+.favourite-icon .portal-icon svg,.creation-choice-grid .portal-icon svg{width:22px;height:22px}
+.other-worlds button .portal-icon{flex:0 0 20px}
+.other-worlds button .portal-icon--finali{color:#543a15}
+.empty>.portal-icon{margin:0 auto 15px;width:30px;height:30px}
+.empty>.portal-icon svg{width:22px;height:22px}
+.page-heading h1 .portal-icon,.competition-create h2 .portal-icon{width:.82em;height:.82em;vertical-align:baseline}
+.club-tournament-group h3 .portal-icon{width:18px;height:18px}
