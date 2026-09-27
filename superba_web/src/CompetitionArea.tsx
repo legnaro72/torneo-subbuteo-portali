@@ -3,7 +3,7 @@ import {ArrowLeft, ArrowRight, ArrowUpRight, ChevronDown, Copy, Download, Plus, 
 import {api, type Player, type Tournament, type User} from './api';
 import TournamentView from './TournamentView';
 import {tournamentPath} from './routes';
-import {BadgeEditor, TeamMark, type BadgeMap} from './TeamBadges';
+import {BadgeEditor, TeamMark, tournamentBadge, type BadgeMap} from './TeamBadges';
 import PlayerMultiSelect from './PlayerMultiSelect';
 import PortalIcon from './PortalIcon';
 import {preferredViewMode, type ViewMode} from './viewModePreference';
@@ -66,7 +66,7 @@ function SwissCreate({onClose,onCreated}:{onClose:()=>void;onCreated:(id:string)
   const entries=[...players.filter(p=>selected.includes(p.id)).map(p=>({key:p.id,source_id:p.id,name:p.name,team:overrides[p.id]?.team??(useNames?p.name:p.team),potential:overrides[p.id]?.potential??(Number(p.potential)||4),guest:false})),...guests.split('\n').map(s=>s.trim()).filter(Boolean).map((value,i)=>({key:`guest:${i}`,source_id:null,name:value,team:overrides[`guest:${i}`]?.team??(useNames?value:''),potential:overrides[`guest:${i}`]?.potential??4,guest:true}))];
   const labels=entries.map(e=>e.team.trim()?`${e.team.trim()} - ${e.name}`:e.name);
   const valid=name.trim().length>0&&entries.length>=3&&entries.length<=64&&new Set(labels.map(x=>x.toLocaleLowerCase())).size===labels.length&&entries.every(e=>Number.isInteger(e.potential)&&e.potential>=1&&e.potential<=10);
-  const badges=Object.fromEntries(entries.flatMap((entry,i)=>{const badge=badgesByKey[entry.key]??players.find(p=>p.id===entry.source_id)?.badge;return badge?[[labels[i],badge]]:[];})) as BadgeMap;
+  const badges=Object.fromEntries(entries.flatMap((entry,i)=>{const badge=tournamentBadge(labels[i],badgesByKey[entry.key]);return badge?[[labels[i],badge]]:[];})) as BadgeMap;
   async function submit(){if(!valid||busy)return;setBusy(true);setError('');try{const data=await api<Competition>('/swiss','POST',{name:name.trim(),mode,max_rounds:maxRounds,participants:entries.map(({source_id,name,team,potential,guest})=>({source_id,name,team,potential,guest})),badges,request_id:requestId.current});onCreated(data.id);}catch(e){setError(err(e));}finally{setBusy(false);}}
   return <section className="results-card competition-create">
     <div className="section-heading"><div><span className="eyebrow">NUOVO TORNEO SVIZZERO · PASSO {step} DI 2 · {step===1?'SELEZIONE GIOCATORI':'CONFERMA DATI'}</span><h2><PortalIcon kind="svizzero"/> Nuovo torneo svizzero</h2><p>{step===1?'Seleziona giocatori reali o aggiungi ospiti.':'Controlla i dati e genera il primo turno.'}</p></div></div>

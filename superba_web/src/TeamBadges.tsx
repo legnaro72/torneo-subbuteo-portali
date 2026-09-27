@@ -61,6 +61,11 @@ export function automaticBadge(name:string):TeamBadge|undefined{
   return automaticFlag(name)||automaticClub(name);
 }
 
+/** The tournament's current team is authoritative; a manual image is a fallback. */
+export function tournamentBadge(name:string, selected?:TeamBadge):TeamBadge|undefined{
+  return automaticBadge(name)??selected;
+}
+
 export function TeamMark({name,badge}:{name:string;badge?:TeamBadge}){
   const [failed,setFailed]=useState(false);
   const shown=badge||automaticBadge(name);

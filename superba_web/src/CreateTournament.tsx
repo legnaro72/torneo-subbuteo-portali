@@ -1,7 +1,7 @@
 import React, {useEffect, useMemo, useRef, useState} from 'react';
 import {ArrowLeft, ArrowRight, Plus, X} from 'lucide-react';
 import {api, type Player, type Tournament} from './api';
-import {BadgeEditor, type BadgeMap} from './TeamBadges';
+import {BadgeEditor, tournamentBadge, type BadgeMap} from './TeamBadges';
 import PlayerMultiSelect from './PlayerMultiSelect';
 
 type Entry = {key:string; source_id:string|null; name:string; team:string; potential:number; guest:boolean};
@@ -36,7 +36,7 @@ export default function CreateTournament({onClose,onCreated}:{onClose:()=>void;o
       team:overrides[`guest:${i}`]?.team??guest,potential:overrides[`guest:${i}`]?.potential??4,guest:true}))
   ];
   const labels=entries.map(e=>e.team.trim()?`${e.team.trim()} - ${e.name}`:e.name);
-  const badges=Object.fromEntries(entries.flatMap((entry,i)=>{const badge=badgesByKey[entry.key]??players.find(p=>p.id===entry.source_id)?.badge;return badge?[[labels[i],badge]]:[];})) as BadgeMap;
+  const badges=Object.fromEntries(entries.flatMap((entry,i)=>{const badge=tournamentBadge(labels[i],badgesByKey[entry.key]);return badge?[[labels[i],badge]]:[];})) as BadgeMap;
   const duplicateNames=new Set(entries.map(e=>e.name.toLocaleLowerCase())).size!==entries.length;
   const duplicateLabels=new Set(labels.map(x=>x.toLocaleLowerCase())).size!==labels.length;
   const validEntries=entries.length>=3&&entries.length<=64&&!duplicateNames&&!duplicateLabels&&entries.every(e=>Number.isInteger(e.potential)&&e.potential>=1&&e.potential<=10);
