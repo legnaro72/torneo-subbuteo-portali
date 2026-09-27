@@ -10,7 +10,9 @@ Tigullio su Vercel. Richiede Git e l'accesso Vercel già configurato.
 from __future__ import annotations
 
 import argparse
+import os
 import json
+import shutil
 import subprocess
 import sys
 from contextlib import contextmanager
@@ -25,7 +27,31 @@ PROJECTS = {
 }
 
 
+def find_git() -> str:
+    discovered = shutil.which("git")
+    if discovered:
+        return discovered
+    local_app_data = Path(os.environ.get("LOCALAPPDATA", ""))
+    candidates = [
+        Path(r"C:\Program Files\Git\cmd\git.exe"),
+        Path(r"C:\Program Files\Git\bin\git.exe"),
+        Path.home() / r".cache\codex-runtimes\codex-primary-runtime\dependencies\native\git\cmd\git.exe",
+    ]
+    if local_app_data:
+        candidates.extend(sorted(local_app_data.glob(r"GitHubDesktop\app-*\resources\app\git\cmd\git.exe"), reverse=True))
+        candidates.extend(sorted(local_app_data.glob(r"GitHubDesktop\app-*\resources\app\git\mingw64\bin\git.exe"), reverse=True))
+    for candidate in candidates:
+        if candidate.is_file():
+            return str(candidate)
+    raise RuntimeError("Git non trovato. Installa Git per Windows oppure apri lo script da GitHub Desktop dopo aver configurato Git nel PATH.")
+
+
+GIT = find_git()
+
+
 def run(*args: str, capture: bool = True) -> str:
+    if args and args[0] == "git":
+        args = (GIT, *args[1:])
     completed = subprocess.run(args, cwd=ROOT, text=True, check=True, capture_output=capture)
     return completed.stdout.strip()
 
