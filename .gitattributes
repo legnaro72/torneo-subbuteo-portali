@@ -1,0 +1,4 @@
+# Preserve manuals as binary files; do not convert line endings.
+manuale/*.pdf binary
+manuale/*.docx binary
+superba_web/backend/manuale-utente.pdf binary
