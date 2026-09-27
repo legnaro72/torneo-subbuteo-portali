@@ -52,7 +52,7 @@ class GazzettaPDF(FPDF):
     def __init__(self, tournament_name):
         super().__init__(orientation='P', unit='mm', format='A4')
         self.tournament_name = tournament_name
-        self.logo = Path(__file__).resolve().parents[1] / 'public' / 'logo-superba.jpg'
+        self.logo = Path(__file__).resolve().parents[1] / 'public' / 'logo-tigullio.jpg'
         self.set_margins(10, 40, 10)
         self.set_auto_page_break(True, 10)
         self._badge_cache = {}
@@ -67,7 +67,7 @@ class GazzettaPDF(FPDF):
         self.set_xy(40, 6)
         self.set_font('Helvetica', 'B', 20)
         self.set_text_color(255, 255, 255)
-        self.cell(160, 11, 'IL GAZZETTINO DELLA SUPERBA', new_x='LMARGIN', new_y='NEXT')
+        self.cell(160, 11, 'IL GAZZETTINO DELLA TIGULLIO', new_x='LMARGIN', new_y='NEXT')
         self.set_x(40)
         self.set_font('Helvetica', 'I', 10)
         self.set_text_color(220, 225, 235)
@@ -100,7 +100,7 @@ class GazzettaPDF(FPDF):
         if url in self._badge_cache:
             return self._badge_cache[url]
         try:
-            request = Request(url, headers={'User-Agent': 'SuperbaPortalPDF/1.0'})
+            request = Request(url, headers={'User-Agent': 'TigullioPortalPDF/1.0'})
             with urlopen(request, timeout=3) as response:
                 content_type = response.headers.get('content-type', '').lower()
                 raw = response.read(180000)

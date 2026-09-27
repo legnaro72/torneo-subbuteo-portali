@@ -44,7 +44,7 @@ class ClubPDF(FPDF):
         super().__init__(orientation='P', unit='mm', format='A4')
         self.set_margins(10, 40, 10)
         self.set_auto_page_break(True, 12)
-        self.logo = Path(__file__).resolve().parents[1] / 'public' / 'logo-superba.jpg'
+        self.logo = Path(__file__).resolve().parents[1] / 'public' / 'logo-tigullio.jpg'
         self._badge_cache = {}
 
     def header(self):
@@ -57,10 +57,10 @@ class ClubPDF(FPDF):
         self.set_xy(40, 6)
         self.set_text_color(255, 255, 255)
         self.set_font('Helvetica', 'B', 20)
-        self.cell(160, 11, 'IL GAZZETTINO DELLA SUPERBA', new_x='LMARGIN', new_y='NEXT')
+        self.cell(160, 11, 'IL GAZZETTINO DELLA TIGULLIO', new_x='LMARGIN', new_y='NEXT')
         self.set_x(40)
         self.set_font('Helvetica', 'I', 10)
-        self.cell(160, 7, 'Composizione Club Superba | Aggiornato il ' + datetime.now().strftime('%d/%m/%Y alle %H:%M'))
+        self.cell(160, 7, 'Composizione Club Tigullio | Aggiornato il ' + datetime.now().strftime('%d/%m/%Y alle %H:%M'))
         self.set_y(41)
 
     def footer(self):
@@ -69,7 +69,7 @@ class ClubPDF(FPDF):
         self.set_y(-8)
         self.set_font('Helvetica', 'B', 8)
         self.set_text_color(255, 255, 255)
-        self.cell(0, 6, f'Pagina {self.page_no()} - La Gazzetta della Superba', align='C')
+        self.cell(0, 6, f'Pagina {self.page_no()} - La Gazzetta della Tigullio', align='C')
 
     def room(self, height):
         if self.get_y() + height > 282:
@@ -90,7 +90,7 @@ class ClubPDF(FPDF):
         if url in self._badge_cache:
             return self._badge_cache[url]
         try:
-            request = Request(url, headers={'User-Agent': 'SuperbaPortalPDF/1.0'})
+            request = Request(url, headers={'User-Agent': 'TigullioPortalPDF/1.0'})
             with urlopen(request, timeout=3) as response:
                 content_type = response.headers.get('content-type', '').lower()
                 raw = response.read(180000)
