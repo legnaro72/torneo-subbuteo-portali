@@ -4,7 +4,7 @@ Esegui dalla root del repository, sul branch main:
     py AllineaPortali.py
 
 Le modifiche restano intenzionalmente non committate e quindi visibili in
-GitHub Desktop. DeployAllineamenti.py userà il file di stato interno creato
+GitHub Desktop. Anche il CSS comune viene riallineato e ricolorato per i club. DeployAllineamenti.py userà il file di stato interno creato
 qui per pubblicare solo questi file dopo la revisione.
 """
 from __future__ import annotations

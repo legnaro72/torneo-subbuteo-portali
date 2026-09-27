@@ -5,7 +5,7 @@ Run from the repository root:
   python ClonaMigrazione.py sync piercrew|tigullio|all
 
 `sync` updates shared code from Superba without deleting clone files. It preserves
-the club logo, theme, database mapping, environment examples and documentation.
+the club logo, database mapping, environment examples and documentation. Shared CSS is copied from Superba and recolored for the target club.
 """
 from __future__ import annotations
 
@@ -22,7 +22,7 @@ SOURCE = ROOT / "superba_web"
 EXCLUDE = {".venv", ".vercel", "node_modules", "dist", "tmp", "__pycache__", "test-results", ".env", ".env.local", "tsconfig.tsbuildinfo"}
 TEXT_SUFFIXES = {".py", ".ts", ".tsx", ".css", ".html", ".json", ".md", ".txt", ".example"}
 SYNC_PRESERVE = {
-    Path("backend/store.py"), Path("src/theme.css"), Path(".env.example"),
+    Path("backend/store.py"), Path(".env.example"),
     Path("README.md"), Path("CLONE_INFO.json"), Path("public/logo-superba.jpg"),
     Path("public/manifest.webmanifest"), Path("public/pwa-192.png"),
     Path("public/pwa-512.png"), Path("public/pwa-maskable-192.png"),
