@@ -22,7 +22,7 @@ SOURCE = ROOT / "superba_web"
 EXCLUDE = {".venv", ".vercel", "node_modules", "dist", "tmp", "__pycache__", "test-results", ".env", ".env.local", "tsconfig.tsbuildinfo"}
 TEXT_SUFFIXES = {".py", ".ts", ".tsx", ".css", ".html", ".json", ".md", ".txt", ".example"}
 SYNC_PRESERVE = {
-    Path("backend/store.py"), Path(".env.example"),
+    Path("backend/store.py"), Path("backend/manuale-utente.pdf"), Path(".env.example"),
     Path("README.md"), Path("CLONE_INFO.json"), Path("public/logo-superba.jpg"),
     Path("public/manifest.webmanifest"), Path("public/pwa-192.png"),
     Path("public/pwa-512.png"), Path("public/pwa-maskable-192.png"),
@@ -170,6 +170,7 @@ def clone(club_key: str) -> Path:
         (target / "public" / "logo-superba.jpg").unlink()
         shutil.copy2(logo, target / "public" / f"logo-{club_key}.jpg")
         _write_pwa_assets(target, club_key)
+        shutil.copy2(ROOT / "manuale" / f"Manuale_utente_{club['name']}.pdf", target / "backend" / "manuale-utente.pdf")
         (target / "CLONE_INFO.json").write_text(json.dumps({
             "club": club["name"], "source": "superba_web", "deployment": "not-configured",
             "mongo_writes_by_script": False,
@@ -207,6 +208,11 @@ def sync(club_key: str) -> int:
             shutil.copy2(source_file, destination)
             updated += 1
     updated += _write_pwa_assets(target, club_key)
+    manual = ROOT / "manuale" / f"Manuale_utente_{club['name']}.pdf"
+    destination = target / "backend" / "manuale-utente.pdf"
+    if not destination.exists() or manual.read_bytes() != destination.read_bytes():
+        shutil.copy2(manual, destination)
+        updated += 1
     return updated
 
 

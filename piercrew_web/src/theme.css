@@ -272,3 +272,21 @@ input,textarea,select,.score input{background:#fffefa;color:var(--club-ink);bord
 .empty>.portal-icon,.empty>.portal-icon-outline{display:block;margin:0 auto 15px;width:30px;height:30px}
 .page-heading h1 .portal-icon,.page-heading h1 .portal-icon-outline,.competition-create h2 .portal-icon,.competition-create h2 .portal-icon-outline{width:.82em;height:.82em;vertical-align:baseline}
 .club-tournament-group h3 .portal-icon{width:18px;height:18px}
+
+/* Three clear actions in the phone header: sound, manual, logout. */
+.topbar-controls{display:flex;align-items:center;gap:9px}
+.music-control{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:42px;padding:8px 11px;border:1px solid var(--club-primary);border-radius:12px;background:var(--club-primary);color:#fff;box-shadow:0 4px 12px #0002;font-weight:700}
+.music-control[aria-pressed="true"]{background:var(--club-primary-hover);border-color:var(--club-primary-hover);color:#fff}
+.music-control:hover{background:var(--club-primary-hover);color:#fff}
+.manual-control{display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:42px;padding:8px 11px;border:1px solid var(--club-border);border-radius:12px;background:var(--club-paper);color:var(--club-primary);font-size:12px;font-weight:800;white-space:nowrap;box-shadow:0 4px 12px #0001}
+.manual-control:hover{background:var(--club-soft)}
+.manual-control:focus-visible,.music-control:focus-visible,.mobile-logout:focus-visible{outline:3px solid var(--club-accent);outline-offset:2px}
+@media(max-width:760px){
+  .topbar{display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-rows:auto auto;column-gap:8px;row-gap:7px;height:auto;min-height:79px;padding:8px 15px 10px}
+  .topbar>span:first-child{grid-column:1/-1;grid-row:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:11px}
+  .topbar-controls{grid-column:1;grid-row:2;min-width:0;gap:8px}
+  .topbar-controls .environment{display:none}
+  .topbar .mobile-logout{grid-column:2;grid-row:2;display:inline-flex;align-items:center;justify-content:center;width:42px;height:42px;min-width:42px;border:1px solid var(--club-border);border-radius:12px;background:var(--club-paper);color:var(--club-primary)}
+  .music-control{width:42px;min-width:42px;padding:0}
+  .manual-control{padding:8px 10px;font-size:12px}
+}

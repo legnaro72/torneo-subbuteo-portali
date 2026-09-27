@@ -5,11 +5,12 @@ import os
 import re
 import time
 from datetime import datetime, timedelta
+from pathlib import Path
 from urllib.parse import urlencode
 
 from bson import ObjectId
 from fastapi import Depends, FastAPI, HTTPException, Request, Response
-from fastapi.responses import JSONResponse
+from fastapi.responses import FileResponse, JSONResponse
 from pymongo import ReturnDocument
 from pymongo.errors import DuplicateKeyError, PyMongoError
 
@@ -128,6 +129,14 @@ def health(store: Store = Depends(store_dep)):
     store.tournaments.find_one({}, {'_id': 1})
     store.swiss_tournaments.find_one({}, {'_id': 1})
     return {'database': 'ok'}
+
+
+@app.get('/api/manuale-utente.pdf')
+def manuale_utente(user=Depends(current_user)):
+    path = Path(__file__).with_name('manuale-utente.pdf')
+    if not path.is_file():
+        raise HTTPException(503, 'Manuale momentaneamente non disponibile.')
+    return FileResponse(path, media_type='application/pdf', filename='Manuale_utente_Superba.pdf', content_disposition_type='inline')
 
 
 @app.post('/api/auth/login')
