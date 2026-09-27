@@ -66,8 +66,9 @@ export default function CreateTournament({onClose,onCreated}:{onClose:()=>void;o
     finally{setBusy(false);}
   }
 
+  const stepLabel=step===1?'SELEZIONE GIOCATORI':step===2?'CONFERMA DATI':'CALENDARIO';
   return <div className="modal-backdrop"><section className="modal creation-modal" role="dialog" aria-modal="true" aria-labelledby="create-title">
-    <div className="section-heading"><div><span className="eyebrow">NUOVO CAMPIONATO · PASSO {step} DI 3</span><h2 id="create-title">Crea un torneo all’italiana</h2></div><button aria-label="Chiudi" disabled={busy} onClick={onClose}><X/></button></div>
+    <div className="section-heading"><div><span className="eyebrow">NUOVO CAMPIONATO · PASSO {step} DI 3 · {stepLabel}</span><h2 id="create-title">Crea un torneo all’italiana</h2></div><button aria-label="Chiudi" disabled={busy} onClick={onClose}><X/></button></div>
     {error&&<div role="alert" className="alert error">{error}</div>}
     <form onSubmit={e=>{e.preventDefault();if(step===3)void submit();}}>
       {step===1&&<>
@@ -78,7 +79,7 @@ export default function CreateTournament({onClose,onCreated}:{onClose:()=>void;o
         <div className="creation-count">{entries.length} partecipanti selezionati{duplicateNames?' · ci sono nomi duplicati':''}</div>
       </>}
       {step===2&&<>
-        <p>Puoi modificare squadra e potenziale per questo torneo. L’anagrafica del Club non cambia.</p>
+        <p>Controlla e conferma i dati dei partecipanti. Puoi modificare squadra e potenziale solo per questo torneo: l’anagrafica del Club non cambia.</p>
         <label className="checkbox"><input type="checkbox" checked={usePlayerNames} onChange={e=>togglePlayerNames(e.target.checked)}/>Usa i nomi dei giocatori come nomi delle squadre</label>
         <div className="participant-editor">{entries.map(entry=><div className="participant-row" key={entry.key}><strong>{entry.name}{entry.guest&&<small> ospite</small>}</strong><label>Squadra<input value={entry.team} maxLength={100} onChange={e=>update(entry,{team:e.target.value})}/></label><label>Potenziale<input type="number" min={1} max={10} value={entry.potential} onChange={e=>update(entry,{potential:Number(e.target.value)})}/></label><button type="button" className="secondary compact" onClick={()=>{setBadgeTarget(entry.team.trim()?`${entry.team.trim()} - ${entry.name}`:entry.name);setBadgeEditorOpen(true);}}>🛡️ Scegli stemma</button></div>)}</div>
         <button type="button" className="secondary" onClick={()=>setBadgeEditorOpen(true)}>🛡️ Immagini per la vista Premium</button>
@@ -90,7 +91,7 @@ export default function CreateTournament({onClose,onCreated}:{onClose:()=>void;o
         {groupCount>1&&assignment==='manual'&&<div className="manual-assignments">{entries.map((entry,i)=><label key={entry.key}>{entry.name}<select value={manualGroups[entry.key]??i%groupCount} onChange={e=>setManualGroups(current=>({...current,[entry.key]:Number(e.target.value)}))}>{Array.from({length:groupCount},(_,g)=><option value={g} key={g}>Girone {g+1}</option>)}</select></label>)}</div>}
         <div className="group-preview">{groups.map((group,i)=><section className="group-editor" key={i}><h3>{groupCount>1?`Girone ${i+1}`:"Partecipanti"} <small>· potenziale medio {group.length?(group.reduce((n,p)=>n+p.potential,0)/group.length).toFixed(1):'0'}</small></h3>{group.map(p=><div key={p.key}>{p.team.trim()?`${p.team.trim()} - ${p.name}`:p.name} <small>· {p.potential}★</small></div>)}{group.length<2&&<p>Servono almeno due partecipanti.</p>}</section>)}</div>
       </>}
-      <div className="modal-actions"><button type="button" className="secondary" disabled={busy} onClick={step===1?onClose:()=>setStep(step-1)}>{step===1?'Annulla':<><ArrowLeft size={16}/>Indietro</>}</button>{step<3?<button type="button" className="primary" disabled={step===1?(!name.trim()||!validEntries||entries.length<groupCount*2):!validEntries} onClick={()=>setStep(step+1)}>Continua<ArrowRight size={17}/></button>:<button type="button" className="primary" disabled={!canGenerate} onClick={()=>void submit()}>{busy?'Creazione…':<>Genera calendario<Plus size={17}/></>}</button>}</div>
+      <div className="modal-actions"><button type="button" className="secondary" disabled={busy} onClick={step===1?onClose:()=>setStep(step-1)}>{step===1?'Annulla':<><ArrowLeft size={16}/>Indietro</>}</button>{step<3?<button type="button" className="primary" disabled={step===1?(!name.trim()||!validEntries||entries.length<groupCount*2):!validEntries} onClick={()=>setStep(step+1)}>{step===1?'Conferma giocatori':'Conferma dati e continua'}<ArrowRight size={17}/></button>:<button type="button" className="primary" disabled={!canGenerate} onClick={()=>void submit()}>{busy?'Creazione…':<>Genera calendario<Plus size={17}/></>}</button>}</div>
     </form>
     {badgeEditorOpen&&<BadgeEditor participants={labels} badges={badges} busy={busy} initialSelected={badgeTarget} onClose={()=>setBadgeEditorOpen(false)} onSave={async selected=>{setBadgesByKey(Object.fromEntries(entries.flatMap((entry,i)=>selected[labels[i]]?[[entry.key,selected[labels[i]]]]:[])));setBadgeEditorOpen(false);}}/>}
   </section></div>;
