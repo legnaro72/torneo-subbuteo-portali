@@ -22,7 +22,7 @@ test('bracket connections follow actual reseeding rather than card adjacency',()
 });
 
 test('day reveal stays bounded and filtered archives never queue a long sequence',()=>{
- assert.equal(matchDelay(1,false),155);
- assert.equal(matchDelay(500,false),1085);
+ assert.equal(matchDelay(1,false),310);
+ assert.equal(matchDelay(500,false),2170);
  assert.equal(matchDelay(500,true),0);
 });

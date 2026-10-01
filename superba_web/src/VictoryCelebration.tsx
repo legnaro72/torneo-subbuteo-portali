@@ -35,7 +35,7 @@ function Ceremony({tournament,winners,badges,onClose}:{tournament:string;winners
   return createPortal(<dialog ref={dialog} className="ceremony" aria-labelledby="ceremony-title" onCancel={e=>{e.preventDefault();onClose();}} onClick={e=>{if(e.target===e.currentTarget)onClose();}}><div className="ceremony-stage">
     <button type="button" className="ceremony-close" aria-label="Chiudi premiazione" onClick={onClose} autoFocus><X/></button>
     <div key={replay} className="ceremony-scene">
-      <div className="ceremony-confetti" aria-hidden="true">{Array.from({length:64},(_,i)=><i key={i} style={{'--x':`${(i*37)%100}%`,'--drift':`${((i*71)%260)-130}px`,'--delay':`${(i%8)*.055}s`,'--duration':`${3.1+(i%9)*.16}s`,'--spin':`${360+(i%5)*180}deg`,'--color':['#e7c775','#fffdf6','#78a6d4'][i%3]} as CSSProperties}/>)}</div>
+      <div className="ceremony-confetti" aria-hidden="true">{Array.from({length:64},(_,i)=><i key={i} style={{'--x':`${(i*37)%100}%`,'--drift':`${((i*71)%260)-130}px`,'--delay':`${(i%8)*.055}s`,'--duration':`${3.1+(i%9)*.16}s`,'--spin':`${360+(i%5)*180}deg`,'--color':['var(--club-accent)','var(--club-paper)','var(--club-primary)'][i%3]} as CSSProperties}/>)}</div>
       <p className="ceremony-kicker">SUPERBA · IL MOMENTO DELLA GLORIA</p>
       <div className="ceremony-cup" aria-hidden="true"><Trophy strokeWidth={1}/></div>
       <h2 id="ceremony-title">{winners.length>1?'I campioni dei gironi':'Il campione sei tu.'}</h2>
