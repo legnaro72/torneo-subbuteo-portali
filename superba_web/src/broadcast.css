@@ -133,8 +133,8 @@
 .bracket-lines path{fill:none;stroke:#95a9bd;stroke-width:1.5}.bracket-lines .champion-path{stroke:#b18a36;stroke-width:3}
 .bracket-champion{display:flex;align-items:center;justify-content:center;gap:15px;padding:22px;background:#fbf1d9;color:#755515}.bracket-champion strong{display:block;font-size:22px;color:#102b4e}
 @media(prefers-reduced-motion:no-preference){
-.tournament-results .day-matches .match-row{animation:broadcast-enter .52s cubic-bezier(.16,.8,.24,1) both;animation-delay:var(--match-delay,0ms)}
-.tournament-results .day-matches .score{animation:score-glint .82s ease-out both;animation-delay:calc(var(--match-delay,0ms) + .3s)}
+.tournament-results .day-matches .match-row{animation:broadcast-enter 1.04s cubic-bezier(.16,.8,.24,1) both;animation-delay:var(--match-delay,0ms)}
+.tournament-results .day-matches .score{animation:score-glint 1.64s ease-out both;animation-delay:calc(var(--match-delay,0ms) + .6s)}
  .day-title{animation:day-dissolve .25s ease-out}
  .loading-panel i{animation:loading-sheen 1.6s ease-in-out infinite}
  .ceremony-cup{animation:cup-arrive .8s cubic-bezier(.16,.8,.2,1) both}
