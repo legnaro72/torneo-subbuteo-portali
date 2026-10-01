@@ -65,7 +65,7 @@ Il portale è pubblicato su [superbaweb.vercel.app](https://superbaweb.vercel.ap
 
 ### Presentazione sportiva Superba
 
-- Cambio giornata/turno con ingresso progressivo degli incontri a intervalli di 155 ms, ben percepibile ma limitato anche per giornate numerose, senza ripartenze durante la modifica dei gol. Gli elenchi filtrati compaiono subito.
+- Cambio giornata/turno con ingresso progressivo degli incontri a intervalli di 310 ms e durata di 1,04 secondi per riga, ben percepibile ma limitato anche per giornate numerose, senza ripartenze durante la modifica dei gol. Gli elenchi filtrati compaiono subito.
 - Premiazione a schermo intero con coppa, stemmi, coriandoli nei colori del club, vincitori distinti per girone, ripetizione, audio e chiusura da tastiera. La musica di sottofondo viene sospesa durante l'audio della premiazione e ripristinata secondo la preferenza dell'utente. Le animazioni rispettano la preferenza di movimento ridotto.
 - Intestazioni mobili compatte, nomi e stagioni presentati in forma leggibile senza cambiare identificatori o dati; tabellini in sola lettura e conferma sulle righe appena salvate.
 - Capolista in evidenza, movimento delle righe su aggiornamenti reali della classifica, tabellone con collegamenti ricavati dagli abbinamenti effettivi e percorso del campione, bacheca dei giocatori più titolati.
