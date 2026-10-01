@@ -63,6 +63,20 @@ Il portale è pubblicato su [superbaweb.vercel.app](https://superbaweb.vercel.ap
 
 ## Verifiche
 
+### Presentazione sportiva Superba
+
+- Cambio giornata/turno con ingresso progressivo degli incontri a intervalli di 105 ms, durata limitata anche per giornate numerose, senza ripartenze durante la modifica dei gol. Gli elenchi filtrati compaiono subito.
+- Premiazione a schermo intero con coppa, stemmi, coriandoli nei colori del club, vincitori distinti per girone, ripetizione, audio e chiusura da tastiera. La musica di sottofondo viene sospesa durante l'audio della premiazione e ripristinata secondo la preferenza dell'utente. Le animazioni rispettano la preferenza di movimento ridotto.
+- Intestazioni mobili compatte, nomi e stagioni presentati in forma leggibile senza cambiare identificatori o dati; tabellini in sola lettura e conferma sulle righe appena salvate.
+- Capolista in evidenza, movimento delle righe su aggiornamenti reali della classifica, tabellone con collegamenti ricavati dagli abbinamenti effettivi e percorso del campione, bacheca dei giocatori più titolati.
+- Home con accesso diretto alla giornata del campionato attivo (o del preferito attivo), caricamenti separati dagli archivi vuoti e conferma prima di scartare modifiche del club. Le bozze del club restano in memoria: salvarle prima di lasciare la pagina.
+
+Test aggiuntivi di presentazione, abbinamenti e preferenze:
+
+```powershell
+node --test tests/test_presentation.cjs tests/test_view_preference.cjs tests/test_crest_ui.cjs
+```
+
 ```powershell
 .\.venv\Scripts\python.exe -B -m unittest discover -s tests -v
 npm run build

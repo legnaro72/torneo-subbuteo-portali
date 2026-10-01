@@ -1,4 +1,5 @@
 import {useEffect, useRef, useState} from 'react';
+import {celebrationAudioEvent} from './VictoryCelebration';
 
 const key='superba-background-music';
 
@@ -12,11 +13,19 @@ function Speaker({enabled}:{enabled:boolean}){
 
 export default function MusicControl({src='/TraLeDita.mp3'}:{src?:string}){
   const audio=useRef<HTMLAudioElement>(null);
-  const [enabled,setEnabled]=useState(()=>localStorage.getItem(key)==='on');
+  const [enabled,setEnabled]=useState(()=>{try{return localStorage.getItem(key)==='on';}catch{return false;}});
+  const [suspended,setSuspended]=useState(false);
   useEffect(()=>{
-    if(enabled){audio.current?.load();void audio.current?.play().catch(()=>setEnabled(false));}
+    const suspend=(event:Event)=>{const active=!!(event as CustomEvent<boolean>).detail;if(active)audio.current?.pause();setSuspended(active);};
+    window.addEventListener(celebrationAudioEvent,suspend);
+    return()=>window.removeEventListener(celebrationAudioEvent,suspend);
+  },[]);
+  useEffect(()=>{
+    let cancelled=false;
+    if(enabled&&!suspended){void audio.current?.play().catch(()=>{if(!cancelled)setEnabled(false);});}
     else audio.current?.pause();
-    localStorage.setItem(key,enabled?'on':'off');
-  },[enabled,src]);
+    try{localStorage.setItem(key,enabled?'on':'off');}catch{}
+    return()=>{cancelled=true;};
+  },[enabled,src,suspended]);
   return <><button className="music-control" type="button" aria-label={enabled?'Disabilita musica di sottofondo':'Abilita musica di sottofondo'} title={enabled?'Disabilita musica di sottofondo':'Abilita musica di sottofondo'} aria-pressed={enabled} onClick={()=>setEnabled(value=>!value)}><Speaker enabled={enabled}/><span>Musica {enabled?'attiva':'spenta'}</span></button><audio ref={audio} src={src} loop preload="none"/></>;
 }
