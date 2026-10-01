@@ -1,3 +1,4 @@
+import {Shield, Flag, Palette, Users} from 'lucide-react';
 import React, {useEffect, useMemo, useRef, useState} from 'react';
 import {ArrowLeft, ArrowRight, Plus, X} from 'lucide-react';
 import {api, type Player, type Tournament} from './api';
@@ -81,7 +82,7 @@ export default function CreateTournament({onClose,onCreated}:{onClose:()=>void;o
       {step===2&&<>
         <p>Controlla e conferma i dati dei partecipanti. Puoi modificare squadra e potenziale solo per questo torneo: l’anagrafica del Club non cambia.</p>
         <label className="checkbox"><input type="checkbox" checked={usePlayerNames} onChange={e=>togglePlayerNames(e.target.checked)}/>Usa i nomi dei giocatori come nomi delle squadre</label>
-        <div className="participant-editor">{entries.map(entry=><div className="participant-row" key={entry.key}><strong>{entry.name}{entry.guest&&<small> ospite</small>}</strong><label>Squadra<input value={entry.team} maxLength={100} onChange={e=>update(entry,{team:e.target.value})}/></label><label>Potenziale<input type="number" min={1} max={10} value={entry.potential} onChange={e=>update(entry,{potential:Number(e.target.value)})}/></label><button type="button" className="secondary compact" onClick={()=>{setBadgeTarget(entry.team.trim()?`${entry.team.trim()} - ${entry.name}`:entry.name);setBadgeEditorOpen(true);}}>🛡️ Scegli stemma</button></div>)}</div>
+        <div className="participant-editor">{entries.map(entry=><div className="participant-row" key={entry.key}><strong>{entry.name}{entry.guest&&<small> ospite</small>}</strong><label>Squadra<input value={entry.team} maxLength={100} onChange={e=>update(entry,{team:e.target.value})}/></label><label>Potenziale<input type="number" min={1} max={10} value={entry.potential} onChange={e=>update(entry,{potential:Number(e.target.value)})}/></label><button type="button" className="secondary compact" onClick={()=>{setBadgeTarget(entry.team.trim()?`${entry.team.trim()} - ${entry.name}`:entry.name);setBadgeEditorOpen(true);}}><Shield size={16}/>Scegli stemma</button></div>)}</div>
         {duplicateLabels&&<div role="alert" className="alert error">Due partecipanti avrebbero lo stesso nome nel calendario. Modifica le squadre.</div>}{entries.some(e=>e.potential<1||e.potential>10||!Number.isInteger(e.potential))&&<div role="alert" className="alert error">Il potenziale deve essere un numero intero tra 1 e 10.</div>}
       </>}
       {step===3&&<>

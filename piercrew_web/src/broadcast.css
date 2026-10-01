@@ -1,0 +1,212 @@
+/* PierCrew broadcast layer. Presentation only; shared club themes are untouched. */
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.discard-dialog{width:min(480px,calc(100vw - 32px));padding:25px;border:1px solid var(--club-border);border-radius:16px;background:var(--club-paper);color:var(--club-ink);box-shadow:0 18px 80px #164d3240}
+.discard-dialog::backdrop{background:#0b2b1b99;backdrop-filter:blur(3px)}
+.discard-dialog p{margin:14px 0 20px;font-size:14px;color:var(--club-muted)}
+.results-heading h3,.badge-modal h2{display:flex;align-items:center;gap:8px}
+.leader-card .team-mark,.honours-card .team-mark,.bracket-match .team-mark{display:grid}
+:where(button,a,input,select,textarea):focus-visible{outline:3px solid #b28a34;outline-offset:3px}
+.page-heading p,.section-heading p{font-size:13px;color:#566a80}
+.hero,.arena-hero{box-shadow:0 12px 28px #164d3220}
+.hero h2{max-width:650px;text-wrap:balance}
+.arena-hero{min-height:200px;padding:26px 30px;margin-bottom:18px}
+.arena-copy{max-width:76%;position:relative;z-index:2}
+.arena-copy h1{font-size:clamp(26px,3vw,38px);letter-spacing:-1px;line-height:1.15;text-wrap:balance;overflow-wrap:break-word}
+.arena-copy .tournament-season{font-size:16px;color:#efdca6;margin-top:6px;letter-spacing:.04em}
+.arena-copy>p:not(.tournament-season){font-size:13px;margin-top:8px}
+.arena-facts{margin-top:16px;gap:18px}
+.arena-facts>span{padding:0;background:none;border:0;display:flex;gap:7px;align-items:baseline;font-size:12px}
+.arena-facts strong{font-size:22px}
+.arena-live-dot{animation:none;box-shadow:0 0 0 4px #ffda451a}
+.arena-visual{opacity:.7}
+.stat,.results-card,.club-section,.favourites-panel{box-shadow:0 4px 15px #164d3208}
+.tournament-toolbar{margin:14px 0;gap:12px}
+.tournament-toolbar .tabs{gap:10px}
+.tournament-toolbar .tabs button{font-size:13px}
+.tabs button.active,.tournament-toolbar .tabs button.active{box-shadow:0 3px 10px #164d3215}
+.settings-toggle{min-height:44px;font-size:13px}
+.settings-section-head strong,.view-switcher>span,.round-selector-head>span{display:flex;align-items:center;gap:8px}
+.round-selector{margin:12px 0;padding:14px 18px;box-shadow:0 6px 16px #164d3218}
+.round-selector-head{font-size:17px}
+.round-track{padding-top:9px}
+.round-track button{min-height:40px}
+.tournament-results .results-heading{padding:16px 18px;border-bottom:1px solid var(--club-border)}
+.tournament-results .results-heading h3{color:var(--club-ink);font-size:19px}
+.tournament-results .results-heading>span{font-size:12px;color:#566a80}
+.tournament-results .matches{position:relative}
+.tournament-results .match-row{position:relative;animation:none}
+.tournament-results .matches.premium .match-row{min-height:76px;padding:13px 4px;grid-template-columns:minmax(0,1fr) 108px minmax(0,1fr) 34px;gap:12px}
+.tournament-results .matches.premium .team{font-size:15px;gap:9px;color:var(--club-ink);white-space:normal}
+.tournament-results .matches.premium .team>span:not(.team-mark){white-space:normal;overflow-wrap:anywhere;line-height:1.35}
+.tournament-results .matches.premium .team-mark{width:30px;height:30px;min-width:30px;flex-basis:30px}
+.tournament-results .matches.compact .team{color:var(--club-ink)}
+.tournament-results .matches.standard .team{color:var(--club-ink)}
+.tournament-results .match-row:hover{box-shadow:none}
+.tournament-results .matches.premium .score input{width:43px;min-height:44px;font-size:21px}
+.broadcast-score{font-variant-numeric:tabular-nums;gap:7px}
+.broadcast-score strong{display:grid;place-items:center;width:42px;min-height:44px;font-family:Manrope,sans-serif;font-size:25px;line-height:1;background:#eaf0f6;color:var(--club-dark);border-radius:7px}
+.broadcast-score>span{font-size:17px;color:#577061}
+.broadcast-score.provisional strong{background:#f3f4f4;color:#65768a}
+.match-status{display:flex;align-items:center;justify-content:center;color:#788594;grid-column:4;grid-row:1;width:30px;min-height:38px}
+.match-status.confirmed{color:#365b79}
+.matches.standard .match-status{grid-row:auto}
+.match-saved{position:absolute;right:7px;bottom:0;color:#356b50;font-size:10px;line-height:1.2;pointer-events:none}
+.tournament-results .matches .match-row.just-saved{background:#ecf5ee;box-shadow:inset 3px 0 #54805d}
+.tournament-results .matches .match-row.edited{background:#fff7df;box-shadow:inset 3px 0 #b18a36}
+.loading-panel{padding:22px;color:var(--club-muted);font-size:13px}
+.loading-panel>div{display:grid;gap:13px;margin-top:16px}
+.loading-panel i{display:block;height:22px;width:100%;border-radius:5px;background:linear-gradient(100deg,#e6ebee,#f2f8e9,#e6ebee);background-size:200% 100%}
+.loading-panel i:nth-child(2){width:85%}.loading-panel i:nth-child(3){width:65%}
+.leader-card{display:flex;align-items:center;gap:15px;padding:22px 24px;background:linear-gradient(110deg,#164d32,#204c78);color:var(--club-paper)}
+.leader-card .eyebrow{display:block;color:#ffda45;font-size:10px;margin-bottom:5px}
+.leader-card>div:nth-child(2){flex:1;min-width:0}
+.leader-card>div:nth-child(2)>strong{font:700 20px Manrope,sans-serif;overflow-wrap:anywhere}
+.leader-emblem{color:#ffda45}
+.leader-points{display:grid;text-align:center;min-width:65px;border-left:1px solid #ffffff35;padding-left:15px}
+.leader-points strong{font:800 30px Manrope,sans-serif;color:#efdc9e}
+.leader-points small{font-size:11px;color:#e0e7ee}
+.standings-card th{font-size:11px;font-weight:700}
+.standings-card td{font-size:14px;padding:17px 14px;font-variant-numeric:tabular-nums}
+.standings-card td.points{font-size:19px;font-weight:800}
+.standing-leader{background:#fcf6e7}
+.rank-number{display:grid;place-items:center;width:28px;height:28px;border-radius:50%;color:var(--club-muted);font-weight:700}
+.standing-leader .rank-number{background:#ffda45;color:var(--club-dark)}
+.honours-gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:15px;margin:12px 0 25px}
+.honours-gallery:empty{display:none}
+.honours-card{position:relative;display:flex;flex-direction:column;align-items:center;gap:9px;padding:24px 20px;border:1px solid #d6c495;border-radius:15px;background:radial-gradient(ellipse at 50% 0,#386089,#164d32 80%);color:#fffdf1;text-align:center;overflow:hidden}
+.honours-card>svg{color:#ffda45}
+.honours-card>strong{font:800 23px Manrope,sans-serif}
+.honours-card>.team-mark{width:40px;height:40px;background:#ffffffef}
+.honours-card>span:not(.team-mark){color:#eedcaa;font-size:14px}
+.honours-card small{color:#d8e3ee;font-size:12px;line-height:1.6;overflow-wrap:anywhere}
+.champion-banner{display:flex;align-items:center;gap:16px;margin:16px 0;padding:20px 22px;border:1px solid #d7c390;border-radius:14px;background:linear-gradient(105deg,#faf1da,#fffdf1);color:var(--club-dark)}
+.champion-banner>svg{color:#987220;flex-shrink:0}
+.champion-banner>div{flex:1;min-width:0}.champion-banner strong{font-size:16px;overflow-wrap:anywhere}
+.champion-banner .eyebrow{display:block;color:#7f6226;font-size:10px;margin-bottom:5px}
+.champion-banner .victory-button{background:var(--club-dark);color:#f6e6bc;border:1px solid var(--club-dark);border-radius:9px;min-height:44px}
+.champion-banner .victory-button:hover{background:#224e7c}
+.ceremony{position:fixed;inset:0;margin:0;width:100vw;max-width:none;height:100dvh;max-height:none;border:0;padding:0;background:#081b32;color:#fffdf1;overflow:auto;overscroll-behavior:contain}
+.ceremony::backdrop{background:#06172b}
+.ceremony-stage{position:relative;isolation:isolate;min-height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 24px 32px;text-align:center;background:radial-gradient(ellipse at 50% 32%,#a982393e,transparent 44%),radial-gradient(ellipse at 15% 80%,#214b7c70,transparent 55%),#0b2340}
+.ceremony-close{position:fixed;z-index:5;right:24px;top:20px;width:44px;height:44px;border:1px solid #ffffff45;border-radius:50%;color:#fff;background:#164d32}
+.ceremony-scene{max-width:1050px;width:100%}
+.ceremony-kicker{font-size:10px;font-weight:700;letter-spacing:.27em;color:#e8d59f}
+.ceremony-cup{position:relative;margin:24px auto 10px;width:135px;height:135px;display:grid;place-items:center;color:#ebcf85;filter:drop-shadow(0 0 25px #e7c77545)}
+.ceremony-cup:before{content:'';position:absolute;inset:-25px;border:1px solid #d4b76340;border-radius:50%;box-shadow:0 0 0 18px #d4b76308}
+.ceremony-cup svg{width:120px;height:120px}
+.ceremony h2{font-size:clamp(27px,4vw,47px);letter-spacing:-1.4px;color:#fffdf1;margin:16px 0 7px}
+.ceremony-tournament{font-size:16px;color:#b9cada;margin:0 auto 24px;max-width:650px;overflow-wrap:anywhere}
+.ceremony-winners{display:flex;justify-content:center;gap:16px;flex-wrap:wrap;margin:0 auto;position:relative;z-index:1}
+.ceremony-winners article{display:flex;flex-direction:column;align-items:center;gap:8px;min-width:0;max-width:850px;padding:10px 22px}
+.ceremony-winners article>strong{font:800 clamp(28px,5vw,60px)/1.15 Manrope,sans-serif;letter-spacing:-1px;text-wrap:balance;overflow-wrap:anywhere;color:#f7e8bd}
+.ceremony-winners.multiple article{flex:1 1 230px;max-width:420px;background:#ffffff07;border:1px solid #ffffff18;border-radius:16px;padding:20px}
+.ceremony-winners.multiple article>strong{font-size:26px}
+.ceremony-badge{display:grid;place-items:center;width:60px;height:60px;margin-bottom:8px}
+.ceremony-badge .team-badge{width:100%;height:100%;object-fit:contain;max-width:none;max-height:none}
+.ceremony-badge .team-badge-fallback{font-size:30px}
+.ceremony-group{color:#b9cada;font-size:13px}.ceremony-winner-label{font-size:9px;color:#dfc989;letter-spacing:.28em}
+.ceremony-signature{margin-top:28px;color:#9fb4c9;font-size:13px}
+.ceremony-controls{position:relative;z-index:3;display:flex;justify-content:center;flex-wrap:wrap;gap:10px;margin-top:28px}
+.ceremony-controls button{min-height:44px;padding:11px 18px;border:1px solid #ffffff30;background:#ffffff08;color:#e8eef5;border-radius:9px;font-size:13px}
+.ceremony-controls button:last-child{color:#164d32;background:#ffda45;border-color:#ffda45;font-weight:700}
+.ceremony-audio-note{color:#d5dee8;font-size:12px;margin-top:12px}
+.ceremony-confetti{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:2}
+.ceremony-confetti i{position:absolute;left:var(--x);top:-18px;width:8px;height:14px;background:var(--color);opacity:0}
+.ceremony-confetti i:nth-child(3n){width:5px;height:9px;border-radius:50%}
+.knockout .results-heading h3{display:flex;align-items:center;gap:9px}
+.knockout .eyebrow{font-size:10px}
+.bracket-hint{padding:14px 20px;font-size:12px}
+.bracket-scroll{overflow:auto;padding:0 22px 25px;scrollbar-width:thin}
+.bracket-board{position:relative;display:flex;gap:64px;min-width:max-content;align-items:stretch}
+.bracket-round{position:relative;width:260px;flex:0 0 260px;display:flex;flex-direction:column;z-index:1}
+.bracket-round h4{font-size:13px;letter-spacing:.06em;color:var(--club-muted);margin:0 0 16px;text-transform:uppercase}
+.bracket-round-matches{display:flex;flex:1;flex-direction:column;justify-content:space-around;gap:22px}
+.bracket-match{border:1px solid var(--club-border);border-radius:10px;background:var(--club-paper);overflow:hidden;box-shadow:0 3px 10px #164d3208}
+.bracket-match>div{display:grid;grid-template-columns:24px minmax(0,1fr) 22px 14px;gap:7px;align-items:center;padding:11px 10px;font-size:13px}
+.bracket-match>div>span:nth-child(2){overflow-wrap:anywhere;line-height:1.35}
+.bracket-match .team-mark{width:24px;height:24px}.bracket-match strong{font-size:19px;font-variant-numeric:tabular-nums}
+.bracket-match>div+div{border-top:1px solid var(--club-border)}
+.bracket-match .bracket-winner{background:#edf2f8;color:#187442;font-weight:700}
+.bracket-match>small{display:block;font-size:10px;padding:6px 10px;color:var(--club-muted);border-top:1px solid var(--club-border)}
+.bracket-match.champion-match{border-color:#b18a36}.champion-match .bracket-winner{background:#fbf1d9;color:#755515}
+.bracket-lines{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none}
+.bracket-lines path{fill:none;stroke:#95a9bd;stroke-width:1.5}.bracket-lines .champion-path{stroke:#b18a36;stroke-width:3}
+.bracket-champion{display:flex;align-items:center;justify-content:center;gap:15px;padding:22px;background:#fbf1d9;color:#755515}.bracket-champion strong{display:block;font-size:22px;color:#164d32}
+@media(prefers-reduced-motion:no-preference){
+.tournament-results .day-matches .match-row{animation:broadcast-enter .52s cubic-bezier(.16,.8,.24,1) both;animation-delay:var(--match-delay,0ms)}
+.tournament-results .day-matches .score{animation:score-glint .82s ease-out both;animation-delay:calc(var(--match-delay,0ms) + .3s)}
+ .day-title{animation:day-dissolve .25s ease-out}
+ .loading-panel i{animation:loading-sheen 1.6s ease-in-out infinite}
+ .ceremony-cup{animation:cup-arrive .8s cubic-bezier(.16,.8,.2,1) both}
+ .ceremony-winners{animation:winner-arrive .7s .35s both}
+ .ceremony-confetti i{animation:confetti-fall var(--duration) var(--delay) cubic-bezier(.16,.55,.6,1) both}
+ .ceremony-confetti i:nth-child(even){animation-name:confetti-left}
+ .ceremony-confetti i:nth-child(odd){animation-name:confetti-right}
+}
+@keyframes broadcast-enter{from{opacity:0;transform:translateX(-24px)}to{opacity:1;transform:none}}
+@keyframes score-glint{0%,100%{filter:none}40%{filter:drop-shadow(0 0 7px #d6ad4b85)}}
+@keyframes day-dissolve{from{opacity:.2;transform:translateY(3px)}to{opacity:1;transform:none}}
+@keyframes loading-sheen{to{background-position:-200% 0}}
+@keyframes cup-arrive{from{opacity:0;transform:translateY(25px) scale(.8)}to{opacity:1;transform:none}}
+@keyframes winner-arrive{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:none}}
+@keyframes confetti-fall{0%{opacity:0;transform:translate(0,-20px) rotate(0)}8%{opacity:1}85%{opacity:1}100%{opacity:0;transform:translate(var(--drift),105vh) rotate(var(--spin))}}
+@keyframes confetti-left{0%{opacity:0;left:0;top:55%;transform:rotate(0)}12%{opacity:1;top:5%}80%{opacity:1}100%{opacity:0;left:var(--x);top:105%;transform:translateX(var(--drift)) rotate(var(--spin))}}
+@keyframes confetti-right{0%{opacity:0;left:100%;top:55%;transform:rotate(0)}12%{opacity:1;top:3%}80%{opacity:1}100%{opacity:0;left:var(--x);top:105%;transform:translateX(var(--drift)) rotate(var(--spin))}}
+@media(max-width:760px){
+ .content{padding-top:12px}
+ .content>.demo-strip{padding:7px 10px;margin-bottom:8px;line-height:1.35}
+ .back{margin-bottom:10px;min-height:30px}
+ .arena-hero{padding:16px 17px 17px;margin:0 0 12px;min-height:0;border-radius:16px}
+ .arena-copy{max-width:100%}
+ .arena-copy .eyebrow{font-size:8px;letter-spacing:1.1px;margin-bottom:9px;padding-right:65px}
+ .arena-copy h1{font-size:25px;line-height:1.18;max-width:100%}
+ .arena-copy>p:not(.tournament-season){display:none}
+ .arena-copy .tournament-season{font-size:13px;margin-top:4px}
+ .arena-facts{margin-top:12px;gap:12px;flex-wrap:wrap}
+ .arena-facts>span{padding:0;gap:4px;font-size:10px;border:0;background:none;min-width:0;flex:0 1 auto;white-space:nowrap}
+ .arena-facts strong{font-size:16px;line-height:1.2}
+ .arena-facts em{font-size:12px}
+ .arena-hero>.badge{position:absolute;right:12px;top:12px;margin:0;font-size:9px;padding:5px 7px}
+ .arena-visual{opacity:.16;right:-25px;pointer-events:none}
+ .tournament-toolbar{margin:9px 0;gap:7px}
+ .tournament-toolbar .tabs:not(.club-tabs) button,.tournament-toolbar .tabs:not(.club-tabs) button.active{gap:5px;font-size:12px;min-height:40px;padding:7px}
+ .tournament-toolbar .toolbar-actions .secondary,.tournament-toolbar .toolbar-actions .icon-button{min-height:36px;padding:6px 10px;font-size:11px}
+ .tournament-toolbar .toolbar-actions{gap:6px}
+ .match-settings{margin:9px 0;border-radius:10px}
+ .settings-toggle{min-height:42px;padding:10px 13px}
+ .round-selector{padding:11px 12px;margin:9px 0;border-radius:13px}
+ .round-selector-head{font-size:14px}.round-selector-head>span{gap:5px}
+ .round-selector-head button{width:38px;height:38px;min-height:38px}
+ .round-track{padding-top:7px;padding-bottom:3px}
+ .round-track button{min-width:40px;height:38px;min-height:38px;font-size:12px}
+ .tournament-results .results-heading{padding:11px 12px}.tournament-results .results-heading h3{font-size:16px}
+ .tournament-results .matches.premium{padding:0 9px}
+ .tournament-results .matches.premium .match-row{grid-template-columns:minmax(0,1fr) 78px minmax(0,1fr) 22px;gap:5px;min-height:66px;padding:10px 0}
+ .tournament-results .matches.premium .team{font-size:12px;gap:4px}
+ .tournament-results .matches.premium .team-mark{width:22px;height:22px;min-width:22px;flex-basis:22px}
+ .tournament-results .matches.premium .score input{width:33px;min-height:42px;font-size:18px}
+ .broadcast-score strong{width:32px;min-height:38px;font-size:22px}
+ .tournament-results .matches.compact .broadcast-score strong{width:27px;font-size:19px}
+ .broadcast-score{gap:3px}.broadcast-score>span{font-size:14px}
+ .match-status{width:22px}
+ .matches.standard .match-status{grid-column:1/-1;grid-row:4;width:auto;justify-self:center;min-height:20px}
+ .match-saved{font-size:9px}
+ .leader-card{padding:16px 13px;gap:10px}.leader-card>div:nth-child(2)>strong{font-size:16px}.leader-card .eyebrow{font-size:8px;letter-spacing:1px}
+ .leader-points{min-width:48px;padding-left:10px}.leader-points strong{font-size:25px}
+ .standings-card td{padding:13px 10px;font-size:13px}
+ .standings-card th:first-child,.standings-card td:first-child{position:sticky;left:0;background:var(--club-paper);z-index:1}
+ .champion-banner{padding:16px;flex-wrap:wrap;gap:10px}.champion-banner .victory-button{width:100%}
+ .champion-banner>div{flex-basis:calc(100% - 40px)}
+ .honours-gallery{grid-template-columns:1fr}.honours-card{padding:20px}
+ .ceremony-stage{padding:65px 16px 24px}.ceremony-close{right:14px;top:12px}
+ .ceremony-kicker{font-size:8px;letter-spacing:.18em}.ceremony-cup{width:100px;height:100px;margin:24px auto 14px}.ceremony-cup svg{width:90px;height:90px}
+ .ceremony h2{font-size:29px}.ceremony-tournament{font-size:13px;margin-bottom:14px}
+ .ceremony-winners article{padding:8px;max-width:100%}.ceremony-winners article>strong{font-size:34px}
+ .ceremony-winners.multiple article>strong{font-size:23px}.ceremony-winners.multiple article{padding:16px}
+ .ceremony-controls{gap:8px;margin-top:22px}.ceremony-controls button{font-size:12px;padding:10px 12px}
+ .bracket-round{width:230px;flex-basis:230px}.bracket-board{gap:46px}.bracket-scroll{padding:0 14px 20px}
+}
+@media(prefers-reduced-motion:reduce){
+ .tournament-results .match-row,.tournament-results .score,.day-title,.loading-panel i,.ceremony-cup,.ceremony-winners{animation:none!important;transform:none!important;opacity:1!important}
+ .ceremony-confetti{display:none}
+}
