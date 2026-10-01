@@ -68,7 +68,10 @@ def _ignored(_directory: str, names: list[str]) -> set[str]:
 
 
 def _club_text(content: str, relative: Path, club: dict) -> str:
-    if relative.name == "theme.css":
+    # Shared visual layers may live in more than theme.css (for example the
+    # broadcast and ceremony components).  Recolour every CSS file copied from
+    # Superba so a sync never leaves the target club with Superba accents.
+    if relative.suffix == ".css":
         for old, new in club["colors"].items():
             content = content.replace(old, new)
     if relative == Path("index.html"):

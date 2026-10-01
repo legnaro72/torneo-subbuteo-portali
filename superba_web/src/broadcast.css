@@ -133,8 +133,8 @@
 .bracket-lines path{fill:none;stroke:#95a9bd;stroke-width:1.5}.bracket-lines .champion-path{stroke:#b18a36;stroke-width:3}
 .bracket-champion{display:flex;align-items:center;justify-content:center;gap:15px;padding:22px;background:#fbf1d9;color:#755515}.bracket-champion strong{display:block;font-size:22px;color:#102b4e}
 @media(prefers-reduced-motion:no-preference){
- .tournament-results .day-matches .match-row{animation:broadcast-enter .32s cubic-bezier(.2,.7,.2,1) both;animation-delay:var(--match-delay,0ms)}
- .tournament-results .day-matches .score{animation:score-glint .55s ease-out both;animation-delay:calc(var(--match-delay,0ms) + .2s)}
+.tournament-results .day-matches .match-row{animation:broadcast-enter .52s cubic-bezier(.16,.8,.24,1) both;animation-delay:var(--match-delay,0ms)}
+.tournament-results .day-matches .score{animation:score-glint .82s ease-out both;animation-delay:calc(var(--match-delay,0ms) + .3s)}
  .day-title{animation:day-dissolve .25s ease-out}
  .loading-panel i{animation:loading-sheen 1.6s ease-in-out infinite}
  .ceremony-cup{animation:cup-arrive .8s cubic-bezier(.16,.8,.2,1) both}
@@ -143,7 +143,7 @@
  .ceremony-confetti i:nth-child(even){animation-name:confetti-left}
  .ceremony-confetti i:nth-child(odd){animation-name:confetti-right}
 }
-@keyframes broadcast-enter{from{opacity:0;transform:translateX(-14px)}to{opacity:1;transform:none}}
+@keyframes broadcast-enter{from{opacity:0;transform:translateX(-24px)}to{opacity:1;transform:none}}
 @keyframes score-glint{0%,100%{filter:none}40%{filter:drop-shadow(0 0 7px #d6ad4b85)}}
 @keyframes day-dissolve{from{opacity:.2;transform:translateY(3px)}to{opacity:1;transform:none}}
 @keyframes loading-sheen{to{background-position:-200% 0}}

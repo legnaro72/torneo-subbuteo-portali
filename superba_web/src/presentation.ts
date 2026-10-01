@@ -9,7 +9,7 @@ export function tournamentLabel(name:string):string {
 }
 
 export function matchDelay(index:number, all:boolean):number {
-  return all ? 0 : Math.min(index, 7) * 105;
+  return all ? 0 : Math.min(index, 7) * 155;
 }
 
 export type BracketMatch = {index:number;round:number;round_name?:string;home:string;away:string;home_goals:number;away_goals:number;valid:boolean;winner?:string};
