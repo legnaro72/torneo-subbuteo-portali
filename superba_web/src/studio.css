@@ -30,6 +30,12 @@
  .ceremony-signature{animation:winner-arrive .6s 2.5s both}
 }
 @keyframes lights-on{from{opacity:0}to{opacity:1}}
+.studio .studio-controls select{appearance:none;-webkit-appearance:none;min-width:230px;min-height:44px;padding:10px 38px;border:1px solid color-mix(in srgb,var(--club-paper) 25%,transparent);border-radius:8px;background-color:color-mix(in srgb,var(--club-paper) 8%,var(--club-dark));color:var(--club-paper);font-size:13px;font-weight:700;text-align:center;text-align-last:center;cursor:pointer}
+.studio .studio-controls select:focus-visible{outline:2px solid var(--club-accent);outline-offset:2px}
+.studio .studio-controls option{background:var(--club-dark);color:var(--club-paper)}
+.studio-select{position:relative;display:inline-flex;align-items:center;flex:0 0 auto;max-width:100%}
+.studio-select svg{position:absolute;right:13px;top:50%;transform:translateY(-50%);color:var(--club-paper);pointer-events:none}
+@media(max-width:760px){.studio .studio-controls select{min-width:0;width:min(230px,calc(100vw - 24px))}}
 .studio-note{color:var(--club-paper)}
 .ceremony-export p{color:var(--club-paper)}
 @media(max-width:760px){.championship-story{grid-template-columns:1fr}.championship-story article{padding:20px}.story-progress{font-size:36px}.season-honours .section-heading{flex-wrap:wrap;gap:12px}.studio{padding:18px 12px}.studio-head{gap:12px}.studio-head img{width:42px;height:42px}.studio-game{grid-template-columns:minmax(0,1fr) 78px minmax(0,1fr);padding:14px 10px;gap:8px}.studio-game>div:first-child,.studio-game>div:last-child{flex-direction:column;text-align:center;gap:7px}.studio-game strong{font-size:13px}.studio-game .team-badge{width:28px;height:28px}.studio-score b{font-size:28px}.studio-ribbon{flex-wrap:wrap;margin:18px 0}.studio-controls button{font-size:12px}.studio-note{font-size:10px}.season-trophies{grid-template-columns:1fr}}

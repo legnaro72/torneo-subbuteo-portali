@@ -1,6 +1,30 @@
-// Canvas export stays local and only loads the same-origin club logo.
 // Tournament/player text is drawn as text, never interpreted as markup.
-export async function downloadChampionCard(tournament:string,winner:string,group?:string){
+async function loadBadge(mark:Element|null|undefined):Promise<{image:HTMLImageElement;url:string}|null>{
+  if(!mark)return null;
+  let blob:Blob;
+  try{
+    if(mark instanceof SVGElement){
+      blob=new Blob([new XMLSerializer().serializeToString(mark)],{type:'image/svg+xml'});
+    }else if(mark instanceof HTMLImageElement){
+      const src=mark.currentSrc||mark.src;
+      if(!src)return null;
+      let response:Response;
+      if(/^https?:\/\//i.test(src)&&new URL(src).origin!==location.origin){
+        // Try the existing image URL first; the authenticated image route
+        // handles providers that display in <img> but deny canvas CORS.
+        try{response=await fetch(src,{mode:'cors',referrerPolicy:'no-referrer'});if(!response.ok)throw new Error('Stemma non disponibile.');}
+        catch{response=await fetch(`/api/badge-image?url=${encodeURIComponent(src)}`,{credentials:'same-origin'});}
+      }else response=await fetch(src,{credentials:'same-origin'});
+      if(!response.ok)throw new Error('Stemma non disponibile.');
+      blob=await response.blob();
+    }else return null;
+    const url=URL.createObjectURL(blob),image=new Image();
+    try{image.src=url;await image.decode();return {image,url};}
+    catch(error){URL.revokeObjectURL(url);throw error;}
+  }catch{return null;}
+}
+
+export async function downloadChampionCard(tournament:string,winner:string,group?:string,mark?:Element|null){
   const canvas=document.createElement('canvas');canvas.width=1200;canvas.height=1500;
   const ctx=canvas.getContext('2d');if(!ctx)throw new Error('Il browser non supporta la cartolina.');
   const theme=getComputedStyle(document.documentElement), dark=theme.getPropertyValue('--club-dark').trim()||'#102b4e',accent=theme.getPropertyValue('--club-accent').trim()||'#e7d9b4',paper=theme.getPropertyValue('--club-paper').trim()||'#fffdf6',primary=theme.getPropertyValue('--club-primary').trim()||'#173f72';
@@ -14,13 +38,27 @@ export async function downloadChampionCard(tournament:string,winner:string,group
   // Trophy silhouette, drawn natively for a sharp downloadable image.
   ctx.strokeStyle=accent;ctx.fillStyle=accent;ctx.lineWidth=14;ctx.lineJoin='round';ctx.beginPath();ctx.moveTo(505,365);ctx.lineTo(695,365);ctx.lineTo(676,478);ctx.quadraticCurveTo(600,570,524,478);ctx.closePath();ctx.fill();
   ctx.beginPath();ctx.moveTo(507,392);ctx.lineTo(457,392);ctx.quadraticCurveTo(450,493,540,493);ctx.moveTo(693,392);ctx.lineTo(743,392);ctx.quadraticCurveTo(750,493,660,493);ctx.moveTo(600,522);ctx.lineTo(600,585);ctx.moveTo(548,590);ctx.lineTo(652,590);ctx.stroke();
+  const badge=await loadBadge(mark);
+  let badgeDrawn=false;
+  if(badge){
+    try{
+      const {image}=badge;
+      if(image.naturalWidth&&image.naturalHeight){
+        const scale=Math.min(112/image.naturalWidth,112/image.naturalHeight);
+        const width=image.naturalWidth*scale,height=image.naturalHeight*scale;
+        ctx.drawImage(image,600-width/2,610+(112-height)/2,width,height);
+        badgeDrawn=true;
+      }
+    }catch{/* A broken badge must not prevent the card download. */
+    }finally{URL.revokeObjectURL(badge.url);}
+  }
   const textBlock=(text:string,y:number,maxSize:number,maxWidth:number,maxLines:number)=>{
     let lines:string[]=[],size=maxSize;
     for(;size>=14;size-=2){ctx.font=`bold ${size}px sans-serif`;lines=[''];for(const word of text.split(/\s+/)){const n=lines.length-1,candidate=lines[n]?`${lines[n]} ${word}`:word;if(ctx.measureText(candidate).width>maxWidth&&lines[n])lines.push(word);else lines[n]=candidate;}if(lines.length<=maxLines&&lines.every(l=>ctx.measureText(l).width<=maxWidth))break;}
     lines.slice(0,maxLines).forEach((line,i)=>ctx.fillText(line,600,y+i*size*1.25,maxWidth));
   }
-  ctx.font='bold 22px sans-serif';ctx.fillText(group?'VINCITORE DEL GIRONE':'CAMPIONE',600,680);
-  textBlock(winner,785,70,980,3);
+  ctx.font='bold 22px sans-serif';ctx.fillText(group?'VINCITORE DEL GIRONE':'CAMPIONE',600,badgeDrawn?760:680);
+  textBlock(winner,badgeDrawn?860:785,70,980,3);
   ctx.fillStyle=paper;textBlock(tournament,1080,35,980,3);
   if(group){ctx.fillStyle=accent;textBlock(group,1235,28,980,2);}
   ctx.fillStyle=paper;ctx.font='22px sans-serif';ctx.fillText('Un piccolo campo. Una grande vittoria.',600,1375);

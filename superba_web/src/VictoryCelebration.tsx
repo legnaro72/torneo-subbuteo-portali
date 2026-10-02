@@ -15,6 +15,7 @@ export default function VictoryCelebration({tournament,winners,badges}:{tourname
 
 function Ceremony({tournament,winners,badges,onClose}:{tournament:string;winners:Winner[];badges?:BadgeMap;onClose:()=>void}) {
   const dialog=useRef<HTMLDialogElement>(null), audio=useRef<HTMLAudioElement>(null);
+  const winnerMarks=useRef<HTMLDivElement>(null);
   const [replay,setReplay]=useState(0), [sound,setSound]=useState(true), [audioError,setAudioError]=useState(false);
   const [cardWinner,setCardWinner]=useState(0),[exporting,setExporting]=useState(false),[exportMessage,setExportMessage]=useState('');
   useEffect(()=>{dialog.current?.scrollTo({top:0,behavior:'instant'});},[replay]);
@@ -44,12 +45,12 @@ function Ceremony({tournament,winners,badges,onClose}:{tournament:string;winners
       <div className="ceremony-cup" aria-hidden="true"><Trophy strokeWidth={1}/></div>
       <h2 id="ceremony-title">{winners.length>1?'I campioni dei gironi':'Il campione sei tu.'}</h2>
       <p className="ceremony-tournament">{tournamentLabel(tournament)}</p>
-      <div className={'ceremony-winners'+(winners.length>1?' multiple':'')}>{winners.map(w=><article key={`${w.group||''}:${w.name}`}><span className="ceremony-badge"><TeamMark name={w.name} badge={badges?.[w.name]}/></span>{w.group&&<span className="ceremony-group">{w.group}</span>}<strong>{w.name}</strong><span className="ceremony-winner-label">VINCITORE</span></article>)}</div>
+      <div ref={winnerMarks} className={'ceremony-winners'+(winners.length>1?' multiple':'')}>{winners.map(w=><article key={`${w.group||''}:${w.name}`}><span className="ceremony-badge"><TeamMark name={w.name} badge={badges?.[w.name]}/></span>{w.group&&<span className="ceremony-group">{w.group}</span>}<strong>{w.name}</strong><span className="ceremony-winner-label">VINCITORE</span></article>)}</div>
       <p className="ceremony-signature">Un piccolo campo. Una grande vittoria.</p>
     </div>
     <div className="ceremony-controls"><button type="button" onClick={()=>{setReplay(n=>n+1);setAudioError(false);setSound(true);}}><RotateCcw size={17}/>Ripeti</button><button type="button" aria-pressed={sound} onClick={()=>{setAudioError(false);setSound(v=>!v);}}>{sound?<Volume2 size={17}/>:<VolumeX size={17}/>}Audio {sound?'attivo':'spento'}</button><button type="button" onClick={onClose}>Torna al torneo</button></div>
     {audioError&&<p role="status" className="ceremony-audio-note">Audio non disponibile. La premiazione continua senza musica.</p>}
-    <div className="ceremony-export">{winners.length>1&&<label>Cartolina per<select value={cardWinner} onChange={e=>setCardWinner(Number(e.target.value))}>{winners.map((w,i)=><option key={i} value={i}>{w.group?`${w.group} · `:''}{w.name}</option>)}</select></label>}<button type="button" disabled={exporting} onClick={async()=>{setExporting(true);setExportMessage('');try{const winner=winners[cardWinner];await downloadChampionCard(tournamentLabel(tournament),winner.name,winner.group);setExportMessage('Cartolina PNG pronta: controlla i download del browser.');}catch{setExportMessage('Download non riuscito. Riprova dalla cartolina del campione.');}finally{setExporting(false);}}}><Download size={17}/>{exporting?'Preparo la cartolina…':'Scarica cartolina del campione'}</button><p role="status">{exportMessage}</p></div>
+    <div className="ceremony-export">{winners.length>1&&<label>Cartolina per<select value={cardWinner} onChange={e=>setCardWinner(Number(e.target.value))}>{winners.map((w,i)=><option key={i} value={i}>{w.group?`${w.group} · `:''}{w.name}</option>)}</select></label>}<button type="button" disabled={exporting} onClick={async()=>{setExporting(true);setExportMessage('');try{const winner=winners[cardWinner];const mark=winnerMarks.current?.querySelectorAll('.ceremony-badge')[cardWinner]?.querySelector('img,svg');await downloadChampionCard(tournamentLabel(tournament),winner.name,winner.group,mark);setExportMessage('Cartolina PNG pronta: controlla i download del browser.');}catch{setExportMessage('Download non riuscito. Riprova dalla cartolina del campione.');}finally{setExporting(false);}}}><Download size={17}/>{exporting?'Preparo la cartolina…':'Scarica cartolina del campione'}</button><p role="status">{exportMessage}</p></div>
     <audio ref={audio} src="/wearethechamp.mp3" preload="none"/>
   </div></dialog>,document.body);
 }
