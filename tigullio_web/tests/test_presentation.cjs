@@ -6,9 +6,9 @@ require.extensions['.ts']=(module,filename)=>module._compile(ts.transpileModule(
 const {tournamentLabel,bracketLinks,matchWinner,matchDelay}=require('../src/presentation.ts');
 
 test('legacy names become display labels without conflating copies or arbitrary names',()=>{
- assert.equal(tournamentLabel('CampionatoSuperba_26_27'),'Campionato Superba · 2026/27');
- assert.equal(tournamentLabel('CampionatoSuperba_26_27_backup'),'Campionato Superba · 2026/27 backup');
- assert.equal(tournamentLabel('finito_fasefinaleEliminazionediretta_CampionatoSuperba_26_27'),'Finali · Campionato Superba · 2026/27');
+ assert.equal(tournamentLabel('CampionatoTigullio_26_27'),'Campionato Tigullio · 2026/27');
+ assert.equal(tournamentLabel('CampionatoTigullio_26_27_backup'),'Campionato Tigullio · 2026/27 backup');
+ assert.equal(tournamentLabel('finito_fasefinaleEliminazionediretta_CampionatoTigullio_26_27'),'Finali · Campionato Tigullio · 2026/27');
  assert.equal(tournamentLabel('Coppa 2026 · Genova'),'Coppa 2026 · Genova');
 });
 

@@ -18,7 +18,7 @@ const {TeamMark, automaticClub, tournamentBadge} = require('../src/TeamBadges.ts
 const render = component => renderToStaticMarkup(React.createElement(component.type, component.props));
 
 test('editing crest configuration updates the SVG without interpreting team text as markup', () => {
-  const initial = defaultCrest('Superba');
+  const initial = defaultCrest('Tigullio');
   const first = render(React.createElement(CustomCrest, {config: initial}));
   const updated = render(React.createElement(CustomCrest, {config: {...initial, primary: '#ff0000',
     shape: 'circle', icon: 'trophy', title: '<img onerror=alert(1)>'}}));
@@ -30,8 +30,8 @@ test('editing crest configuration updates the SVG without interpreting team text
 });
 
 test('common team mark supports custom, flag, club and no-image modes', () => {
-  const config = defaultCrest('Superba');
-  assert.match(render(React.createElement(TeamMark, {name: 'Superba', badge: {kind: 'custom', config}})), /<svg/);
+  const config = defaultCrest('Tigullio');
+  assert.match(render(React.createElement(TeamMark, {name: 'Tigullio', badge: {kind: 'custom', config}})), /<svg/);
   assert.match(render(React.createElement(TeamMark, {name: 'Italia', badge: {kind: 'flag', ref: 'IT'}})), /flagcdn.com\/it.svg/);
   assert.match(render(React.createElement(TeamMark, {name: 'Genoa', badge: {kind: 'club', ref: 'File:Genoa.svg', url: 'https:\/\/example.com\/Genoa.svg'}})), /Genoa.svg/);
   assert.equal(render(React.createElement(TeamMark, {name: 'Italia', badge: {kind: 'none'}})), 'I');

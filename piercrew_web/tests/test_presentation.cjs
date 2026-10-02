@@ -6,9 +6,9 @@ require.extensions['.ts']=(module,filename)=>module._compile(ts.transpileModule(
 const {tournamentLabel,bracketLinks,matchWinner,matchDelay}=require('../src/presentation.ts');
 
 test('legacy names become display labels without conflating copies or arbitrary names',()=>{
- assert.equal(tournamentLabel('CampionatoSuperba_26_27'),'Campionato Superba · 2026/27');
- assert.equal(tournamentLabel('CampionatoSuperba_26_27_backup'),'Campionato Superba · 2026/27 backup');
- assert.equal(tournamentLabel('finito_fasefinaleEliminazionediretta_CampionatoSuperba_26_27'),'Finali · Campionato Superba · 2026/27');
+ assert.equal(tournamentLabel('CampionatoPierCrew_26_27'),'Campionato PierCrew · 2026/27');
+ assert.equal(tournamentLabel('CampionatoPierCrew_26_27_backup'),'Campionato PierCrew · 2026/27 backup');
+ assert.equal(tournamentLabel('finito_fasefinaleEliminazionediretta_CampionatoPierCrew_26_27'),'Finali · Campionato PierCrew · 2026/27');
  assert.equal(tournamentLabel('Coppa 2026 · Genova'),'Coppa 2026 · Genova');
 });
 

@@ -20,7 +20,7 @@ from PIL import Image, ImageOps
 ROOT = Path(__file__).resolve().parent
 SOURCE = ROOT / "superba_web"
 EXCLUDE = {".venv", ".vercel", "node_modules", "dist", "tmp", "__pycache__", "test-results", ".env", ".env.local", "tsconfig.tsbuildinfo"}
-TEXT_SUFFIXES = {".py", ".ts", ".tsx", ".css", ".html", ".json", ".md", ".txt", ".example"}
+TEXT_SUFFIXES = {".py", ".ts", ".tsx", ".cjs", ".css", ".html", ".json", ".md", ".txt", ".example"}
 SYNC_PRESERVE = {
     Path("backend/store.py"), Path("backend/manuale-utente.pdf"), Path(".env.example"),
     Path("README.md"), Path("CLONE_INFO.json"), Path("public/logo-superba.jpg"),
@@ -68,10 +68,10 @@ def _ignored(_directory: str, names: list[str]) -> set[str]:
 
 
 def _club_text(content: str, relative: Path, club: dict) -> str:
-    # Shared visual layers may live in more than theme.css (for example the
-    # broadcast and ceremony components).  Recolour every CSS file copied from
-    # Superba so a sync never leaves the target club with Superba accents.
-    if relative.suffix == ".css":
+    # Canvas postcards also define fallback colours in TypeScript. Recolour
+    # those literals along with CSS so even a missing theme variable cannot
+    # give a cloned club Superba's palette.
+    if relative.suffix == ".css" or relative == Path("src/championCard.ts"):
         for old, new in club["colors"].items():
             content = content.replace(old, new)
     if relative == Path("index.html"):

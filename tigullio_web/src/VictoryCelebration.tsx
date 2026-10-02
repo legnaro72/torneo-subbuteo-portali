@@ -1,6 +1,7 @@
 import {useEffect, useRef, useState, type CSSProperties} from 'react';
 import {createPortal} from 'react-dom';
-import {RotateCcw, Trophy, Volume2, VolumeX, X} from 'lucide-react';
+import {Download, RotateCcw, Trophy, Volume2, VolumeX, X} from 'lucide-react';
+import {downloadChampionCard} from './championCard';
 import {TeamMark, type BadgeMap} from './TeamBadges';
 import {tournamentLabel} from './presentation';
 
@@ -14,7 +15,10 @@ export default function VictoryCelebration({tournament,winners,badges}:{tourname
 
 function Ceremony({tournament,winners,badges,onClose}:{tournament:string;winners:Winner[];badges?:BadgeMap;onClose:()=>void}) {
   const dialog=useRef<HTMLDialogElement>(null), audio=useRef<HTMLAudioElement>(null);
+  const winnerMarks=useRef<HTMLDivElement>(null);
   const [replay,setReplay]=useState(0), [sound,setSound]=useState(true), [audioError,setAudioError]=useState(false);
+  const [cardWinner,setCardWinner]=useState(0),[exporting,setExporting]=useState(false),[exportMessage,setExportMessage]=useState('');
+  useEffect(()=>{dialog.current?.scrollTo({top:0,behavior:'instant'});},[replay]);
   useEffect(()=>{
     const previous=document.activeElement as HTMLElement|null, overflow=document.body.style.overflow;
     dialog.current?.showModal();document.body.style.overflow='hidden';
@@ -35,16 +39,18 @@ function Ceremony({tournament,winners,badges,onClose}:{tournament:string;winners
   return createPortal(<dialog ref={dialog} className="ceremony" aria-labelledby="ceremony-title" onCancel={e=>{e.preventDefault();onClose();}} onClick={e=>{if(e.target===e.currentTarget)onClose();}}><div className="ceremony-stage">
     <button type="button" className="ceremony-close" aria-label="Chiudi premiazione" onClick={onClose} autoFocus><X/></button>
     <div key={replay} className="ceremony-scene">
-      <div className="ceremony-confetti" aria-hidden="true">{Array.from({length:64},(_,i)=><i key={i} style={{'--x':`${(i*37)%100}%`,'--drift':`${((i*71)%260)-130}px`,'--delay':`${(i%8)*.055}s`,'--duration':`${3.1+(i%9)*.16}s`,'--spin':`${360+(i%5)*180}deg`,'--color':['var(--club-accent)','var(--club-paper)','var(--club-primary)'][i%3]} as CSSProperties}/>)}</div>
+      <div className="ceremony-spotlight" aria-hidden="true"/>
+      <div className="ceremony-confetti" aria-hidden="true">{Array.from({length:88},(_,i)=><i key={i} style={{'--x':`${(i*37)%100}%`,'--drift':`${((i*71)%260)-130}px`,'--delay':`${2.1+(i%8)*.055}s`,'--duration':`${3.1+(i%9)*.16}s`,'--spin':`${360+(i%5)*180}deg`,'--color':['var(--club-accent)','var(--club-paper)','var(--club-primary)'][i%3]} as CSSProperties}/>)}</div>
       <p className="ceremony-kicker">TIGULLIO · IL MOMENTO DELLA GLORIA</p>
       <div className="ceremony-cup" aria-hidden="true"><Trophy strokeWidth={1}/></div>
       <h2 id="ceremony-title">{winners.length>1?'I campioni dei gironi':'Il campione sei tu.'}</h2>
       <p className="ceremony-tournament">{tournamentLabel(tournament)}</p>
-      <div className={'ceremony-winners'+(winners.length>1?' multiple':'')}>{winners.map(w=><article key={`${w.group||''}:${w.name}`}><span className="ceremony-badge"><TeamMark name={w.name} badge={badges?.[w.name]}/></span>{w.group&&<span className="ceremony-group">{w.group}</span>}<strong>{w.name}</strong><span className="ceremony-winner-label">VINCITORE</span></article>)}</div>
+      <div ref={winnerMarks} className={'ceremony-winners'+(winners.length>1?' multiple':'')}>{winners.map(w=><article key={`${w.group||''}:${w.name}`}><span className="ceremony-badge"><TeamMark name={w.name} badge={badges?.[w.name]}/></span>{w.group&&<span className="ceremony-group">{w.group}</span>}<strong>{w.name}</strong><span className="ceremony-winner-label">VINCITORE</span></article>)}</div>
       <p className="ceremony-signature">Un piccolo campo. Una grande vittoria.</p>
     </div>
     <div className="ceremony-controls"><button type="button" onClick={()=>{setReplay(n=>n+1);setAudioError(false);setSound(true);}}><RotateCcw size={17}/>Ripeti</button><button type="button" aria-pressed={sound} onClick={()=>{setAudioError(false);setSound(v=>!v);}}>{sound?<Volume2 size={17}/>:<VolumeX size={17}/>}Audio {sound?'attivo':'spento'}</button><button type="button" onClick={onClose}>Torna al torneo</button></div>
     {audioError&&<p role="status" className="ceremony-audio-note">Audio non disponibile. La premiazione continua senza musica.</p>}
+    <div className="ceremony-export">{winners.length>1&&<label>Cartolina per<select value={cardWinner} onChange={e=>setCardWinner(Number(e.target.value))}>{winners.map((w,i)=><option key={i} value={i}>{w.group?`${w.group} · `:''}{w.name}</option>)}</select></label>}<button type="button" disabled={exporting} onClick={async()=>{setExporting(true);setExportMessage('');try{const winner=winners[cardWinner];const mark=winnerMarks.current?.querySelectorAll('.ceremony-badge')[cardWinner]?.querySelector('img,svg');await downloadChampionCard(tournamentLabel(tournament),winner.name,winner.group,mark);setExportMessage('Cartolina PNG pronta: controlla i download del browser.');}catch{setExportMessage('Download non riuscito. Riprova dalla cartolina del campione.');}finally{setExporting(false);}}}><Download size={17}/>{exporting?'Preparo la cartolina…':'Scarica cartolina del campione'}</button><p role="status">{exportMessage}</p></div>
     <audio ref={audio} src="/wearethechamp.mp3" preload="none"/>
   </div></dialog>,document.body);
 }

@@ -21,8 +21,10 @@ from .security import generate_token, hash_password, hash_token, password_needs_
 from .store import Store, get_store
 from .tournaments import is_italiana, load, save, view
 from .badges import badge_for_team, persist_club_badges, with_club_badges
+from .badge_image import fetch_badge_image
 
 app = FastAPI(title='Tigullio', docs_url='/api/docs', openapi_url='/api/openapi.json')
+
 COOKIE = 'tigullio_portal_session'
 DESTINATIONS = {
     'finali': os.getenv('LEGACY_FINALI_URL', ''),
@@ -78,6 +80,14 @@ def current_user(request: Request, store: Store = Depends(store_dep)):
     if result['role'] in ('A', 'W') and not result['password_verified']:
         raise HTTPException(401, 'Il tuo ruolo è cambiato. Accedi con la password.')
     return result
+
+
+@app.get('/api/badge-image')
+def badge_image(url: str, user=Depends(current_user)):
+    body, media_type = fetch_badge_image(url)
+    return Response(body, media_type=media_type, headers={
+        'Content-Disposition': 'attachment', 'Content-Security-Policy': 'sandbox',
+    })
 
 
 def writer(user=Depends(current_user), store: Store = Depends(store_dep)):
