@@ -104,7 +104,7 @@ input,textarea,select,.score input{background:#fffefa;color:var(--club-ink);bord
   .favourites-grid article{grid-template-columns:34px minmax(0,1fr);gap:5px 10px;padding:12px 13px}
   .favourites-grid .favourite-icon{grid-row:1/3;align-self:start}
   .favourites-grid article>strong{font-size:15px}
-  .favourites-grid .favourite-open,.favourites-grid article>p{grid-column:2;min-width:0;margin:0}
+  .favourites-grid .favourite-actions,.favourites-grid article>p{grid-column:2;min-width:0;margin:0}
   .favourites-grid .favourite-open{font-size:13px;min-height:43px;align-items:center}
   .favourites-grid label{grid-column:1/-1;font-size:12px}
   .favourites-grid select{min-height:42px;font-size:14px}

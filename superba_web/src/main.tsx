@@ -1,7 +1,8 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {createRoot} from 'react-dom/client';
 import {ArrowUpRight, ArrowRight, Check, LogOut, BookOpen, Info, Plus, Search, ShieldCheck, X, CalendarDays, LockKeyhole} from 'lucide-react';
-import {api, type User, type Tournament, type Summary} from './api';
+import {api, ApiError, type User, type Tournament, type Summary} from './api';
+import {reconcileFavourite, removeFavourite, type Favourite, type FavouriteKind, type Favourites} from './favourites';
 import CreateTournament from './CreateTournament';
 import MusicControl from './MusicControl';
 import TournamentView from './TournamentView';
@@ -28,9 +29,6 @@ const finalMusic='https://raw.githubusercontent.com/legnaro72/torneo-Subbuteo-we
 const swissMusic='https://raw.githubusercontent.com/legnaro72/torneo-Subbuteo-webapp/main/Appenzeller%20Jodler.mp3';
 const message = (error: unknown) => error instanceof Error ? error.message : 'Operazione non riuscita.';
 type Page='home'|'italiana'|'club'|'finali'|'svizzero';
-type FavouriteKind='italiana'|'finali'|'svizzero';
-type Favourite={id:string;name:string};
-type Favourites=Partial<Record<FavouriteKind,Favourite>>;
 const pageFromLocation=(): Page=>{const path=window.location.pathname;const direct=readTournamentRoute(window.location);if(direct&&(direct.type==='finali'||direct.type==='svizzero'))return direct.type;return path==='/club'?'club':path==='/italiana'?'italiana':path==='/finali'?'finali':path==='/svizzero'?'svizzero':'home';};
 
 function Signature(){return <span className="site-credit header-credit"><small>IDEATO E REALIZZATO DA</small><strong>© {new Date().getFullYear()} Legnaro 72</strong></span>;}
@@ -46,6 +44,9 @@ function App() {
   const [finalsList,setFinalsList]=useState<Favourite[]>([]);
   const [swissList,setSwissList]=useState<Favourite[]>([]);
   const [favourites,setFavourites]=useState<Favourites>({});
+  const [favouritesReadyFor,setFavouritesReadyFor]=useState('');
+  const [competitionListsLoading,setCompetitionListsLoading]=useState({finali:true,svizzero:true});
+  const listUser=useRef('');
   const [page, setPage] = useState<Page>(pageFromLocation);
   const [search, setSearch] = useState('');
   const [creating, setCreating] = useState(false);
@@ -59,10 +60,11 @@ function App() {
   const [competitionName,setCompetitionName]=useState(()=>{const route=readTournamentRoute(window.location);return route&&route.type!=='italiana'?route.name:'';});
   const canWrite = !!user && ['A', 'W'].includes(user.role) && user.password_verified && config.writes_enabled;
   useEffect(() => { Promise.all([api<Config>('/config').then(setConfig), api<User>('/auth/me').then(setUser).catch(() => null)]).catch(e => setError(message(e))).finally(() => setReady(true)); }, []);
-  const refresh = async () => {setListLoading(true);try{setList(await api<Summary[]>('/tournaments'));setListLoaded(true);}catch(e){setError(message(e));}finally{setListLoading(false);}};
-  useEffect(() => { if (user) void refresh(); }, [user]);
-  useEffect(()=>{if(!user)return;try{setFavourites(JSON.parse(localStorage.getItem(`superba-favourites:${user.id}`)||'{}'));}catch{setFavourites({});}Promise.all([api<Favourite[]>('/finals'),api<Favourite[]>('/swiss')]).then(([finals,swiss])=>{setFinalsList(finals);setSwissList(swiss);}).catch(()=>{});},[user?.id]);
-  useEffect(()=>{if(!user)return;try{localStorage.setItem(`superba-favourites:${user.id}`,JSON.stringify(favourites));}catch{}},[favourites,user?.id]);
+  const refresh = async () => {setListLoading(true);try{const tournaments=await api<Summary[]>('/tournaments');setList(tournaments);setListLoaded(true);setFavourites(current=>reconcileFavourite(current,'italiana',tournaments));}catch(e){setError(message(e));}finally{setListLoading(false);}};
+  useEffect(()=>{if(!user)return;try{setFavourites(JSON.parse(localStorage.getItem(`superba-favourites:${user.id}`)||'{}'));}catch{setFavourites({});}setFavouritesReadyFor(user.id);},[user?.id]);
+  useEffect(() => { if(user&&(page==='home'||listUser.current!==user.id)){listUser.current=user.id;void refresh();} }, [user?.id,page]);
+  useEffect(()=>{if(!user||page!=='home'||favouritesReadyFor!==user.id)return;let cancelled=false;for(const kind of ['finali','svizzero'] as const){setCompetitionListsLoading(current=>({...current,[kind]:true}));api<Favourite[]>(kind==='finali'?'/finals':'/swiss').then(items=>{if(cancelled)return;if(kind==='finali')setFinalsList(items);else setSwissList(items);setFavourites(current=>reconcileFavourite(current,kind,items));}).catch(()=>{}).finally(()=>{if(!cancelled)setCompetitionListsLoading(current=>({...current,[kind]:false}));});}return()=>{cancelled=true;};},[user?.id,page,favouritesReadyFor]);
+  useEffect(()=>{if(!user||favouritesReadyFor!==user.id)return;try{localStorage.setItem(`superba-favourites:${user.id}`,JSON.stringify(favourites));}catch{}},[favourites,favouritesReadyFor,user?.id]);
   useEffect(()=>{const currentUrl=window.location.href;const onPop=()=>{if(dirty&&page==='club'&&!window.confirm('Le modifiche del club non salvate andranno perse. Vuoi cambiare pagina?')){window.history.pushState({},'',currentUrl);return;}setActive(null);setDirty(false);setPage(pageFromLocation());const route=readTournamentRoute(window.location);setDirectRoute(route);setCompetitionName(route&&route.type!=='italiana'?route.name:'');};window.addEventListener('popstate',onPop);return()=>window.removeEventListener('popstate',onPop);},[dirty,page]);
   useEffect(()=>{
     if(!user||!directRoute)return;
@@ -87,22 +89,32 @@ function App() {
   useEffect(()=>{window.scrollTo({top:0,left:0,behavior:'instant'});},[page,active?.id,user?.id]);
   useEffect(()=>{const handler=(event:BeforeUnloadEvent)=>{if(dirty){event.preventDefault();event.returnValue='';}};window.addEventListener('beforeunload',handler);return()=>window.removeEventListener('beforeunload',handler);},[dirty]);
   const leave = () => !dirty || window.confirm(page==='club'?'Le modifiche del club non salvate andranno perse. Vuoi cambiare pagina?':'Ci sono modifiche non salvate. Salvale prima di uscire se vuoi conservarle sul server. Vuoi cambiare pagina?');
-  async function open(id: string) {
+  async function open(id: string,fromFavourite=false) {
     if (!leave()) return;
     setBusy(true); setError(''); setNotice('');
     try { const tournament=await api<Tournament>('/tournaments/' + id);setActive(tournament); setPage('italiana'); setDirty(false); window.history.pushState({},'',tournamentPath(tournament.name)); }
-    catch (e) { setError(message(e)); }
+    catch (e) { if(fromFavourite&&e instanceof ApiError&&e.status===404){setFavourites(current=>removeFavourite(current,'italiana',id));setNotice('Il torneo preferito non è più disponibile. Il collegamento è stato rimosso.');void refresh();}else setError(message(e)); }
     finally { setBusy(false); }
   }
-  function openFavourite(kind:FavouriteKind,favourite:Favourite){
+  async function openFavourite(kind:FavouriteKind,favourite:Favourite){
+    if(kind==='italiana'){await open(favourite.id,true);return;}
     if(!leave())return;
-    if(kind==='italiana'){void open(favourite.id);return;}
-    setActive(null);setDirty(false);setError('');setNotice('');setPage(kind);setCompetitionName(favourite.name);setDirectRoute(null);window.history.pushState({},'',tournamentPath(favourite.name,kind));
+    setBusy(true);setError('');setNotice('');
+    try{
+      const items=await api<Favourite[]>(kind==='finali'?'/finals':'/swiss');
+      if(kind==='finali')setFinalsList(items);else setSwissList(items);
+      setFavourites(current=>reconcileFavourite(current,kind,items));
+      const found=items.find(item=>item.id===favourite.id);
+      if(!found){setNotice('Il torneo preferito non è più disponibile. Il collegamento è stato rimosso.');return;}
+      const detailBase=kind==='svizzero'?'/swiss':found.mode==='groups'?'/tournaments':'/finals';
+      try{await api<unknown>(`${detailBase}/${found.id}`);}catch(e){if(e instanceof ApiError&&e.status===404){setFavourites(current=>removeFavourite(current,kind,favourite.id));setNotice('Il torneo preferito non è più disponibile. Il collegamento è stato rimosso.');return;}throw e;}
+      setActive(null);setDirty(false);setPage(kind);setCompetitionName(found.name);setDirectRoute(null);window.history.pushState({},'',tournamentPath(found.name,kind));
+    }catch(e){setError(message(e));}finally{setBusy(false);}
   }
   function setFavourite(kind:FavouriteKind,id:string){
     const source=kind==='italiana'?list:kind==='finali'?finalsList:swissList;
     const found=source.find(item=>item.id===id);
-    setFavourites(current=>{const next={...current};if(found)next[kind]={id:found.id,name:found.name};else delete next[kind];return next;});
+    setFavourites(current=>found?{...current,[kind]:{id:found.id,name:found.name}}:removeFavourite(current,kind));
   }
   async function external(destination: string, tournamentName?: string) {
     if (!leave()) return;
@@ -150,7 +162,7 @@ function App() {
             <section className="hero"><div><span className="hero-kicker"><span className="live-dot"/> IL GIOCO, AL CENTRO</span><h2>{activeChampionship?tournamentLabel(activeChampionship.name):<>La passione è la stessa.<br/>Il campo è tutto nuovo.</>}</h2><p>{activeChampionship?`${activeChampionship.played} partite validate su ${activeChampionship.matches}. La prossima giornata ti aspetta.`:'Organizza il campionato e vivi ogni risultato insieme al tuo club.'}</p><button disabled={busy||listLoading} onClick={() => activeChampionship?void open(activeChampionship.id):navigate('italiana')}>{activeChampionship?'Vai alla giornata':'Vai ai tornei all’italiana'}<ArrowRight size={18}/></button></div><div className="pitch" aria-hidden="true"><div className="pitch-line"/><div className="center-circle"/><div className="box top"/><div className="box bottom"/><div className="player p1"/><div className="player p2"/><div className="player p3"/><div className="ball"/></div><span className="hero-number">01 / SUPERBA</span></section>
             {activeChampionship&&<ChampionshipStory key={activeChampionship.id} id={activeChampionship.id} revision={`${activeChampionship.played}:${activeChampionship.matches}`} onOpen={()=>void open(activeChampionship.id)}/> }
             {listLoading?<LoadingPanel label="Caricamento tornei…"/>:<div className="stats"><Stat label="Tornei in archivio" value={list.length} icon={<PortalIcon kind="italiana"/>}/><Stat label="Partite giocate" value={list.reduce((n,t) => n+t.played,0)} icon={<Check/>}/><Stat label="Tornei da completare" value={list.filter(t=>t.played<t.matches).length} icon={<CalendarDays/>}/></div>}
-            <section className="favourites-panel"><div><span className="eyebrow">ACCESSO RAPIDO</span><h2>I tuoi preferiti</h2><p>Un torneo per formula, memorizzato solo su questo dispositivo.</p></div><div className="favourites-grid">{([{kind:'italiana',label:'All’italiana',items:list},{kind:'finali',label:'Fasi finali',items:finalsList},{kind:'svizzero',label:'Svizzero',items:swissList}] as {kind:FavouriteKind;label:string;items:Favourite[]}[]).map(({kind,label,items})=>{const favourite=favourites[kind];return <article key={kind}><span className="favourite-icon"><PortalIcon kind={kind}/></span><strong>{label}</strong>{favourite?<button className="favourite-open" onClick={()=>openFavourite(kind,favourite)}>{tournamentLabel(favourite.name)}<ArrowUpRight size={15}/></button>:<p>Nessun preferito</p>}<label>Imposta preferito<select aria-label={`Preferito ${label}`} value={favourite?.id||''} onChange={e=>setFavourite(kind,e.target.value)}><option value="">Scegli un torneo…</option>{items.map(item=><option key={item.id} value={item.id}>{tournamentLabel(item.name)}</option>)}</select></label></article>;})}</div></section>
+            <section className="favourites-panel"><div><span className="eyebrow">ACCESSO RAPIDO</span><h2>I tuoi preferiti</h2><p>Un torneo per formula, memorizzato solo su questo dispositivo.</p></div><div className="favourites-grid">{([{kind:'italiana',label:'All’italiana',items:list},{kind:'finali',label:'Fasi finali',items:finalsList},{kind:'svizzero',label:'Svizzero',items:swissList}] as {kind:FavouriteKind;label:string;items:Favourite[]}[]).map(({kind,label,items})=>{const favourite=favourites[kind],checking=kind==='italiana'?listLoading:competitionListsLoading[kind];return <article key={kind}><span className="favourite-icon"><PortalIcon kind={kind}/></span><strong>{label}</strong>{favourite?<div className="favourite-actions"><button className="favourite-open" disabled={busy||checking} onClick={()=>void openFavourite(kind,favourite)}>{tournamentLabel(favourite.name)}<ArrowUpRight size={15}/></button><button type="button" className="favourite-remove" aria-label={`Rimuovi preferito ${label}`} title="Rimuovi preferito" onClick={()=>setFavourite(kind,'')}><X size={16}/></button></div>:<p>Nessun preferito</p>}<label>Imposta preferito<select aria-label={`Preferito ${label}`} value={favourite?.id||''} disabled={checking} onChange={e=>setFavourite(kind,e.target.value)}><option value="">Scegli un torneo…</option>{items.map(item=><option key={item.id} value={item.id}>{tournamentLabel(item.name)}</option>)}</select></label></article>;})}</div></section>
           </>}
           <section className="archive"><div className="section-heading"><div><h2>{page === 'home' ? 'I tuoi tornei' : 'Archivio tornei'}</h2><p>Riprendi il gioco da dove lo hai lasciato.</p></div><label className="search"><Search size={17}/><input aria-label="Cerca torneo" value={search} onChange={e=>setSearch(e.target.value)} placeholder="Cerca un torneo…"/></label></div>
             <div className="tournament-list">{listLoading&&<LoadingPanel label="Caricamento archivio…"/>}{!listLoading&&list.filter(t=>t.name.toLocaleLowerCase().includes(search.toLocaleLowerCase())).map(t=><button disabled={busy} className="tournament-row" key={t.id} onClick={()=>open(t.id)}><span className="tournament-icon"><PortalIcon kind="italiana"/></span><span className="tournament-title"><strong>{tournamentLabel(t.name)}</strong><small>{t.groups > 1 && <>{`${t.groups} gironi`}<span>·</span></>}{t.matches} partite</small></span><span className={'badge ' + (t.played === t.matches ? 'done' : '')}>{t.played === t.matches ? 'Completato' : 'In corso'}</span><span className="progress"><span>{t.played}/{t.matches} giocate</span><span className="track"><i style={{width:`${t.played/t.matches*100}%`}}/></span></span><ArrowRight size={18}/></button>)}
