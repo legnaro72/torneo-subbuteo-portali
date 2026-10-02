@@ -65,6 +65,11 @@ Il portale è pubblicato su [superbaweb.vercel.app](https://superbaweb.vercel.ap
 
 ### Presentazione sportiva Superba
 
+- Modalità Regia da ogni torneo: giornate e turni, gruppi distinti, navigazione da tastiera, ripetizione dell'ingresso e schermo intero. Le schermate si adattano all'altezza disponibile (da 2 a 6 incontri). Vengono proiettati esclusivamente risultati salvati; gli incontri non validati mostrano un trattino.
+- Home con capolista per girone, avanzamento e ultimo risultato nell'ordine del calendario (non ultima modifica cronologica: i dati non espongono il momento della validazione).
+- Premiazione in sequenza: luce, coppa, titolo, vincitore e coriandoli. Ogni vincitore può scaricare la propria cartolina PNG 1200 × 1500 con logo, colori del club e titolo del torneo. L'immagine viene generata nel browser.
+- Palmarès con targhe delle singole vittorie e filtro per stagione. Gli archivi senza stagione riconoscibile restano sotto “Stagione non indicata”. Gli stemmi dei giocatori sono quelli attuali, perché il palmarès non conserva lo stemma storico.
+
 - Cambio giornata/turno con ingresso progressivo degli incontri a intervalli di 310 ms e durata di 1,04 secondi per riga, ben percepibile ma limitato anche per giornate numerose, senza ripartenze durante la modifica dei gol. Gli elenchi filtrati compaiono subito.
 - Premiazione a schermo intero con coppa, stemmi, coriandoli nei colori del club, vincitori distinti per girone, ripetizione, audio e chiusura da tastiera. La musica di sottofondo viene sospesa durante l'audio della premiazione e ripristinata secondo la preferenza dell'utente. Le animazioni rispettano la preferenza di movimento ridotto.
 - Intestazioni mobili compatte, nomi e stagioni presentati in forma leggibile senza cambiare identificatori o dati; tabellini in sola lettura e conferma sulle righe appena salvate.
@@ -75,6 +80,7 @@ Test aggiuntivi di presentazione, abbinamenti e preferenze:
 
 ```powershell
 node --test tests/test_presentation.cjs tests/test_view_preference.cjs tests/test_crest_ui.cjs
+node --test tests/test_studio.cjs
 ```
 
 ```powershell
