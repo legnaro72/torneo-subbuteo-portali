@@ -1,5 +1,6 @@
+import WhatsAppIcon from './WhatsAppIcon';
 import {useState} from 'react';
-import {MessageCircle,X} from 'lucide-react';
+import {X} from 'lucide-react';
 import {pdfFileFromResponse,savePlayNowPdf} from './playNowPdf';
 import './pdfShare.css';
 
@@ -25,7 +26,7 @@ export default function PdfShareButton({url,filename,title,revision='',disabled=
     }catch(e){setError(e instanceof Error?e.message:'Preparazione del PDF non riuscita. Riprova.');}
     finally{setBusy(false);}
   }
-  return <span className="pdf-share"><button type="button" className="secondary compact" disabled={disabled||busy} onClick={()=>void share()} title={`Condividi il PDF nel gruppo ${whatsappGroup}`}><MessageCircle size={16}/>{busy?'Preparazione…':ready?'WhatsApp · PDF pronto':'WhatsApp'}</button>
-    {open&&<span className="pdf-share-info"><button type="button" className="pdf-share-close" aria-label="Chiudi indicazioni WhatsApp" onClick={()=>setOpen(false)}><X size={16}/></button>{error?<span role="alert">{error}</span>:<span role="status">{busy?'Preparazione del PDF con i dati salvati…':ready?<>PDF pronto. Premi di nuovo <strong>WhatsApp · PDF pronto</strong>, scegli WhatsApp e il gruppo <strong>{whatsappGroup}</strong>.</>:fallback===key?<>PDF scaricato. Apri WhatsApp, cerca <strong>{whatsappGroup}</strong> e allega <strong>{filename}</strong> dai Download. <a href="https://web.whatsapp.com/" target="_blank" rel="noopener noreferrer">Apri WhatsApp</a></>:<>I dati sono cambiati. Premi WhatsApp per preparare il PDF aggiornato.</>}</span>}</span>}
+  return <span className="pdf-share"><button type="button" className="secondary compact whatsapp-button" disabled={disabled||busy} onClick={()=>void share()} title={`Condividi il PDF nel gruppo ${whatsappGroup}`}><WhatsAppIcon/>{busy?'Preparazione…':ready?'WhatsApp · PDF pronto':'WhatsApp'}</button>
+    {open&&<span className="pdf-share-info"><button type="button" className="pdf-share-close" aria-label="Chiudi indicazioni WhatsApp" onClick={()=>setOpen(false)}><X size={16}/></button>{error?<span role="alert">{error}</span>:<span role="status">{busy?'Preparazione del PDF con i dati salvati…':ready?<>PDF pronto. Premi di nuovo <strong>WhatsApp · PDF pronto</strong>, scegli WhatsApp e il gruppo <strong>{whatsappGroup}</strong>.</>:fallback===key?<>PDF scaricato. Apri WhatsApp, cerca <strong>{whatsappGroup}</strong> e allega <strong>{filename}</strong> dai Download. <a className="whatsapp-button" href="https://web.whatsapp.com/" target="_blank" rel="noopener noreferrer"><WhatsAppIcon/>Apri WhatsApp</a></>:<>I dati sono cambiati. Premi WhatsApp per preparare il PDF aggiornato.</>}</span>}</span>}
   </span>;
 }

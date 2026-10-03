@@ -1,5 +1,7 @@
+import './pdfShare.css';
+import WhatsAppIcon from './WhatsAppIcon';
 import {useMemo,useState} from 'react';
-import {ArrowRight,Download,MessageCircle,Search,Users,Zap} from 'lucide-react';
+import {ArrowRight,Download,Search,Users,Zap} from 'lucide-react';
 import {TeamMark,type BadgeMap} from './TeamBadges';
 import {attendees,suggestMatches,type PlayableMatch} from './matchSuggestions';
 import './playNow.css';
@@ -47,9 +49,9 @@ export default function PlayNow({matches,storageKey,exportPath,version,badges,wi
     </div>
     <div className="results-card play-proposals"><div className="results-heading"><h3><Zap size={18}/>{preview==='all'?'Incontri disputabili':'In campo insieme'}</h3><span role="status">{games.length} incontri {preview==='all'?'disponibili':'simultanei'}</span></div>
       <div className="play-preview-switch"><div className="segmented" role="group" aria-label="Anteprima incontri"><button type="button" className={preview==='all'?'active':''} aria-pressed={preview==='all'} onClick={()=>setPreview('all')}>Tutti gli incontri ({result.available})</button><button type="button" className={preview==='together'?'active':''} aria-pressed={preview==='together'} onClick={()=>setPreview('together')}>In campo insieme ({result.proposed.length})</button></div></div>
-      <div className="play-pdf-actions"><button type="button" className="primary compact" disabled={!result.available||exporting} onClick={()=>void exportPdf()}><Download size={17}/>{exporting?'Preparazione PDF…':`Scarica PDF (${result.available})`}</button><button type="button" className="secondary compact" disabled={!result.available||exporting} onClick={()=>void sharePdf()}><MessageCircle size={17}/>{shareReady?'WhatsApp · PDF pronto':'WhatsApp'}</button><p>Il PDF include tutti gli incontri disponibili.</p></div>
+      <div className="play-pdf-actions"><button type="button" className="primary compact" disabled={!result.available||exporting} onClick={()=>void exportPdf()}><Download size={17}/>{exporting?'Preparazione PDF…':`Scarica PDF (${result.available})`}</button><button type="button" className="secondary compact whatsapp-button" disabled={!result.available||exporting} onClick={()=>void sharePdf()}><WhatsAppIcon/>{shareReady?'WhatsApp · PDF pronto':'WhatsApp'}</button><p>Il PDF include tutti gli incontri disponibili.</p></div>
       {shareReady&&<p className="results-note" role="status">PDF pronto. Premi “WhatsApp · PDF pronto”, scegli WhatsApp e poi il gruppo “Campionato Superba”.</p>}
-      {fallbackKey===exportKey&&<div className="play-pdf-actions" role="status"><p>PDF scaricato. Questo browser non condivide allegati: apri WhatsApp, scegli il gruppo “Campionato Superba” e allega il file dai Download.</p><a className="secondary compact" href="https://web.whatsapp.com/" target="_blank" rel="noopener noreferrer">Apri WhatsApp<ArrowRight size={16}/></a></div>}
+      {fallbackKey===exportKey&&<div className="play-pdf-actions" role="status"><p>PDF scaricato. Questo browser non condivide allegati: apri WhatsApp, scegli il gruppo “Campionato Superba” e allega il file dai Download.</p><a className="secondary compact whatsapp-button" href="https://web.whatsapp.com/" target="_blank" rel="noopener noreferrer"><WhatsAppIcon/>Apri WhatsApp<ArrowRight size={16}/></a></div>}
       {exportError&&<div className="alert error" role="alert">{exportError}</div>}
       <p className="results-note">{preview==='all'?'Anteprima completa, ordinata dalle prime giornate. Un giocatore può comparire in più incontri: queste partite vanno disputate in momenti diversi.':'Una proposta di partite da giocare contemporaneamente, senza impegnare lo stesso giocatore in più incontri.'}</p>
       {blocked.length>0&&<p className="results-note">Le partite con modifiche in bozza sono escluse: salva i risultati per aggiornare i suggerimenti.</p>}

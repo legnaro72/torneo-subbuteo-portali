@@ -1,10 +1,32 @@
 """Shareable list of pending matches; no results or tournament writes."""
 from datetime import datetime, timezone
+from io import BytesIO
 
-from .report import GazzettaPDF, NAVY, GOLD, PALE, printable
+from .report import GazzettaPDF, NAVY, GOLD, PALE, printable, badge_for, remote_image_url
+from .badge_image import fetch_badge_image
 
 
 class PlayNowPDF(GazzettaPDF):
+    def draw_match_badge(self, badge, label, x, y, size=8):
+        if not isinstance(badge, dict) or badge.get('kind') == 'none':
+            return
+        url = badge.get('url') if badge.get('kind') == 'club' else remote_image_url(badge)
+        if url:
+            if url not in self._badge_cache:
+                try:
+                    self._badge_cache[url] = fetch_badge_image(url)[0]
+                except Exception:
+                    self._badge_cache[url] = None
+            raw = self._badge_cache[url]
+            if raw:
+                try:
+                    self.image(BytesIO(raw), x=x, y=y, w=size, h=size, keep_aspect_ratio=True)
+                    return
+                except Exception:
+                    pass
+        # Use the existing PDF crest fallback if an external image is missing.
+        self.draw_badge({'kind': 'custom', 'config': badge.get('config') or {}}, label, x, y, size)
+
     def header(self):
         self.set_fill_color(*NAVY)
         self.rect(0, 0, 210, 41, 'F')
@@ -27,6 +49,7 @@ class PlayNowPDF(GazzettaPDF):
 
 def render_play_now_pdf(data, matches):
     pdf = PlayNowPDF(data['name'])
+    badges = data.get('badges') or {}
     pdf.set_title(printable(f"Superba - Partite disponibili - {data['name']}"))
     pdf.set_author('Superba Subbuteo Club')
     pdf.add_page()
@@ -47,7 +70,7 @@ def render_play_now_pdf(data, matches):
         pdf.set_font('Helvetica', '', 11)
         home = printable(match['home'])
         away = printable(match['away'])
-        lines = max(len(pdf.multi_cell(83, 5.5, value, dry_run=True, output='LINES')) for value in (home, away))
+        lines = max(len(pdf.multi_cell(73, 5.5, value, dry_run=True, output='LINES')) for value in (home, away))
         height = max(16, lines * 5.5 + 6)
         if pdf.get_y() + height + (11 if label != previous else 0) > 280:
             pdf.add_page()
@@ -62,18 +85,20 @@ def render_play_now_pdf(data, matches):
         x, y = 10, pdf.get_y()
         pdf.set_fill_color(*PALE if number % 2 else (248, 249, 251))
         pdf.rect(x, y, 190, height, 'F')
+        pdf.draw_match_badge(badge_for(match['home'], badges), match['home'], x + 11, y + (height - 8) / 2)
+        pdf.draw_match_badge(badge_for(match['away'], badges), match['away'], x + 108, y + (height - 8) / 2)
         pdf.set_text_color(*NAVY)
         pdf.set_font('Helvetica', 'B', 9)
         pdf.set_xy(x, y + 3)
         pdf.cell(10, height - 6, str(number), align='C')
         pdf.set_font('Helvetica', '', 11)
-        pdf.set_xy(x + 10, y + 3)
-        pdf.multi_cell(83, 5.5, home)
+        pdf.set_xy(x + 20, y + 3)
+        pdf.multi_cell(73, 5.5, home)
         pdf.set_xy(x + 93, y + 3)
         pdf.set_font('Helvetica', 'B', 9)
         pdf.cell(14, height - 6, 'VS', align='C')
-        pdf.set_xy(x + 107, y + 3)
+        pdf.set_xy(x + 117, y + 3)
         pdf.set_font('Helvetica', '', 11)
-        pdf.multi_cell(83, 5.5, away)
+        pdf.multi_cell(73, 5.5, away)
         pdf.set_xy(10, y + height + 1)
     return bytes(pdf.output())

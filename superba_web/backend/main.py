@@ -472,7 +472,7 @@ def export_play_now(kind: str, tournament_id: str, request: PlayNowExport, user=
         raise HTTPException(409, 'Alcune partite non sono più disponibili. Ricarica il torneo e riprova.')
     selected.sort(key=lambda m: (m.get('day', m.get('round', 1)), m.get('group', ''), m['index']))
     from .play_now_report import render_play_now_pdf
-    return Response(render_play_now_pdf(data, selected), media_type='application/pdf',
+    return Response(render_play_now_pdf(with_club_badges(store, data), selected), media_type='application/pdf',
                     headers={'Content-Disposition': 'attachment; filename="partite-disponibili-superba.pdf"'})
 
 

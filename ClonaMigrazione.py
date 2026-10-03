@@ -11,6 +11,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import shutil
 from pathlib import Path
 
@@ -68,9 +69,15 @@ def _ignored(_directory: str, names: list[str]) -> set[str]:
 
 
 def _club_text(content: str, relative: Path, club: dict) -> str:
-    if relative == Path("src/clubFeatures.ts"):
-        content = content.replace("playNowEnabled = true", "playNowEnabled = false")
-        content = content.replace("whatsAppPdfEnabled = true", "whatsAppPdfEnabled = false")
+    # All new shared features now travel with the clone and subsequent syncs.
+    # PlayNow's PDF imports this palette from report.py as well.
+    if relative in (Path("backend/report.py"), Path("backend/club_report.py")):
+        for name, original, source in (("NAVY", "(26, 54, 93)", "#102b4e"),
+                                      ("GOLD", "(212, 175, 55)", "#e7d9b4"),
+                                      ("PALE", "(230, 235, 245)", "#f3f5f6")):
+            color = club["colors"][source].lstrip('#')
+            rgb = tuple(int(color[i:i+2], 16) for i in (0, 2, 4))
+            content = content.replace(f'{name} = {original}', f'{name} = {rgb}')
     # Canvas postcards also define fallback colours in TypeScript. Recolour
     # those literals along with CSS so even a missing theme variable cannot
     # give a cloned club Superba's palette.
@@ -197,9 +204,12 @@ def sync(club_key: str) -> int:
         raise FileNotFoundError(f"Clone mancante: {target}. Esegui prima la clonazione iniziale.")
     club = {**CLUBS[club_key], "key": club_key}
     updated = 0
-    for source_file in SOURCE.rglob("*"):
-        if not source_file.is_file():
-            continue
+    # Prune ignored directories before walking them (including PDF test dependencies).
+    source_files = []
+    for directory, directories, filenames in os.walk(SOURCE):
+        directories[:] = [name for name in directories if name not in EXCLUDE]
+        source_files.extend(Path(directory) / name for name in filenames)
+    for source_file in source_files:
         relative = source_file.relative_to(SOURCE)
         if any(part in EXCLUDE for part in relative.parts) or source_file.name.endswith(".pyc") or relative in SYNC_PRESERVE:
             continue
