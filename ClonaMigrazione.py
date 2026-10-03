@@ -68,6 +68,8 @@ def _ignored(_directory: str, names: list[str]) -> set[str]:
 
 
 def _club_text(content: str, relative: Path, club: dict) -> str:
+    if relative == Path("src/clubFeatures.ts"):
+        content = content.replace("playNowEnabled = true", "playNowEnabled = false")
     # Canvas postcards also define fallback colours in TypeScript. Recolour
     # those literals along with CSS so even a missing theme variable cannot
     # give a cloned club Superba's palette.

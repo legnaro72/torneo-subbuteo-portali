@@ -1,0 +1,7630 @@
+[{
+  "_id": {
+    "$oid": "69c59e97732a8bf8571fa504"
+  },
+  "nome_torneo": "CampionatoSuperba_26_27",
+  "calendario": [
+    {
+      "Girone": "Girone 1",
+      "Giornata": 1,
+      "Casa": "Germania - Steven71",
+      "Ospite": "Eire - Federico",
+      "GolCasa": 3,
+      "GolOspite": 1,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 1,
+      "Casa": "Inghilterra - Celtico69",
+      "Ospite": "Grecia - Pedino",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 1,
+      "Casa": "Croazia - Bomber69",
+      "Ospite": "Olanda - Asto",
+      "GolCasa": 2,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 1,
+      "Casa": "Austria - Lord Sinc",
+      "Ospite": "San Marino - Legnaro72",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 1,
+      "Casa": "Spagna - FabioMarce",
+      "Ospite": "Belgio - Ruben Paz",
+      "GolCasa": 2,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 1,
+      "Casa": "Danimarca - SampElvio",
+      "Ospite": "Italia - Felgen79",
+      "GolCasa": 1,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 1,
+      "Casa": "Malta - Futzal",
+      "Ospite": "Romania - Crazy Doc",
+      "GolCasa": 1,
+      "GolOspite": 1,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 2,
+      "Casa": "Germania - Steven71",
+      "Ospite": "Grecia - Pedino",
+      "GolCasa": 2,
+      "GolOspite": 1,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 2,
+      "Casa": "Eire - Federico",
+      "Ospite": "Olanda - Asto",
+      "GolCasa": 0,
+      "GolOspite": 1,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 2,
+      "Casa": "Inghilterra - Celtico69",
+      "Ospite": "San Marino - Legnaro72",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 2,
+      "Casa": "Croazia - Bomber69",
+      "Ospite": "Belgio - Ruben Paz",
+      "GolCasa": 3,
+      "GolOspite": 1,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 2,
+      "Casa": "Austria - Lord Sinc",
+      "Ospite": "Italia - Felgen79",
+      "GolCasa": 2,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 2,
+      "Casa": "Spagna - FabioMarce",
+      "Ospite": "Romania - Crazy Doc",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 2,
+      "Casa": "Danimarca - SampElvio",
+      "Ospite": "Malta - Futzal",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 3,
+      "Casa": "Germania - Steven71",
+      "Ospite": "Olanda - Asto",
+      "GolCasa": 3,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 3,
+      "Casa": "Grecia - Pedino",
+      "Ospite": "San Marino - Legnaro72",
+      "GolCasa": 1,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 3,
+      "Casa": "Eire - Federico",
+      "Ospite": "Belgio - Ruben Paz",
+      "GolCasa": 1,
+      "GolOspite": 9,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 3,
+      "Casa": "Inghilterra - Celtico69",
+      "Ospite": "Italia - Felgen79",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 3,
+      "Casa": "Croazia - Bomber69",
+      "Ospite": "Romania - Crazy Doc",
+      "GolCasa": 4,
+      "GolOspite": 1,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 3,
+      "Casa": "Austria - Lord Sinc",
+      "Ospite": "Malta - Futzal",
+      "GolCasa": 4,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 3,
+      "Casa": "Spagna - FabioMarce",
+      "Ospite": "Danimarca - SampElvio",
+      "GolCasa": 1,
+      "GolOspite": 2,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 4,
+      "Casa": "Germania - Steven71",
+      "Ospite": "San Marino - Legnaro72",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 4,
+      "Casa": "Olanda - Asto",
+      "Ospite": "Belgio - Ruben Paz",
+      "GolCasa": 1,
+      "GolOspite": 2,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 4,
+      "Casa": "Grecia - Pedino",
+      "Ospite": "Italia - Felgen79",
+      "GolCasa": 0,
+      "GolOspite": 1,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 4,
+      "Casa": "Eire - Federico",
+      "Ospite": "Romania - Crazy Doc",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 4,
+      "Casa": "Inghilterra - Celtico69",
+      "Ospite": "Malta - Futzal",
+      "GolCasa": 2,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 4,
+      "Casa": "Croazia - Bomber69",
+      "Ospite": "Danimarca - SampElvio",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 4,
+      "Casa": "Austria - Lord Sinc",
+      "Ospite": "Spagna - FabioMarce",
+      "GolCasa": 2,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 5,
+      "Casa": "Germania - Steven71",
+      "Ospite": "Belgio - Ruben Paz",
+      "GolCasa": 2,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 5,
+      "Casa": "San Marino - Legnaro72",
+      "Ospite": "Italia - Felgen79",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 5,
+      "Casa": "Olanda - Asto",
+      "Ospite": "Romania - Crazy Doc",
+      "GolCasa": 4,
+      "GolOspite": 2,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 5,
+      "Casa": "Grecia - Pedino",
+      "Ospite": "Malta - Futzal",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 5,
+      "Casa": "Eire - Federico",
+      "Ospite": "Danimarca - SampElvio",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 5,
+      "Casa": "Inghilterra - Celtico69",
+      "Ospite": "Spagna - FabioMarce",
+      "GolCasa": 2,
+      "GolOspite": 1,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 5,
+      "Casa": "Croazia - Bomber69",
+      "Ospite": "Austria - Lord Sinc",
+      "GolCasa": 0,
+      "GolOspite": 1,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 6,
+      "Casa": "Germania - Steven71",
+      "Ospite": "Italia - Felgen79",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 6,
+      "Casa": "Belgio - Ruben Paz",
+      "Ospite": "Romania - Crazy Doc",
+      "GolCasa": 1,
+      "GolOspite": 1,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 6,
+      "Casa": "San Marino - Legnaro72",
+      "Ospite": "Malta - Futzal",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 6,
+      "Casa": "Olanda - Asto",
+      "Ospite": "Danimarca - SampElvio",
+      "GolCasa": 1,
+      "GolOspite": 4,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 6,
+      "Casa": "Grecia - Pedino",
+      "Ospite": "Spagna - FabioMarce",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 6,
+      "Casa": "Eire - Federico",
+      "Ospite": "Austria - Lord Sinc",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 6,
+      "Casa": "Inghilterra - Celtico69",
+      "Ospite": "Croazia - Bomber69",
+      "GolCasa": 4,
+      "GolOspite": 1,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 7,
+      "Casa": "Germania - Steven71",
+      "Ospite": "Romania - Crazy Doc",
+      "GolCasa": 4,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 7,
+      "Casa": "Italia - Felgen79",
+      "Ospite": "Malta - Futzal",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 7,
+      "Casa": "Belgio - Ruben Paz",
+      "Ospite": "Danimarca - SampElvio",
+      "GolCasa": 2,
+      "GolOspite": 1,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 7,
+      "Casa": "San Marino - Legnaro72",
+      "Ospite": "Spagna - FabioMarce",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 7,
+      "Casa": "Olanda - Asto",
+      "Ospite": "Austria - Lord Sinc",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 7,
+      "Casa": "Grecia - Pedino",
+      "Ospite": "Croazia - Bomber69",
+      "GolCasa": 1,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 7,
+      "Casa": "Eire - Federico",
+      "Ospite": "Inghilterra - Celtico69",
+      "GolCasa": 0,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 8,
+      "Casa": "Germania - Steven71",
+      "Ospite": "Malta - Futzal",
+      "GolCasa": 1,
+      "GolOspite": 1,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 8,
+      "Casa": "Romania - Crazy Doc",
+      "Ospite": "Danimarca - SampElvio",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 8,
+      "Casa": "Italia - Felgen79",
+      "Ospite": "Spagna - FabioMarce",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 8,
+      "Casa": "Belgio - Ruben Paz",
+      "Ospite": "Austria - Lord Sinc",
+      "GolCasa": 0,
+      "GolOspite": 1,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 8,
+      "Casa": "San Marino - Legnaro72",
+      "Ospite": "Croazia - Bomber69",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 8,
+      "Casa": "Olanda - Asto",
+      "Ospite": "Inghilterra - Celtico69",
+      "GolCasa": 0,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 8,
+      "Casa": "Grecia - Pedino",
+      "Ospite": "Eire - Federico",
+      "GolCasa": 4,
+      "GolOspite": 1,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 9,
+      "Casa": "Germania - Steven71",
+      "Ospite": "Danimarca - SampElvio",
+      "GolCasa": 1,
+      "GolOspite": 2,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 9,
+      "Casa": "Malta - Futzal",
+      "Ospite": "Spagna - FabioMarce",
+      "GolCasa": 0,
+      "GolOspite": 1,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 9,
+      "Casa": "Romania - Crazy Doc",
+      "Ospite": "Austria - Lord Sinc",
+      "GolCasa": 0,
+      "GolOspite": 2,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 9,
+      "Casa": "Italia - Felgen79",
+      "Ospite": "Croazia - Bomber69",
+      "GolCasa": 1,
+      "GolOspite": 2,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 9,
+      "Casa": "Belgio - Ruben Paz",
+      "Ospite": "Inghilterra - Celtico69",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 9,
+      "Casa": "San Marino - Legnaro72",
+      "Ospite": "Eire - Federico",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 9,
+      "Casa": "Olanda - Asto",
+      "Ospite": "Grecia - Pedino",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 10,
+      "Casa": "Germania - Steven71",
+      "Ospite": "Spagna - FabioMarce",
+      "GolCasa": 5,
+      "GolOspite": 1,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 10,
+      "Casa": "Danimarca - SampElvio",
+      "Ospite": "Austria - Lord Sinc",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 10,
+      "Casa": "Malta - Futzal",
+      "Ospite": "Croazia - Bomber69",
+      "GolCasa": 1,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 10,
+      "Casa": "Romania - Crazy Doc",
+      "Ospite": "Inghilterra - Celtico69",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 10,
+      "Casa": "Italia - Felgen79",
+      "Ospite": "Eire - Federico",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 10,
+      "Casa": "Belgio - Ruben Paz",
+      "Ospite": "Grecia - Pedino",
+      "GolCasa": 3,
+      "GolOspite": 1,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 10,
+      "Casa": "San Marino - Legnaro72",
+      "Ospite": "Olanda - Asto",
+      "GolCasa": 0,
+      "GolOspite": 2,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 11,
+      "Casa": "Germania - Steven71",
+      "Ospite": "Austria - Lord Sinc",
+      "GolCasa": 1,
+      "GolOspite": 1,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 11,
+      "Casa": "Spagna - FabioMarce",
+      "Ospite": "Croazia - Bomber69",
+      "GolCasa": 0,
+      "GolOspite": 2,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 11,
+      "Casa": "Danimarca - SampElvio",
+      "Ospite": "Inghilterra - Celtico69",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 11,
+      "Casa": "Malta - Futzal",
+      "Ospite": "Eire - Federico",
+      "GolCasa": 3,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 11,
+      "Casa": "Romania - Crazy Doc",
+      "Ospite": "Grecia - Pedino",
+      "GolCasa": 2,
+      "GolOspite": 5,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 11,
+      "Casa": "Italia - Felgen79",
+      "Ospite": "Olanda - Asto",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 11,
+      "Casa": "Belgio - Ruben Paz",
+      "Ospite": "San Marino - Legnaro72",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 12,
+      "Casa": "Germania - Steven71",
+      "Ospite": "Croazia - Bomber69",
+      "GolCasa": 0,
+      "GolOspite": 2,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 12,
+      "Casa": "Austria - Lord Sinc",
+      "Ospite": "Inghilterra - Celtico69",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 12,
+      "Casa": "Spagna - FabioMarce",
+      "Ospite": "Eire - Federico",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 12,
+      "Casa": "Danimarca - SampElvio",
+      "Ospite": "Grecia - Pedino",
+      "GolCasa": 1,
+      "GolOspite": 1,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 12,
+      "Casa": "Malta - Futzal",
+      "Ospite": "Olanda - Asto",
+      "GolCasa": 1,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 12,
+      "Casa": "Romania - Crazy Doc",
+      "Ospite": "San Marino - Legnaro72",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 12,
+      "Casa": "Italia - Felgen79",
+      "Ospite": "Belgio - Ruben Paz",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 13,
+      "Casa": "Germania - Steven71",
+      "Ospite": "Inghilterra - Celtico69",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 13,
+      "Casa": "Croazia - Bomber69",
+      "Ospite": "Eire - Federico",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 13,
+      "Casa": "Austria - Lord Sinc",
+      "Ospite": "Grecia - Pedino",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 13,
+      "Casa": "Spagna - FabioMarce",
+      "Ospite": "Olanda - Asto",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 13,
+      "Casa": "Danimarca - SampElvio",
+      "Ospite": "San Marino - Legnaro72",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 13,
+      "Casa": "Malta - Futzal",
+      "Ospite": "Belgio - Ruben Paz",
+      "GolCasa": 0,
+      "GolOspite": 2,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 13,
+      "Casa": "Romania - Crazy Doc",
+      "Ospite": "Italia - Felgen79",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 14,
+      "Casa": "Eire - Federico",
+      "Ospite": "Germania - Steven71",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 14,
+      "Casa": "Grecia - Pedino",
+      "Ospite": "Inghilterra - Celtico69",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 14,
+      "Casa": "Olanda - Asto",
+      "Ospite": "Croazia - Bomber69",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 14,
+      "Casa": "San Marino - Legnaro72",
+      "Ospite": "Austria - Lord Sinc",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 14,
+      "Casa": "Belgio - Ruben Paz",
+      "Ospite": "Spagna - FabioMarce",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 14,
+      "Casa": "Italia - Felgen79",
+      "Ospite": "Danimarca - SampElvio",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 14,
+      "Casa": "Romania - Crazy Doc",
+      "Ospite": "Malta - Futzal",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 15,
+      "Casa": "Grecia - Pedino",
+      "Ospite": "Germania - Steven71",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 15,
+      "Casa": "Olanda - Asto",
+      "Ospite": "Eire - Federico",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 15,
+      "Casa": "San Marino - Legnaro72",
+      "Ospite": "Inghilterra - Celtico69",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 15,
+      "Casa": "Belgio - Ruben Paz",
+      "Ospite": "Croazia - Bomber69",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 15,
+      "Casa": "Italia - Felgen79",
+      "Ospite": "Austria - Lord Sinc",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 15,
+      "Casa": "Romania - Crazy Doc",
+      "Ospite": "Spagna - FabioMarce",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 15,
+      "Casa": "Malta - Futzal",
+      "Ospite": "Danimarca - SampElvio",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 16,
+      "Casa": "Olanda - Asto",
+      "Ospite": "Germania - Steven71",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 16,
+      "Casa": "San Marino - Legnaro72",
+      "Ospite": "Grecia - Pedino",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 16,
+      "Casa": "Belgio - Ruben Paz",
+      "Ospite": "Eire - Federico",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 16,
+      "Casa": "Italia - Felgen79",
+      "Ospite": "Inghilterra - Celtico69",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 16,
+      "Casa": "Romania - Crazy Doc",
+      "Ospite": "Croazia - Bomber69",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 16,
+      "Casa": "Malta - Futzal",
+      "Ospite": "Austria - Lord Sinc",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 16,
+      "Casa": "Danimarca - SampElvio",
+      "Ospite": "Spagna - FabioMarce",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 17,
+      "Casa": "San Marino - Legnaro72",
+      "Ospite": "Germania - Steven71",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 17,
+      "Casa": "Belgio - Ruben Paz",
+      "Ospite": "Olanda - Asto",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 17,
+      "Casa": "Italia - Felgen79",
+      "Ospite": "Grecia - Pedino",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 17,
+      "Casa": "Romania - Crazy Doc",
+      "Ospite": "Eire - Federico",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 17,
+      "Casa": "Malta - Futzal",
+      "Ospite": "Inghilterra - Celtico69",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 17,
+      "Casa": "Danimarca - SampElvio",
+      "Ospite": "Croazia - Bomber69",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 17,
+      "Casa": "Spagna - FabioMarce",
+      "Ospite": "Austria - Lord Sinc",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 18,
+      "Casa": "Belgio - Ruben Paz",
+      "Ospite": "Germania - Steven71",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 18,
+      "Casa": "Italia - Felgen79",
+      "Ospite": "San Marino - Legnaro72",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 18,
+      "Casa": "Romania - Crazy Doc",
+      "Ospite": "Olanda - Asto",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 18,
+      "Casa": "Malta - Futzal",
+      "Ospite": "Grecia - Pedino",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 18,
+      "Casa": "Danimarca - SampElvio",
+      "Ospite": "Eire - Federico",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 18,
+      "Casa": "Spagna - FabioMarce",
+      "Ospite": "Inghilterra - Celtico69",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 18,
+      "Casa": "Austria - Lord Sinc",
+      "Ospite": "Croazia - Bomber69",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 19,
+      "Casa": "Italia - Felgen79",
+      "Ospite": "Germania - Steven71",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 19,
+      "Casa": "Romania - Crazy Doc",
+      "Ospite": "Belgio - Ruben Paz",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 19,
+      "Casa": "Malta - Futzal",
+      "Ospite": "San Marino - Legnaro72",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 19,
+      "Casa": "Danimarca - SampElvio",
+      "Ospite": "Olanda - Asto",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 19,
+      "Casa": "Spagna - FabioMarce",
+      "Ospite": "Grecia - Pedino",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 19,
+      "Casa": "Austria - Lord Sinc",
+      "Ospite": "Eire - Federico",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 19,
+      "Casa": "Croazia - Bomber69",
+      "Ospite": "Inghilterra - Celtico69",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 20,
+      "Casa": "Romania - Crazy Doc",
+      "Ospite": "Germania - Steven71",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 20,
+      "Casa": "Malta - Futzal",
+      "Ospite": "Italia - Felgen79",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 20,
+      "Casa": "Danimarca - SampElvio",
+      "Ospite": "Belgio - Ruben Paz",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 20,
+      "Casa": "Spagna - FabioMarce",
+      "Ospite": "San Marino - Legnaro72",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 20,
+      "Casa": "Austria - Lord Sinc",
+      "Ospite": "Olanda - Asto",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 20,
+      "Casa": "Croazia - Bomber69",
+      "Ospite": "Grecia - Pedino",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 20,
+      "Casa": "Inghilterra - Celtico69",
+      "Ospite": "Eire - Federico",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 21,
+      "Casa": "Malta - Futzal",
+      "Ospite": "Germania - Steven71",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 21,
+      "Casa": "Danimarca - SampElvio",
+      "Ospite": "Romania - Crazy Doc",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 21,
+      "Casa": "Spagna - FabioMarce",
+      "Ospite": "Italia - Felgen79",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 21,
+      "Casa": "Austria - Lord Sinc",
+      "Ospite": "Belgio - Ruben Paz",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 21,
+      "Casa": "Croazia - Bomber69",
+      "Ospite": "San Marino - Legnaro72",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 21,
+      "Casa": "Inghilterra - Celtico69",
+      "Ospite": "Olanda - Asto",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 21,
+      "Casa": "Eire - Federico",
+      "Ospite": "Grecia - Pedino",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 22,
+      "Casa": "Danimarca - SampElvio",
+      "Ospite": "Germania - Steven71",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 22,
+      "Casa": "Spagna - FabioMarce",
+      "Ospite": "Malta - Futzal",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 22,
+      "Casa": "Austria - Lord Sinc",
+      "Ospite": "Romania - Crazy Doc",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 22,
+      "Casa": "Croazia - Bomber69",
+      "Ospite": "Italia - Felgen79",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 22,
+      "Casa": "Inghilterra - Celtico69",
+      "Ospite": "Belgio - Ruben Paz",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 22,
+      "Casa": "Eire - Federico",
+      "Ospite": "San Marino - Legnaro72",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 22,
+      "Casa": "Grecia - Pedino",
+      "Ospite": "Olanda - Asto",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 23,
+      "Casa": "Spagna - FabioMarce",
+      "Ospite": "Germania - Steven71",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 23,
+      "Casa": "Austria - Lord Sinc",
+      "Ospite": "Danimarca - SampElvio",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 23,
+      "Casa": "Croazia - Bomber69",
+      "Ospite": "Malta - Futzal",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 23,
+      "Casa": "Inghilterra - Celtico69",
+      "Ospite": "Romania - Crazy Doc",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 23,
+      "Casa": "Eire - Federico",
+      "Ospite": "Italia - Felgen79",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 23,
+      "Casa": "Grecia - Pedino",
+      "Ospite": "Belgio - Ruben Paz",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 23,
+      "Casa": "Olanda - Asto",
+      "Ospite": "San Marino - Legnaro72",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 24,
+      "Casa": "Austria - Lord Sinc",
+      "Ospite": "Germania - Steven71",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 24,
+      "Casa": "Croazia - Bomber69",
+      "Ospite": "Spagna - FabioMarce",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 24,
+      "Casa": "Inghilterra - Celtico69",
+      "Ospite": "Danimarca - SampElvio",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 24,
+      "Casa": "Eire - Federico",
+      "Ospite": "Malta - Futzal",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 24,
+      "Casa": "Grecia - Pedino",
+      "Ospite": "Romania - Crazy Doc",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 24,
+      "Casa": "Olanda - Asto",
+      "Ospite": "Italia - Felgen79",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 24,
+      "Casa": "San Marino - Legnaro72",
+      "Ospite": "Belgio - Ruben Paz",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 25,
+      "Casa": "Croazia - Bomber69",
+      "Ospite": "Germania - Steven71",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 25,
+      "Casa": "Inghilterra - Celtico69",
+      "Ospite": "Austria - Lord Sinc",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 25,
+      "Casa": "Eire - Federico",
+      "Ospite": "Spagna - FabioMarce",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 25,
+      "Casa": "Grecia - Pedino",
+      "Ospite": "Danimarca - SampElvio",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 25,
+      "Casa": "Olanda - Asto",
+      "Ospite": "Malta - Futzal",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 25,
+      "Casa": "San Marino - Legnaro72",
+      "Ospite": "Romania - Crazy Doc",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 25,
+      "Casa": "Belgio - Ruben Paz",
+      "Ospite": "Italia - Felgen79",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 26,
+      "Casa": "Inghilterra - Celtico69",
+      "Ospite": "Germania - Steven71",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 26,
+      "Casa": "Eire - Federico",
+      "Ospite": "Croazia - Bomber69",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 26,
+      "Casa": "Grecia - Pedino",
+      "Ospite": "Austria - Lord Sinc",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 26,
+      "Casa": "Olanda - Asto",
+      "Ospite": "Spagna - FabioMarce",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 26,
+      "Casa": "San Marino - Legnaro72",
+      "Ospite": "Danimarca - SampElvio",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 26,
+      "Casa": "Belgio - Ruben Paz",
+      "Ospite": "Malta - Futzal",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 26,
+      "Casa": "Italia - Felgen79",
+      "Ospite": "Romania - Crazy Doc",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    }
+  ],
+  "data_modifica": {
+    "$date": "2026-09-27T08:28:20.194Z"
+  },
+  "_superba_revision": 6
+},
+{
+  "_id": {
+    "$oid": "6ab5197a632ab76a66089fb1"
+  },
+  "nome_torneo": "CampionatoSuperba_26_27_backup",
+  "calendario": [
+    {
+      "Girone": "Girone 1",
+      "Giornata": 1,
+      "Casa": "Germania - Steven71",
+      "Ospite": "Eire - Federico",
+      "GolCasa": 3,
+      "GolOspite": 1,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 1,
+      "Casa": "Inghilterra - Celtico69",
+      "Ospite": "Grecia - Pedino",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 1,
+      "Casa": "Croazia - Bomber69",
+      "Ospite": "Olanda - Asto",
+      "GolCasa": 2,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 1,
+      "Casa": "Austria - Lord Sinc",
+      "Ospite": "San Marino - Legnaro72",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 1,
+      "Casa": "Spagna - FabioMarce",
+      "Ospite": "Belgio - Ruben Paz",
+      "GolCasa": 2,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 1,
+      "Casa": "Danimarca - SampElvio",
+      "Ospite": "Italia - Felgen79",
+      "GolCasa": 1,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 1,
+      "Casa": "Malta - Futzal",
+      "Ospite": "Romania - Crazy Doc",
+      "GolCasa": 1,
+      "GolOspite": 1,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 2,
+      "Casa": "Germania - Steven71",
+      "Ospite": "Grecia - Pedino",
+      "GolCasa": 2,
+      "GolOspite": 1,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 2,
+      "Casa": "Eire - Federico",
+      "Ospite": "Olanda - Asto",
+      "GolCasa": 0,
+      "GolOspite": 1,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 2,
+      "Casa": "Inghilterra - Celtico69",
+      "Ospite": "San Marino - Legnaro72",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 2,
+      "Casa": "Croazia - Bomber69",
+      "Ospite": "Belgio - Ruben Paz",
+      "GolCasa": 3,
+      "GolOspite": 1,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 2,
+      "Casa": "Austria - Lord Sinc",
+      "Ospite": "Italia - Felgen79",
+      "GolCasa": 2,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 2,
+      "Casa": "Spagna - FabioMarce",
+      "Ospite": "Romania - Crazy Doc",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 2,
+      "Casa": "Danimarca - SampElvio",
+      "Ospite": "Malta - Futzal",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 3,
+      "Casa": "Germania - Steven71",
+      "Ospite": "Olanda - Asto",
+      "GolCasa": 3,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 3,
+      "Casa": "Grecia - Pedino",
+      "Ospite": "San Marino - Legnaro72",
+      "GolCasa": 1,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 3,
+      "Casa": "Eire - Federico",
+      "Ospite": "Belgio - Ruben Paz",
+      "GolCasa": 1,
+      "GolOspite": 9,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 3,
+      "Casa": "Inghilterra - Celtico69",
+      "Ospite": "Italia - Felgen79",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 3,
+      "Casa": "Croazia - Bomber69",
+      "Ospite": "Romania - Crazy Doc",
+      "GolCasa": 4,
+      "GolOspite": 1,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 3,
+      "Casa": "Austria - Lord Sinc",
+      "Ospite": "Malta - Futzal",
+      "GolCasa": 4,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 3,
+      "Casa": "Spagna - FabioMarce",
+      "Ospite": "Danimarca - SampElvio",
+      "GolCasa": 1,
+      "GolOspite": 2,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 4,
+      "Casa": "Germania - Steven71",
+      "Ospite": "San Marino - Legnaro72",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 4,
+      "Casa": "Olanda - Asto",
+      "Ospite": "Belgio - Ruben Paz",
+      "GolCasa": 1,
+      "GolOspite": 2,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 4,
+      "Casa": "Grecia - Pedino",
+      "Ospite": "Italia - Felgen79",
+      "GolCasa": 0,
+      "GolOspite": 1,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 4,
+      "Casa": "Eire - Federico",
+      "Ospite": "Romania - Crazy Doc",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 4,
+      "Casa": "Inghilterra - Celtico69",
+      "Ospite": "Malta - Futzal",
+      "GolCasa": 2,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 4,
+      "Casa": "Croazia - Bomber69",
+      "Ospite": "Danimarca - SampElvio",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 4,
+      "Casa": "Austria - Lord Sinc",
+      "Ospite": "Spagna - FabioMarce",
+      "GolCasa": 2,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 5,
+      "Casa": "Germania - Steven71",
+      "Ospite": "Belgio - Ruben Paz",
+      "GolCasa": 2,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 5,
+      "Casa": "San Marino - Legnaro72",
+      "Ospite": "Italia - Felgen79",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 5,
+      "Casa": "Olanda - Asto",
+      "Ospite": "Romania - Crazy Doc",
+      "GolCasa": 4,
+      "GolOspite": 2,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 5,
+      "Casa": "Grecia - Pedino",
+      "Ospite": "Malta - Futzal",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 5,
+      "Casa": "Eire - Federico",
+      "Ospite": "Danimarca - SampElvio",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 5,
+      "Casa": "Inghilterra - Celtico69",
+      "Ospite": "Spagna - FabioMarce",
+      "GolCasa": 2,
+      "GolOspite": 1,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 5,
+      "Casa": "Croazia - Bomber69",
+      "Ospite": "Austria - Lord Sinc",
+      "GolCasa": 0,
+      "GolOspite": 1,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 6,
+      "Casa": "Germania - Steven71",
+      "Ospite": "Italia - Felgen79",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 6,
+      "Casa": "Belgio - Ruben Paz",
+      "Ospite": "Romania - Crazy Doc",
+      "GolCasa": 1,
+      "GolOspite": 1,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 6,
+      "Casa": "San Marino - Legnaro72",
+      "Ospite": "Malta - Futzal",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 6,
+      "Casa": "Olanda - Asto",
+      "Ospite": "Danimarca - SampElvio",
+      "GolCasa": 1,
+      "GolOspite": 4,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 6,
+      "Casa": "Grecia - Pedino",
+      "Ospite": "Spagna - FabioMarce",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 6,
+      "Casa": "Eire - Federico",
+      "Ospite": "Austria - Lord Sinc",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 6,
+      "Casa": "Inghilterra - Celtico69",
+      "Ospite": "Croazia - Bomber69",
+      "GolCasa": 4,
+      "GolOspite": 1,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 7,
+      "Casa": "Germania - Steven71",
+      "Ospite": "Romania - Crazy Doc",
+      "GolCasa": 4,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 7,
+      "Casa": "Italia - Felgen79",
+      "Ospite": "Malta - Futzal",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 7,
+      "Casa": "Belgio - Ruben Paz",
+      "Ospite": "Danimarca - SampElvio",
+      "GolCasa": 2,
+      "GolOspite": 1,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 7,
+      "Casa": "San Marino - Legnaro72",
+      "Ospite": "Spagna - FabioMarce",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 7,
+      "Casa": "Olanda - Asto",
+      "Ospite": "Austria - Lord Sinc",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 7,
+      "Casa": "Grecia - Pedino",
+      "Ospite": "Croazia - Bomber69",
+      "GolCasa": 1,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 7,
+      "Casa": "Eire - Federico",
+      "Ospite": "Inghilterra - Celtico69",
+      "GolCasa": 0,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 8,
+      "Casa": "Germania - Steven71",
+      "Ospite": "Malta - Futzal",
+      "GolCasa": 1,
+      "GolOspite": 1,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 8,
+      "Casa": "Romania - Crazy Doc",
+      "Ospite": "Danimarca - SampElvio",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 8,
+      "Casa": "Italia - Felgen79",
+      "Ospite": "Spagna - FabioMarce",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 8,
+      "Casa": "Belgio - Ruben Paz",
+      "Ospite": "Austria - Lord Sinc",
+      "GolCasa": 0,
+      "GolOspite": 1,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 8,
+      "Casa": "San Marino - Legnaro72",
+      "Ospite": "Croazia - Bomber69",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 8,
+      "Casa": "Olanda - Asto",
+      "Ospite": "Inghilterra - Celtico69",
+      "GolCasa": 0,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 8,
+      "Casa": "Grecia - Pedino",
+      "Ospite": "Eire - Federico",
+      "GolCasa": 4,
+      "GolOspite": 1,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 9,
+      "Casa": "Germania - Steven71",
+      "Ospite": "Danimarca - SampElvio",
+      "GolCasa": 1,
+      "GolOspite": 2,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 9,
+      "Casa": "Malta - Futzal",
+      "Ospite": "Spagna - FabioMarce",
+      "GolCasa": 0,
+      "GolOspite": 1,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 9,
+      "Casa": "Romania - Crazy Doc",
+      "Ospite": "Austria - Lord Sinc",
+      "GolCasa": 0,
+      "GolOspite": 2,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 9,
+      "Casa": "Italia - Felgen79",
+      "Ospite": "Croazia - Bomber69",
+      "GolCasa": 1,
+      "GolOspite": 2,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 9,
+      "Casa": "Belgio - Ruben Paz",
+      "Ospite": "Inghilterra - Celtico69",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 9,
+      "Casa": "San Marino - Legnaro72",
+      "Ospite": "Eire - Federico",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 9,
+      "Casa": "Olanda - Asto",
+      "Ospite": "Grecia - Pedino",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 10,
+      "Casa": "Germania - Steven71",
+      "Ospite": "Spagna - FabioMarce",
+      "GolCasa": 5,
+      "GolOspite": 1,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 10,
+      "Casa": "Danimarca - SampElvio",
+      "Ospite": "Austria - Lord Sinc",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 10,
+      "Casa": "Malta - Futzal",
+      "Ospite": "Croazia - Bomber69",
+      "GolCasa": 1,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 10,
+      "Casa": "Romania - Crazy Doc",
+      "Ospite": "Inghilterra - Celtico69",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 10,
+      "Casa": "Italia - Felgen79",
+      "Ospite": "Eire - Federico",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 10,
+      "Casa": "Belgio - Ruben Paz",
+      "Ospite": "Grecia - Pedino",
+      "GolCasa": 3,
+      "GolOspite": 1,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 10,
+      "Casa": "San Marino - Legnaro72",
+      "Ospite": "Olanda - Asto",
+      "GolCasa": 0,
+      "GolOspite": 2,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 11,
+      "Casa": "Germania - Steven71",
+      "Ospite": "Austria - Lord Sinc",
+      "GolCasa": 1,
+      "GolOspite": 1,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 11,
+      "Casa": "Spagna - FabioMarce",
+      "Ospite": "Croazia - Bomber69",
+      "GolCasa": 0,
+      "GolOspite": 2,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 11,
+      "Casa": "Danimarca - SampElvio",
+      "Ospite": "Inghilterra - Celtico69",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 11,
+      "Casa": "Malta - Futzal",
+      "Ospite": "Eire - Federico",
+      "GolCasa": 3,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 11,
+      "Casa": "Romania - Crazy Doc",
+      "Ospite": "Grecia - Pedino",
+      "GolCasa": 2,
+      "GolOspite": 5,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 11,
+      "Casa": "Italia - Felgen79",
+      "Ospite": "Olanda - Asto",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 11,
+      "Casa": "Belgio - Ruben Paz",
+      "Ospite": "San Marino - Legnaro72",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 12,
+      "Casa": "Germania - Steven71",
+      "Ospite": "Croazia - Bomber69",
+      "GolCasa": 0,
+      "GolOspite": 2,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 12,
+      "Casa": "Austria - Lord Sinc",
+      "Ospite": "Inghilterra - Celtico69",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 12,
+      "Casa": "Spagna - FabioMarce",
+      "Ospite": "Eire - Federico",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 12,
+      "Casa": "Danimarca - SampElvio",
+      "Ospite": "Grecia - Pedino",
+      "GolCasa": 1,
+      "GolOspite": 1,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 12,
+      "Casa": "Malta - Futzal",
+      "Ospite": "Olanda - Asto",
+      "GolCasa": 1,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 12,
+      "Casa": "Romania - Crazy Doc",
+      "Ospite": "San Marino - Legnaro72",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 12,
+      "Casa": "Italia - Felgen79",
+      "Ospite": "Belgio - Ruben Paz",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 13,
+      "Casa": "Germania - Steven71",
+      "Ospite": "Inghilterra - Celtico69",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 13,
+      "Casa": "Croazia - Bomber69",
+      "Ospite": "Eire - Federico",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 13,
+      "Casa": "Austria - Lord Sinc",
+      "Ospite": "Grecia - Pedino",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 13,
+      "Casa": "Spagna - FabioMarce",
+      "Ospite": "Olanda - Asto",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 13,
+      "Casa": "Danimarca - SampElvio",
+      "Ospite": "San Marino - Legnaro72",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 13,
+      "Casa": "Malta - Futzal",
+      "Ospite": "Belgio - Ruben Paz",
+      "GolCasa": 0,
+      "GolOspite": 2,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 13,
+      "Casa": "Romania - Crazy Doc",
+      "Ospite": "Italia - Felgen79",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 14,
+      "Casa": "Eire - Federico",
+      "Ospite": "Germania - Steven71",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 14,
+      "Casa": "Grecia - Pedino",
+      "Ospite": "Inghilterra - Celtico69",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 14,
+      "Casa": "Olanda - Asto",
+      "Ospite": "Croazia - Bomber69",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 14,
+      "Casa": "San Marino - Legnaro72",
+      "Ospite": "Austria - Lord Sinc",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 14,
+      "Casa": "Belgio - Ruben Paz",
+      "Ospite": "Spagna - FabioMarce",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 14,
+      "Casa": "Italia - Felgen79",
+      "Ospite": "Danimarca - SampElvio",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 14,
+      "Casa": "Romania - Crazy Doc",
+      "Ospite": "Malta - Futzal",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 15,
+      "Casa": "Grecia - Pedino",
+      "Ospite": "Germania - Steven71",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 15,
+      "Casa": "Olanda - Asto",
+      "Ospite": "Eire - Federico",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 15,
+      "Casa": "San Marino - Legnaro72",
+      "Ospite": "Inghilterra - Celtico69",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 15,
+      "Casa": "Belgio - Ruben Paz",
+      "Ospite": "Croazia - Bomber69",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 15,
+      "Casa": "Italia - Felgen79",
+      "Ospite": "Austria - Lord Sinc",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 15,
+      "Casa": "Romania - Crazy Doc",
+      "Ospite": "Spagna - FabioMarce",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 15,
+      "Casa": "Malta - Futzal",
+      "Ospite": "Danimarca - SampElvio",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 16,
+      "Casa": "Olanda - Asto",
+      "Ospite": "Germania - Steven71",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 16,
+      "Casa": "San Marino - Legnaro72",
+      "Ospite": "Grecia - Pedino",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 16,
+      "Casa": "Belgio - Ruben Paz",
+      "Ospite": "Eire - Federico",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 16,
+      "Casa": "Italia - Felgen79",
+      "Ospite": "Inghilterra - Celtico69",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 16,
+      "Casa": "Romania - Crazy Doc",
+      "Ospite": "Croazia - Bomber69",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 16,
+      "Casa": "Malta - Futzal",
+      "Ospite": "Austria - Lord Sinc",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 16,
+      "Casa": "Danimarca - SampElvio",
+      "Ospite": "Spagna - FabioMarce",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 17,
+      "Casa": "San Marino - Legnaro72",
+      "Ospite": "Germania - Steven71",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 17,
+      "Casa": "Belgio - Ruben Paz",
+      "Ospite": "Olanda - Asto",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 17,
+      "Casa": "Italia - Felgen79",
+      "Ospite": "Grecia - Pedino",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 17,
+      "Casa": "Romania - Crazy Doc",
+      "Ospite": "Eire - Federico",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 17,
+      "Casa": "Malta - Futzal",
+      "Ospite": "Inghilterra - Celtico69",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 17,
+      "Casa": "Danimarca - SampElvio",
+      "Ospite": "Croazia - Bomber69",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 17,
+      "Casa": "Spagna - FabioMarce",
+      "Ospite": "Austria - Lord Sinc",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 18,
+      "Casa": "Belgio - Ruben Paz",
+      "Ospite": "Germania - Steven71",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 18,
+      "Casa": "Italia - Felgen79",
+      "Ospite": "San Marino - Legnaro72",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 18,
+      "Casa": "Romania - Crazy Doc",
+      "Ospite": "Olanda - Asto",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 18,
+      "Casa": "Malta - Futzal",
+      "Ospite": "Grecia - Pedino",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 18,
+      "Casa": "Danimarca - SampElvio",
+      "Ospite": "Eire - Federico",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 18,
+      "Casa": "Spagna - FabioMarce",
+      "Ospite": "Inghilterra - Celtico69",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 18,
+      "Casa": "Austria - Lord Sinc",
+      "Ospite": "Croazia - Bomber69",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 19,
+      "Casa": "Italia - Felgen79",
+      "Ospite": "Germania - Steven71",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 19,
+      "Casa": "Romania - Crazy Doc",
+      "Ospite": "Belgio - Ruben Paz",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 19,
+      "Casa": "Malta - Futzal",
+      "Ospite": "San Marino - Legnaro72",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 19,
+      "Casa": "Danimarca - SampElvio",
+      "Ospite": "Olanda - Asto",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 19,
+      "Casa": "Spagna - FabioMarce",
+      "Ospite": "Grecia - Pedino",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 19,
+      "Casa": "Austria - Lord Sinc",
+      "Ospite": "Eire - Federico",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 19,
+      "Casa": "Croazia - Bomber69",
+      "Ospite": "Inghilterra - Celtico69",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 20,
+      "Casa": "Romania - Crazy Doc",
+      "Ospite": "Germania - Steven71",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 20,
+      "Casa": "Malta - Futzal",
+      "Ospite": "Italia - Felgen79",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 20,
+      "Casa": "Danimarca - SampElvio",
+      "Ospite": "Belgio - Ruben Paz",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 20,
+      "Casa": "Spagna - FabioMarce",
+      "Ospite": "San Marino - Legnaro72",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 20,
+      "Casa": "Austria - Lord Sinc",
+      "Ospite": "Olanda - Asto",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 20,
+      "Casa": "Croazia - Bomber69",
+      "Ospite": "Grecia - Pedino",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 20,
+      "Casa": "Inghilterra - Celtico69",
+      "Ospite": "Eire - Federico",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 21,
+      "Casa": "Malta - Futzal",
+      "Ospite": "Germania - Steven71",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 21,
+      "Casa": "Danimarca - SampElvio",
+      "Ospite": "Romania - Crazy Doc",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 21,
+      "Casa": "Spagna - FabioMarce",
+      "Ospite": "Italia - Felgen79",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 21,
+      "Casa": "Austria - Lord Sinc",
+      "Ospite": "Belgio - Ruben Paz",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 21,
+      "Casa": "Croazia - Bomber69",
+      "Ospite": "San Marino - Legnaro72",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 21,
+      "Casa": "Inghilterra - Celtico69",
+      "Ospite": "Olanda - Asto",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 21,
+      "Casa": "Eire - Federico",
+      "Ospite": "Grecia - Pedino",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 22,
+      "Casa": "Danimarca - SampElvio",
+      "Ospite": "Germania - Steven71",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 22,
+      "Casa": "Spagna - FabioMarce",
+      "Ospite": "Malta - Futzal",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 22,
+      "Casa": "Austria - Lord Sinc",
+      "Ospite": "Romania - Crazy Doc",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 22,
+      "Casa": "Croazia - Bomber69",
+      "Ospite": "Italia - Felgen79",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 22,
+      "Casa": "Inghilterra - Celtico69",
+      "Ospite": "Belgio - Ruben Paz",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 22,
+      "Casa": "Eire - Federico",
+      "Ospite": "San Marino - Legnaro72",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 22,
+      "Casa": "Grecia - Pedino",
+      "Ospite": "Olanda - Asto",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 23,
+      "Casa": "Spagna - FabioMarce",
+      "Ospite": "Germania - Steven71",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 23,
+      "Casa": "Austria - Lord Sinc",
+      "Ospite": "Danimarca - SampElvio",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 23,
+      "Casa": "Croazia - Bomber69",
+      "Ospite": "Malta - Futzal",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 23,
+      "Casa": "Inghilterra - Celtico69",
+      "Ospite": "Romania - Crazy Doc",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 23,
+      "Casa": "Eire - Federico",
+      "Ospite": "Italia - Felgen79",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 23,
+      "Casa": "Grecia - Pedino",
+      "Ospite": "Belgio - Ruben Paz",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 23,
+      "Casa": "Olanda - Asto",
+      "Ospite": "San Marino - Legnaro72",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 24,
+      "Casa": "Austria - Lord Sinc",
+      "Ospite": "Germania - Steven71",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 24,
+      "Casa": "Croazia - Bomber69",
+      "Ospite": "Spagna - FabioMarce",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 24,
+      "Casa": "Inghilterra - Celtico69",
+      "Ospite": "Danimarca - SampElvio",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 24,
+      "Casa": "Eire - Federico",
+      "Ospite": "Malta - Futzal",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 24,
+      "Casa": "Grecia - Pedino",
+      "Ospite": "Romania - Crazy Doc",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 24,
+      "Casa": "Olanda - Asto",
+      "Ospite": "Italia - Felgen79",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 24,
+      "Casa": "San Marino - Legnaro72",
+      "Ospite": "Belgio - Ruben Paz",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 25,
+      "Casa": "Croazia - Bomber69",
+      "Ospite": "Germania - Steven71",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 25,
+      "Casa": "Inghilterra - Celtico69",
+      "Ospite": "Austria - Lord Sinc",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 25,
+      "Casa": "Eire - Federico",
+      "Ospite": "Spagna - FabioMarce",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 25,
+      "Casa": "Grecia - Pedino",
+      "Ospite": "Danimarca - SampElvio",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 25,
+      "Casa": "Olanda - Asto",
+      "Ospite": "Malta - Futzal",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 25,
+      "Casa": "San Marino - Legnaro72",
+      "Ospite": "Romania - Crazy Doc",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 25,
+      "Casa": "Belgio - Ruben Paz",
+      "Ospite": "Italia - Felgen79",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 26,
+      "Casa": "Inghilterra - Celtico69",
+      "Ospite": "Germania - Steven71",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 26,
+      "Casa": "Eire - Federico",
+      "Ospite": "Croazia - Bomber69",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 26,
+      "Casa": "Grecia - Pedino",
+      "Ospite": "Austria - Lord Sinc",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 26,
+      "Casa": "Olanda - Asto",
+      "Ospite": "Spagna - FabioMarce",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 26,
+      "Casa": "San Marino - Legnaro72",
+      "Ospite": "Danimarca - SampElvio",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 26,
+      "Casa": "Belgio - Ruben Paz",
+      "Ospite": "Malta - Futzal",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 26,
+      "Casa": "Italia - Felgen79",
+      "Ospite": "Romania - Crazy Doc",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": false
+    }
+  ],
+  "data_modifica": {
+    "$date": "2026-09-27T09:28:47.182Z"
+  },
+  "_superba_revision": 6
+},
+{
+  "_id": {
+    "$oid": "68cb408bcb6f6953f52c29f8"
+  },
+  "nome_torneo": "CampionatoSuperba_24_25_Import",
+  "calendario": [
+    {
+      "Girone": "Girone 1",
+      "Giornata": 1,
+      "Casa": "Carpi-Celtico69",
+      "Ospite": "Rimini-Legnaro72",
+      "GolCasa": 1,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 1,
+      "Casa": "Ascoli-SampElvio",
+      "Ospite": "Sestri Levante-Marco",
+      "GolCasa": 3,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 1,
+      "Casa": "Pro Vercelli-Lord Sinc",
+      "Ospite": "Potenza-Polve",
+      "GolCasa": 2,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 1,
+      "Casa": "Avellino-Ruben Paz",
+      "Ospite": "Cavese-Futzal",
+      "GolCasa": 3,
+      "GolOspite": 1,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 1,
+      "Casa": "Ternana-Cicciuz",
+      "Ospite": "Pescara-FabioMarce",
+      "GolCasa": 0,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 1,
+      "Casa": "Pro Patria-Steven71",
+      "Ospite": "Latina-Gimmy87",
+      "GolCasa": 3,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 1,
+      "Casa": "Perugia-Bomber69",
+      "Ospite": "Padova-Niko nn",
+      "GolCasa": 0,
+      "GolOspite": 2,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 1,
+      "Casa": "Spal-L'unico",
+      "Ospite": "V. Entella-Crazy Doc",
+      "GolCasa": 3,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 2,
+      "Casa": "Rimini-Legnaro72",
+      "Ospite": "Ascoli-SampElvio",
+      "GolCasa": 0,
+      "GolOspite": 2,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 2,
+      "Casa": "Carpi-Celtico69",
+      "Ospite": "Spal-L'unico",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 2,
+      "Casa": "Padova-Niko nn",
+      "Ospite": "V. Entella-Crazy Doc",
+      "GolCasa": 3,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 2,
+      "Casa": "Latina-Gimmy87",
+      "Ospite": "Perugia-Bomber69",
+      "GolCasa": 0,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 2,
+      "Casa": "Pescara-FabioMarce",
+      "Ospite": "Pro Patria-Steven71",
+      "GolCasa": 1,
+      "GolOspite": 1,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 2,
+      "Casa": "Cavese-Futzal",
+      "Ospite": "Ternana-Cicciuz",
+      "GolCasa": 3,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 2,
+      "Casa": "Potenza-Polve",
+      "Ospite": "Avellino-Ruben Paz",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 2,
+      "Casa": "Sestri Levante-Marco",
+      "Ospite": "Pro Vercelli-Lord Sinc",
+      "GolCasa": 0,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 3,
+      "Casa": "Ascoli-SampElvio",
+      "Ospite": "Carpi-Celtico69",
+      "GolCasa": 0,
+      "GolOspite": 4,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 3,
+      "Casa": "Pro Vercelli-Lord Sinc",
+      "Ospite": "Rimini-Legnaro72",
+      "GolCasa": 2,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 3,
+      "Casa": "Avellino-Ruben Paz",
+      "Ospite": "Sestri Levante-Marco",
+      "GolCasa": 3,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 3,
+      "Casa": "Ternana-Cicciuz",
+      "Ospite": "Potenza-Polve",
+      "GolCasa": 0,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 3,
+      "Casa": "Pro Patria-Steven71",
+      "Ospite": "Cavese-Futzal",
+      "GolCasa": 3,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 3,
+      "Casa": "Perugia-Bomber69",
+      "Ospite": "Pescara-FabioMarce",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 3,
+      "Casa": "V. Entella-Crazy Doc",
+      "Ospite": "Latina-Gimmy87",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 3,
+      "Casa": "Padova-Niko nn",
+      "Ospite": "Spal-L'unico",
+      "GolCasa": 1,
+      "GolOspite": 1,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 4,
+      "Casa": "Rimini-Legnaro72",
+      "Ospite": "Avellino-Ruben Paz",
+      "GolCasa": 0,
+      "GolOspite": 2,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 4,
+      "Casa": "Carpi-Celtico69",
+      "Ospite": "Pro Vercelli-Lord Sinc",
+      "GolCasa": 0,
+      "GolOspite": 2,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 4,
+      "Casa": "Latina-Gimmy87",
+      "Ospite": "Padova-Niko nn",
+      "GolCasa": 0,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 4,
+      "Casa": "Pescara-FabioMarce",
+      "Ospite": "V. Entella-Crazy Doc",
+      "GolCasa": 3,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 4,
+      "Casa": "Cavese-Futzal",
+      "Ospite": "Perugia-Bomber69",
+      "GolCasa": 0,
+      "GolOspite": 4,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 4,
+      "Casa": "Potenza-Polve",
+      "Ospite": "Pro Patria-Steven71",
+      "GolCasa": 0,
+      "GolOspite": 4,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 4,
+      "Casa": "Sestri Levante-Marco",
+      "Ospite": "Ternana-Cicciuz",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 4,
+      "Casa": "Spal-L'unico",
+      "Ospite": "Ascoli-SampElvio",
+      "GolCasa": 1,
+      "GolOspite": 1,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 5,
+      "Casa": "Pro Vercelli-Lord Sinc",
+      "Ospite": "Ascoli-SampElvio",
+      "GolCasa": 1,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 5,
+      "Casa": "Avellino-Ruben Paz",
+      "Ospite": "Carpi-Celtico69",
+      "GolCasa": 1,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 5,
+      "Casa": "Ternana-Cicciuz",
+      "Ospite": "Rimini-Legnaro72",
+      "GolCasa": 0,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 5,
+      "Casa": "Pro Patria-Steven71",
+      "Ospite": "Sestri Levante-Marco",
+      "GolCasa": 3,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 5,
+      "Casa": "Perugia-Bomber69",
+      "Ospite": "Potenza-Polve",
+      "GolCasa": 2,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 5,
+      "Casa": "V. Entella-Crazy Doc",
+      "Ospite": "Cavese-Futzal",
+      "GolCasa": 0,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 5,
+      "Casa": "Padova-Niko nn",
+      "Ospite": "Pescara-FabioMarce",
+      "GolCasa": 1,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 5,
+      "Casa": "Spal-L'unico",
+      "Ospite": "Latina-Gimmy87",
+      "GolCasa": 3,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 6,
+      "Casa": "Rimini-Legnaro72",
+      "Ospite": "Pro Patria-Steven71",
+      "GolCasa": 1,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 6,
+      "Casa": "Carpi-Celtico69",
+      "Ospite": "Ternana-Cicciuz",
+      "GolCasa": 3,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 6,
+      "Casa": "Ascoli-SampElvio",
+      "Ospite": "Avellino-Ruben Paz",
+      "GolCasa": 1,
+      "GolOspite": 1,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 6,
+      "Casa": "Pro Vercelli-Lord Sinc",
+      "Ospite": "Spal-L'unico",
+      "GolCasa": 2,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 6,
+      "Casa": "Pescara-FabioMarce",
+      "Ospite": "Latina-Gimmy87",
+      "GolCasa": 3,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 6,
+      "Casa": "Cavese-Futzal",
+      "Ospite": "Padova-Niko nn",
+      "GolCasa": 0,
+      "GolOspite": 2,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 6,
+      "Casa": "Potenza-Polve",
+      "Ospite": "V. Entella-Crazy Doc",
+      "GolCasa": 3,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 6,
+      "Casa": "Sestri Levante-Marco",
+      "Ospite": "Perugia-Bomber69",
+      "GolCasa": 0,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 7,
+      "Casa": "Avellino-Ruben Paz",
+      "Ospite": "Pro Vercelli-Lord Sinc",
+      "GolCasa": 1,
+      "GolOspite": 1,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 7,
+      "Casa": "Ternana-Cicciuz",
+      "Ospite": "Ascoli-SampElvio",
+      "GolCasa": 0,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 7,
+      "Casa": "Pro Patria-Steven71",
+      "Ospite": "Carpi-Celtico69",
+      "GolCasa": 1,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 7,
+      "Casa": "Perugia-Bomber69",
+      "Ospite": "Rimini-Legnaro72",
+      "GolCasa": 2,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 7,
+      "Casa": "V. Entella-Crazy Doc",
+      "Ospite": "Sestri Levante-Marco",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 7,
+      "Casa": "Padova-Niko nn",
+      "Ospite": "Potenza-Polve",
+      "GolCasa": 3,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 7,
+      "Casa": "Latina-Gimmy87",
+      "Ospite": "Cavese-Futzal",
+      "GolCasa": 0,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 7,
+      "Casa": "Pescara-FabioMarce",
+      "Ospite": "Spal-L'unico",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 8,
+      "Casa": "Rimini-Legnaro72",
+      "Ospite": "V. Entella-Crazy Doc",
+      "GolCasa": 3,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 8,
+      "Casa": "Carpi-Celtico69",
+      "Ospite": "Perugia-Bomber69",
+      "GolCasa": 1,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 8,
+      "Casa": "Ascoli-SampElvio",
+      "Ospite": "Pro Patria-Steven71",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 8,
+      "Casa": "Pro Vercelli-Lord Sinc",
+      "Ospite": "Ternana-Cicciuz",
+      "GolCasa": 3,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 8,
+      "Casa": "Cavese-Futzal",
+      "Ospite": "Pescara-FabioMarce",
+      "GolCasa": 0,
+      "GolOspite": 2,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 8,
+      "Casa": "Potenza-Polve",
+      "Ospite": "Latina-Gimmy87",
+      "GolCasa": 3,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 8,
+      "Casa": "Sestri Levante-Marco",
+      "Ospite": "Padova-Niko nn",
+      "GolCasa": 0,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 8,
+      "Casa": "Spal-L'unico",
+      "Ospite": "Avellino-Ruben Paz",
+      "GolCasa": 2,
+      "GolOspite": 2,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 9,
+      "Casa": "Ternana-Cicciuz",
+      "Ospite": "Avellino-Ruben Paz",
+      "GolCasa": 0,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 9,
+      "Casa": "Pro Patria-Steven71",
+      "Ospite": "Pro Vercelli-Lord Sinc",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 9,
+      "Casa": "Perugia-Bomber69",
+      "Ospite": "Ascoli-SampElvio",
+      "GolCasa": 3,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 9,
+      "Casa": "V. Entella-Crazy Doc",
+      "Ospite": "Carpi-Celtico69",
+      "GolCasa": 0,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 9,
+      "Casa": "Padova-Niko nn",
+      "Ospite": "Rimini-Legnaro72",
+      "GolCasa": 2,
+      "GolOspite": 1,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 9,
+      "Casa": "Latina-Gimmy87",
+      "Ospite": "Sestri Levante-Marco",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 9,
+      "Casa": "Pescara-FabioMarce",
+      "Ospite": "Potenza-Polve",
+      "GolCasa": 2,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 9,
+      "Casa": "Spal-L'unico",
+      "Ospite": "Cavese-Futzal",
+      "GolCasa": 4,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 10,
+      "Casa": "Rimini-Legnaro72",
+      "Ospite": "Latina-Gimmy87",
+      "GolCasa": 3,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 10,
+      "Casa": "Carpi-Celtico69",
+      "Ospite": "Padova-Niko nn",
+      "GolCasa": 3,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 10,
+      "Casa": "Ascoli-SampElvio",
+      "Ospite": "V. Entella-Crazy Doc",
+      "GolCasa": 3,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 10,
+      "Casa": "Pro Vercelli-Lord Sinc",
+      "Ospite": "Perugia-Bomber69",
+      "GolCasa": 3,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 10,
+      "Casa": "Avellino-Ruben Paz",
+      "Ospite": "Pro Patria-Steven71",
+      "GolCasa": 2,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 10,
+      "Casa": "Ternana-Cicciuz",
+      "Ospite": "Spal-L'unico",
+      "GolCasa": 0,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 10,
+      "Casa": "Potenza-Polve",
+      "Ospite": "Cavese-Futzal",
+      "GolCasa": 0,
+      "GolOspite": 4,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 10,
+      "Casa": "Sestri Levante-Marco",
+      "Ospite": "Pescara-FabioMarce",
+      "GolCasa": 0,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 11,
+      "Casa": "Pro Patria-Steven71",
+      "Ospite": "Ternana-Cicciuz",
+      "GolCasa": 3,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 11,
+      "Casa": "Perugia-Bomber69",
+      "Ospite": "Avellino-Ruben Paz",
+      "GolCasa": 2,
+      "GolOspite": 1,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 11,
+      "Casa": "V. Entella-Crazy Doc",
+      "Ospite": "Pro Vercelli-Lord Sinc",
+      "GolCasa": 0,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 11,
+      "Casa": "Padova-Niko nn",
+      "Ospite": "Ascoli-SampElvio",
+      "GolCasa": 1,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 11,
+      "Casa": "Latina-Gimmy87",
+      "Ospite": "Carpi-Celtico69",
+      "GolCasa": 0,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 11,
+      "Casa": "Pescara-FabioMarce",
+      "Ospite": "Rimini-Legnaro72",
+      "GolCasa": 2,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 11,
+      "Casa": "Cavese-Futzal",
+      "Ospite": "Sestri Levante-Marco",
+      "GolCasa": 3,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 11,
+      "Casa": "Potenza-Polve",
+      "Ospite": "Spal-L'unico",
+      "GolCasa": 0,
+      "GolOspite": 4,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 12,
+      "Casa": "Rimini-Legnaro72",
+      "Ospite": "Cavese-Futzal",
+      "GolCasa": 0,
+      "GolOspite": 2,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 12,
+      "Casa": "Carpi-Celtico69",
+      "Ospite": "Pescara-FabioMarce",
+      "GolCasa": 1,
+      "GolOspite": 1,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 12,
+      "Casa": "Ascoli-SampElvio",
+      "Ospite": "Latina-Gimmy87",
+      "GolCasa": 3,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 12,
+      "Casa": "Pro Vercelli-Lord Sinc",
+      "Ospite": "Padova-Niko nn",
+      "GolCasa": 2,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 12,
+      "Casa": "Avellino-Ruben Paz",
+      "Ospite": "V. Entella-Crazy Doc",
+      "GolCasa": 3,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 12,
+      "Casa": "Ternana-Cicciuz",
+      "Ospite": "Perugia-Bomber69",
+      "GolCasa": 0,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 12,
+      "Casa": "Sestri Levante-Marco",
+      "Ospite": "Potenza-Polve",
+      "GolCasa": 0,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 12,
+      "Casa": "Spal-L'unico",
+      "Ospite": "Pro Patria-Steven71",
+      "GolCasa": 1,
+      "GolOspite": 1,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 13,
+      "Casa": "Perugia-Bomber69",
+      "Ospite": "Pro Patria-Steven71",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 13,
+      "Casa": "V. Entella-Crazy Doc",
+      "Ospite": "Ternana-Cicciuz",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 13,
+      "Casa": "Padova-Niko nn",
+      "Ospite": "Avellino-Ruben Paz",
+      "GolCasa": 0,
+      "GolOspite": 2,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 13,
+      "Casa": "Latina-Gimmy87",
+      "Ospite": "Pro Vercelli-Lord Sinc",
+      "GolCasa": 0,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 13,
+      "Casa": "Pescara-FabioMarce",
+      "Ospite": "Ascoli-SampElvio",
+      "GolCasa": 2,
+      "GolOspite": 2,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 13,
+      "Casa": "Cavese-Futzal",
+      "Ospite": "Carpi-Celtico69",
+      "GolCasa": 0,
+      "GolOspite": 5,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 13,
+      "Casa": "Potenza-Polve",
+      "Ospite": "Rimini-Legnaro72",
+      "GolCasa": 1,
+      "GolOspite": 1,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 13,
+      "Casa": "Spal-L'unico",
+      "Ospite": "Sestri Levante-Marco",
+      "GolCasa": 3,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 14,
+      "Casa": "Rimini-Legnaro72",
+      "Ospite": "Sestri Levante-Marco",
+      "GolCasa": 3,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 14,
+      "Casa": "Carpi-Celtico69",
+      "Ospite": "Potenza-Polve",
+      "GolCasa": 2,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 14,
+      "Casa": "Ascoli-SampElvio",
+      "Ospite": "Cavese-Futzal",
+      "GolCasa": 2,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 14,
+      "Casa": "Pro Vercelli-Lord Sinc",
+      "Ospite": "Pescara-FabioMarce",
+      "GolCasa": 2,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 14,
+      "Casa": "Avellino-Ruben Paz",
+      "Ospite": "Latina-Gimmy87",
+      "GolCasa": 3,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 14,
+      "Casa": "Ternana-Cicciuz",
+      "Ospite": "Padova-Niko nn",
+      "GolCasa": 0,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 14,
+      "Casa": "Pro Patria-Steven71",
+      "Ospite": "V. Entella-Crazy Doc",
+      "GolCasa": 3,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 14,
+      "Casa": "Perugia-Bomber69",
+      "Ospite": "Spal-L'unico",
+      "GolCasa": 5,
+      "GolOspite": 2,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 15,
+      "Casa": "V. Entella-Crazy Doc",
+      "Ospite": "Perugia-Bomber69",
+      "GolCasa": 0,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 15,
+      "Casa": "Padova-Niko nn",
+      "Ospite": "Pro Patria-Steven71",
+      "GolCasa": 1,
+      "GolOspite": 2,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 15,
+      "Casa": "Latina-Gimmy87",
+      "Ospite": "Ternana-Cicciuz",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 15,
+      "Casa": "Pescara-FabioMarce",
+      "Ospite": "Avellino-Ruben Paz",
+      "GolCasa": 1,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 15,
+      "Casa": "Cavese-Futzal",
+      "Ospite": "Pro Vercelli-Lord Sinc",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 15,
+      "Casa": "Potenza-Polve",
+      "Ospite": "Ascoli-SampElvio",
+      "GolCasa": 1,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 15,
+      "Casa": "Sestri Levante-Marco",
+      "Ospite": "Carpi-Celtico69",
+      "GolCasa": 0,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 15,
+      "Casa": "Spal-L'unico",
+      "Ospite": "Rimini-Legnaro72",
+      "GolCasa": 2,
+      "GolOspite": 1,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 16,
+      "Casa": "Rimini-Legnaro72",
+      "Ospite": "Carpi-Celtico69",
+      "GolCasa": 2,
+      "GolOspite": 5,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 16,
+      "Casa": "Sestri Levante-Marco",
+      "Ospite": "Ascoli-SampElvio",
+      "GolCasa": 0,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 16,
+      "Casa": "Potenza-Polve",
+      "Ospite": "Pro Vercelli-Lord Sinc",
+      "GolCasa": 0,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 16,
+      "Casa": "Cavese-Futzal",
+      "Ospite": "Avellino-Ruben Paz",
+      "GolCasa": 0,
+      "GolOspite": 1,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 16,
+      "Casa": "Pescara-FabioMarce",
+      "Ospite": "Ternana-Cicciuz",
+      "GolCasa": 3,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 16,
+      "Casa": "Latina-Gimmy87",
+      "Ospite": "Pro Patria-Steven71",
+      "GolCasa": 0,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 16,
+      "Casa": "Padova-Niko nn",
+      "Ospite": "Perugia-Bomber69",
+      "GolCasa": 1,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 16,
+      "Casa": "V. Entella-Crazy Doc",
+      "Ospite": "Spal-L'unico",
+      "GolCasa": 0,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 17,
+      "Casa": "Ascoli-SampElvio",
+      "Ospite": "Rimini-Legnaro72",
+      "GolCasa": 4,
+      "GolOspite": 1,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 17,
+      "Casa": "Spal-L'unico",
+      "Ospite": "Carpi-Celtico69",
+      "GolCasa": 2,
+      "GolOspite": 1,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 17,
+      "Casa": "V. Entella-Crazy Doc",
+      "Ospite": "Padova-Niko nn",
+      "GolCasa": 0,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 17,
+      "Casa": "Perugia-Bomber69",
+      "Ospite": "Latina-Gimmy87",
+      "GolCasa": 3,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 17,
+      "Casa": "Pro Patria-Steven71",
+      "Ospite": "Pescara-FabioMarce",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 17,
+      "Casa": "Ternana-Cicciuz",
+      "Ospite": "Cavese-Futzal",
+      "GolCasa": 0,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 17,
+      "Casa": "Avellino-Ruben Paz",
+      "Ospite": "Potenza-Polve",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 17,
+      "Casa": "Pro Vercelli-Lord Sinc",
+      "Ospite": "Sestri Levante-Marco",
+      "GolCasa": 3,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 18,
+      "Casa": "Carpi-Celtico69",
+      "Ospite": "Ascoli-SampElvio",
+      "GolCasa": 2,
+      "GolOspite": 2,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 18,
+      "Casa": "Rimini-Legnaro72",
+      "Ospite": "Pro Vercelli-Lord Sinc",
+      "GolCasa": 1,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 18,
+      "Casa": "Sestri Levante-Marco",
+      "Ospite": "Avellino-Ruben Paz",
+      "GolCasa": 0,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 18,
+      "Casa": "Potenza-Polve",
+      "Ospite": "Ternana-Cicciuz",
+      "GolCasa": 3,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 18,
+      "Casa": "Cavese-Futzal",
+      "Ospite": "Pro Patria-Steven71",
+      "GolCasa": 0,
+      "GolOspite": 1,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 18,
+      "Casa": "Pescara-FabioMarce",
+      "Ospite": "Perugia-Bomber69",
+      "GolCasa": 2,
+      "GolOspite": 4,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 18,
+      "Casa": "Latina-Gimmy87",
+      "Ospite": "V. Entella-Crazy Doc",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 18,
+      "Casa": "Spal-L'unico",
+      "Ospite": "Padova-Niko nn",
+      "GolCasa": 1,
+      "GolOspite": 1,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 19,
+      "Casa": "Avellino-Ruben Paz",
+      "Ospite": "Rimini-Legnaro72",
+      "GolCasa": 3,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 19,
+      "Casa": "Pro Vercelli-Lord Sinc",
+      "Ospite": "Carpi-Celtico69",
+      "GolCasa": 2,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 19,
+      "Casa": "Padova-Niko nn",
+      "Ospite": "Latina-Gimmy87",
+      "GolCasa": 3,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 19,
+      "Casa": "V. Entella-Crazy Doc",
+      "Ospite": "Pescara-FabioMarce",
+      "GolCasa": 0,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 19,
+      "Casa": "Perugia-Bomber69",
+      "Ospite": "Cavese-Futzal",
+      "GolCasa": 1,
+      "GolOspite": 1,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 19,
+      "Casa": "Pro Patria-Steven71",
+      "Ospite": "Potenza-Polve",
+      "GolCasa": 4,
+      "GolOspite": 1,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 19,
+      "Casa": "Ternana-Cicciuz",
+      "Ospite": "Sestri Levante-Marco",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 19,
+      "Casa": "Ascoli-SampElvio",
+      "Ospite": "Spal-L'unico",
+      "GolCasa": 1,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 20,
+      "Casa": "Ascoli-SampElvio",
+      "Ospite": "Pro Vercelli-Lord Sinc",
+      "GolCasa": 1,
+      "GolOspite": 2,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 20,
+      "Casa": "Carpi-Celtico69",
+      "Ospite": "Avellino-Ruben Paz",
+      "GolCasa": 4,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 20,
+      "Casa": "Rimini-Legnaro72",
+      "Ospite": "Ternana-Cicciuz",
+      "GolCasa": 3,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 20,
+      "Casa": "Sestri Levante-Marco",
+      "Ospite": "Pro Patria-Steven71",
+      "GolCasa": 0,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 20,
+      "Casa": "Potenza-Polve",
+      "Ospite": "Perugia-Bomber69",
+      "GolCasa": 0,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 20,
+      "Casa": "Cavese-Futzal",
+      "Ospite": "V. Entella-Crazy Doc",
+      "GolCasa": 3,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 20,
+      "Casa": "Pescara-FabioMarce",
+      "Ospite": "Padova-Niko nn",
+      "GolCasa": 0,
+      "GolOspite": 2,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 20,
+      "Casa": "Latina-Gimmy87",
+      "Ospite": "Spal-L'unico",
+      "GolCasa": 0,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 21,
+      "Casa": "Pro Patria-Steven71",
+      "Ospite": "Rimini-Legnaro72",
+      "GolCasa": 2,
+      "GolOspite": 1,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 21,
+      "Casa": "Ternana-Cicciuz",
+      "Ospite": "Carpi-Celtico69",
+      "GolCasa": 0,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 21,
+      "Casa": "Avellino-Ruben Paz",
+      "Ospite": "Ascoli-SampElvio",
+      "GolCasa": 3,
+      "GolOspite": 2,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 21,
+      "Casa": "Spal-L'unico",
+      "Ospite": "Pro Vercelli-Lord Sinc",
+      "GolCasa": 0,
+      "GolOspite": 1,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 21,
+      "Casa": "Latina-Gimmy87",
+      "Ospite": "Pescara-FabioMarce",
+      "GolCasa": 0,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 21,
+      "Casa": "Padova-Niko nn",
+      "Ospite": "Cavese-Futzal",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 21,
+      "Casa": "V. Entella-Crazy Doc",
+      "Ospite": "Potenza-Polve",
+      "GolCasa": 0,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 21,
+      "Casa": "Perugia-Bomber69",
+      "Ospite": "Sestri Levante-Marco",
+      "GolCasa": 3,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 22,
+      "Casa": "Pro Vercelli-Lord Sinc",
+      "Ospite": "Avellino-Ruben Paz",
+      "GolCasa": 4,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 22,
+      "Casa": "Ascoli-SampElvio",
+      "Ospite": "Ternana-Cicciuz",
+      "GolCasa": 3,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 22,
+      "Casa": "Carpi-Celtico69",
+      "Ospite": "Pro Patria-Steven71",
+      "GolCasa": 1,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 22,
+      "Casa": "Rimini-Legnaro72",
+      "Ospite": "Perugia-Bomber69",
+      "GolCasa": 0,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 22,
+      "Casa": "Sestri Levante-Marco",
+      "Ospite": "V. Entella-Crazy Doc",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 22,
+      "Casa": "Potenza-Polve",
+      "Ospite": "Padova-Niko nn",
+      "GolCasa": 0,
+      "GolOspite": 1,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 22,
+      "Casa": "Cavese-Futzal",
+      "Ospite": "Latina-Gimmy87",
+      "GolCasa": 3,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 22,
+      "Casa": "Spal-L'unico",
+      "Ospite": "Pescara-FabioMarce",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 23,
+      "Casa": "V. Entella-Crazy Doc",
+      "Ospite": "Rimini-Legnaro72",
+      "GolCasa": 0,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 23,
+      "Casa": "Perugia-Bomber69",
+      "Ospite": "Carpi-Celtico69",
+      "GolCasa": 1,
+      "GolOspite": 2,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 23,
+      "Casa": "Pro Patria-Steven71",
+      "Ospite": "Ascoli-SampElvio",
+      "GolCasa": 2,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 23,
+      "Casa": "Ternana-Cicciuz",
+      "Ospite": "Pro Vercelli-Lord Sinc",
+      "GolCasa": 0,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 23,
+      "Casa": "Pescara-FabioMarce",
+      "Ospite": "Cavese-Futzal",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 23,
+      "Casa": "Latina-Gimmy87",
+      "Ospite": "Potenza-Polve",
+      "GolCasa": 0,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 23,
+      "Casa": "Padova-Niko nn",
+      "Ospite": "Sestri Levante-Marco",
+      "GolCasa": 3,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 23,
+      "Casa": "Avellino-Ruben Paz",
+      "Ospite": "Spal-L'unico",
+      "GolCasa": 1,
+      "GolOspite": 2,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 24,
+      "Casa": "Avellino-Ruben Paz",
+      "Ospite": "Ternana-Cicciuz",
+      "GolCasa": 3,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 24,
+      "Casa": "Pro Vercelli-Lord Sinc",
+      "Ospite": "Pro Patria-Steven71",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 24,
+      "Casa": "Ascoli-SampElvio",
+      "Ospite": "Perugia-Bomber69",
+      "GolCasa": 1,
+      "GolOspite": 2,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 24,
+      "Casa": "Carpi-Celtico69",
+      "Ospite": "V. Entella-Crazy Doc",
+      "GolCasa": 3,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 24,
+      "Casa": "Rimini-Legnaro72",
+      "Ospite": "Padova-Niko nn",
+      "GolCasa": 0,
+      "GolOspite": 1,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 24,
+      "Casa": "Sestri Levante-Marco",
+      "Ospite": "Latina-Gimmy87",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 24,
+      "Casa": "Potenza-Polve",
+      "Ospite": "Pescara-FabioMarce",
+      "GolCasa": 0,
+      "GolOspite": 1,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 24,
+      "Casa": "Cavese-Futzal",
+      "Ospite": "Spal-L'unico",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 25,
+      "Casa": "Latina-Gimmy87",
+      "Ospite": "Rimini-Legnaro72",
+      "GolCasa": 0,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 25,
+      "Casa": "Padova-Niko nn",
+      "Ospite": "Carpi-Celtico69",
+      "GolCasa": 2,
+      "GolOspite": 1,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 25,
+      "Casa": "V. Entella-Crazy Doc",
+      "Ospite": "Ascoli-SampElvio",
+      "GolCasa": 0,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 25,
+      "Casa": "Perugia-Bomber69",
+      "Ospite": "Pro Vercelli-Lord Sinc",
+      "GolCasa": 3,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 25,
+      "Casa": "Pro Patria-Steven71",
+      "Ospite": "Avellino-Ruben Paz",
+      "GolCasa": 1,
+      "GolOspite": 1,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 25,
+      "Casa": "Spal-L'unico",
+      "Ospite": "Ternana-Cicciuz",
+      "GolCasa": 3,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 25,
+      "Casa": "Cavese-Futzal",
+      "Ospite": "Potenza-Polve",
+      "GolCasa": 1,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 25,
+      "Casa": "Pescara-FabioMarce",
+      "Ospite": "Sestri Levante-Marco",
+      "GolCasa": 3,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 26,
+      "Casa": "Ternana-Cicciuz",
+      "Ospite": "Pro Patria-Steven71",
+      "GolCasa": 0,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 26,
+      "Casa": "Avellino-Ruben Paz",
+      "Ospite": "Perugia-Bomber69",
+      "GolCasa": 1,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 26,
+      "Casa": "Pro Vercelli-Lord Sinc",
+      "Ospite": "V. Entella-Crazy Doc",
+      "GolCasa": 3,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 26,
+      "Casa": "Ascoli-SampElvio",
+      "Ospite": "Padova-Niko nn",
+      "GolCasa": 1,
+      "GolOspite": 1,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 26,
+      "Casa": "Carpi-Celtico69",
+      "Ospite": "Latina-Gimmy87",
+      "GolCasa": 3,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 26,
+      "Casa": "Rimini-Legnaro72",
+      "Ospite": "Pescara-FabioMarce",
+      "GolCasa": 0,
+      "GolOspite": 2,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 26,
+      "Casa": "Sestri Levante-Marco",
+      "Ospite": "Cavese-Futzal",
+      "GolCasa": 0,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 26,
+      "Casa": "Spal-L'unico",
+      "Ospite": "Potenza-Polve",
+      "GolCasa": 1,
+      "GolOspite": 1,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 27,
+      "Casa": "Cavese-Futzal",
+      "Ospite": "Rimini-Legnaro72",
+      "GolCasa": 3,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 27,
+      "Casa": "Pescara-FabioMarce",
+      "Ospite": "Carpi-Celtico69",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 27,
+      "Casa": "Latina-Gimmy87",
+      "Ospite": "Ascoli-SampElvio",
+      "GolCasa": 0,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 27,
+      "Casa": "Padova-Niko nn",
+      "Ospite": "Pro Vercelli-Lord Sinc",
+      "GolCasa": 1,
+      "GolOspite": 1,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 27,
+      "Casa": "V. Entella-Crazy Doc",
+      "Ospite": "Avellino-Ruben Paz",
+      "GolCasa": 0,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 27,
+      "Casa": "Perugia-Bomber69",
+      "Ospite": "Ternana-Cicciuz",
+      "GolCasa": 3,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 27,
+      "Casa": "Potenza-Polve",
+      "Ospite": "Sestri Levante-Marco",
+      "GolCasa": 3,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 27,
+      "Casa": "Pro Patria-Steven71",
+      "Ospite": "Spal-L'unico",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 28,
+      "Casa": "Pro Patria-Steven71",
+      "Ospite": "Perugia-Bomber69",
+      "GolCasa": 3,
+      "GolOspite": 1,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 28,
+      "Casa": "Ternana-Cicciuz",
+      "Ospite": "V. Entella-Crazy Doc",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 28,
+      "Casa": "Avellino-Ruben Paz",
+      "Ospite": "Padova-Niko nn",
+      "GolCasa": 0,
+      "GolOspite": 1,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 28,
+      "Casa": "Pro Vercelli-Lord Sinc",
+      "Ospite": "Latina-Gimmy87",
+      "GolCasa": 3,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 28,
+      "Casa": "Ascoli-SampElvio",
+      "Ospite": "Pescara-FabioMarce",
+      "GolCasa": 2,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 28,
+      "Casa": "Carpi-Celtico69",
+      "Ospite": "Cavese-Futzal",
+      "GolCasa": 2,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 28,
+      "Casa": "Rimini-Legnaro72",
+      "Ospite": "Potenza-Polve",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 28,
+      "Casa": "Sestri Levante-Marco",
+      "Ospite": "Spal-L'unico",
+      "GolCasa": 0,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 29,
+      "Casa": "Sestri Levante-Marco",
+      "Ospite": "Rimini-Legnaro72",
+      "GolCasa": 0,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 29,
+      "Casa": "Potenza-Polve",
+      "Ospite": "Carpi-Celtico69",
+      "GolCasa": 0,
+      "GolOspite": 4,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 29,
+      "Casa": "Cavese-Futzal",
+      "Ospite": "Ascoli-SampElvio",
+      "GolCasa": 1,
+      "GolOspite": 2,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 29,
+      "Casa": "Pescara-FabioMarce",
+      "Ospite": "Pro Vercelli-Lord Sinc",
+      "GolCasa": 1,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 29,
+      "Casa": "Latina-Gimmy87",
+      "Ospite": "Avellino-Ruben Paz",
+      "GolCasa": 0,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 29,
+      "Casa": "Padova-Niko nn",
+      "Ospite": "Ternana-Cicciuz",
+      "GolCasa": 3,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 29,
+      "Casa": "V. Entella-Crazy Doc",
+      "Ospite": "Pro Patria-Steven71",
+      "GolCasa": 0,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 29,
+      "Casa": "Spal-L'unico",
+      "Ospite": "Perugia-Bomber69",
+      "GolCasa": 1,
+      "GolOspite": 1,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 30,
+      "Casa": "Perugia-Bomber69",
+      "Ospite": "V. Entella-Crazy Doc",
+      "GolCasa": 3,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 30,
+      "Casa": "Pro Patria-Steven71",
+      "Ospite": "Padova-Niko nn",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 30,
+      "Casa": "Ternana-Cicciuz",
+      "Ospite": "Latina-Gimmy87",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 30,
+      "Casa": "Avellino-Ruben Paz",
+      "Ospite": "Pescara-FabioMarce",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 30,
+      "Casa": "Pro Vercelli-Lord Sinc",
+      "Ospite": "Cavese-Futzal",
+      "GolCasa": 2,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 30,
+      "Casa": "Ascoli-SampElvio",
+      "Ospite": "Potenza-Polve",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 30,
+      "Casa": "Carpi-Celtico69",
+      "Ospite": "Sestri Levante-Marco",
+      "GolCasa": 3,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 30,
+      "Casa": "Rimini-Legnaro72",
+      "Ospite": "Spal-L'unico",
+      "GolCasa": 0,
+      "GolOspite": 4,
+      "Valida": true
+    }
+  ],
+  "partite": [
+    {
+      "Girone": "Girone 1",
+      "Giornata": 1,
+      "Casa": "Carpi-Celtico69",
+      "Ospite": "Rimini-Legnaro72",
+      "GolCasa": 1,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 1,
+      "Casa": "Ascoli-SampElvio",
+      "Ospite": "Sestri Levante-Marco",
+      "GolCasa": 3,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 1,
+      "Casa": "Pro Vercelli-Lord Sinc",
+      "Ospite": "Potenza-Polve",
+      "GolCasa": 2,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 1,
+      "Casa": "Avellino-Ruben Paz",
+      "Ospite": "Cavese-Futzal",
+      "GolCasa": 3,
+      "GolOspite": 1,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 1,
+      "Casa": "Ternana-Cicciuz",
+      "Ospite": "Pescara-FabioMarce",
+      "GolCasa": 0,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 1,
+      "Casa": "Pro Patria-Steven71",
+      "Ospite": "Latina-Gimmy87",
+      "GolCasa": 3,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 1,
+      "Casa": "Perugia-Bomber69",
+      "Ospite": "Padova-Niko nn",
+      "GolCasa": 0,
+      "GolOspite": 2,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 1,
+      "Casa": "Spal-L'unico",
+      "Ospite": "V. Entella-Crazy Doc",
+      "GolCasa": 3,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 2,
+      "Casa": "Rimini-Legnaro72",
+      "Ospite": "Ascoli-SampElvio",
+      "GolCasa": 0,
+      "GolOspite": 2,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 2,
+      "Casa": "Carpi-Celtico69",
+      "Ospite": "Spal-L'unico",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 2,
+      "Casa": "Padova-Niko nn",
+      "Ospite": "V. Entella-Crazy Doc",
+      "GolCasa": 3,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 2,
+      "Casa": "Latina-Gimmy87",
+      "Ospite": "Perugia-Bomber69",
+      "GolCasa": 0,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 2,
+      "Casa": "Pescara-FabioMarce",
+      "Ospite": "Pro Patria-Steven71",
+      "GolCasa": 1,
+      "GolOspite": 1,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 2,
+      "Casa": "Cavese-Futzal",
+      "Ospite": "Ternana-Cicciuz",
+      "GolCasa": 3,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 2,
+      "Casa": "Potenza-Polve",
+      "Ospite": "Avellino-Ruben Paz",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 2,
+      "Casa": "Sestri Levante-Marco",
+      "Ospite": "Pro Vercelli-Lord Sinc",
+      "GolCasa": 0,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 3,
+      "Casa": "Ascoli-SampElvio",
+      "Ospite": "Carpi-Celtico69",
+      "GolCasa": 0,
+      "GolOspite": 4,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 3,
+      "Casa": "Pro Vercelli-Lord Sinc",
+      "Ospite": "Rimini-Legnaro72",
+      "GolCasa": 2,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 3,
+      "Casa": "Avellino-Ruben Paz",
+      "Ospite": "Sestri Levante-Marco",
+      "GolCasa": 3,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 3,
+      "Casa": "Ternana-Cicciuz",
+      "Ospite": "Potenza-Polve",
+      "GolCasa": 0,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 3,
+      "Casa": "Pro Patria-Steven71",
+      "Ospite": "Cavese-Futzal",
+      "GolCasa": 3,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 3,
+      "Casa": "Perugia-Bomber69",
+      "Ospite": "Pescara-FabioMarce",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 3,
+      "Casa": "V. Entella-Crazy Doc",
+      "Ospite": "Latina-Gimmy87",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 3,
+      "Casa": "Padova-Niko nn",
+      "Ospite": "Spal-L'unico",
+      "GolCasa": 1,
+      "GolOspite": 1,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 4,
+      "Casa": "Rimini-Legnaro72",
+      "Ospite": "Avellino-Ruben Paz",
+      "GolCasa": 0,
+      "GolOspite": 2,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 4,
+      "Casa": "Carpi-Celtico69",
+      "Ospite": "Pro Vercelli-Lord Sinc",
+      "GolCasa": 0,
+      "GolOspite": 2,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 4,
+      "Casa": "Latina-Gimmy87",
+      "Ospite": "Padova-Niko nn",
+      "GolCasa": 0,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 4,
+      "Casa": "Pescara-FabioMarce",
+      "Ospite": "V. Entella-Crazy Doc",
+      "GolCasa": 3,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 4,
+      "Casa": "Cavese-Futzal",
+      "Ospite": "Perugia-Bomber69",
+      "GolCasa": 0,
+      "GolOspite": 4,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 4,
+      "Casa": "Potenza-Polve",
+      "Ospite": "Pro Patria-Steven71",
+      "GolCasa": 0,
+      "GolOspite": 4,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 4,
+      "Casa": "Sestri Levante-Marco",
+      "Ospite": "Ternana-Cicciuz",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 4,
+      "Casa": "Spal-L'unico",
+      "Ospite": "Ascoli-SampElvio",
+      "GolCasa": 1,
+      "GolOspite": 1,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 5,
+      "Casa": "Pro Vercelli-Lord Sinc",
+      "Ospite": "Ascoli-SampElvio",
+      "GolCasa": 1,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 5,
+      "Casa": "Avellino-Ruben Paz",
+      "Ospite": "Carpi-Celtico69",
+      "GolCasa": 1,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 5,
+      "Casa": "Ternana-Cicciuz",
+      "Ospite": "Rimini-Legnaro72",
+      "GolCasa": 0,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 5,
+      "Casa": "Pro Patria-Steven71",
+      "Ospite": "Sestri Levante-Marco",
+      "GolCasa": 3,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 5,
+      "Casa": "Perugia-Bomber69",
+      "Ospite": "Potenza-Polve",
+      "GolCasa": 2,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 5,
+      "Casa": "V. Entella-Crazy Doc",
+      "Ospite": "Cavese-Futzal",
+      "GolCasa": 0,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 5,
+      "Casa": "Padova-Niko nn",
+      "Ospite": "Pescara-FabioMarce",
+      "GolCasa": 1,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 5,
+      "Casa": "Spal-L'unico",
+      "Ospite": "Latina-Gimmy87",
+      "GolCasa": 3,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 6,
+      "Casa": "Rimini-Legnaro72",
+      "Ospite": "Pro Patria-Steven71",
+      "GolCasa": 1,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 6,
+      "Casa": "Carpi-Celtico69",
+      "Ospite": "Ternana-Cicciuz",
+      "GolCasa": 3,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 6,
+      "Casa": "Ascoli-SampElvio",
+      "Ospite": "Avellino-Ruben Paz",
+      "GolCasa": 1,
+      "GolOspite": 1,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 6,
+      "Casa": "Pro Vercelli-Lord Sinc",
+      "Ospite": "Spal-L'unico",
+      "GolCasa": 2,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 6,
+      "Casa": "Pescara-FabioMarce",
+      "Ospite": "Latina-Gimmy87",
+      "GolCasa": 3,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 6,
+      "Casa": "Cavese-Futzal",
+      "Ospite": "Padova-Niko nn",
+      "GolCasa": 0,
+      "GolOspite": 2,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 6,
+      "Casa": "Potenza-Polve",
+      "Ospite": "V. Entella-Crazy Doc",
+      "GolCasa": 3,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 6,
+      "Casa": "Sestri Levante-Marco",
+      "Ospite": "Perugia-Bomber69",
+      "GolCasa": 0,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 7,
+      "Casa": "Avellino-Ruben Paz",
+      "Ospite": "Pro Vercelli-Lord Sinc",
+      "GolCasa": 1,
+      "GolOspite": 1,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 7,
+      "Casa": "Ternana-Cicciuz",
+      "Ospite": "Ascoli-SampElvio",
+      "GolCasa": 0,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 7,
+      "Casa": "Pro Patria-Steven71",
+      "Ospite": "Carpi-Celtico69",
+      "GolCasa": 1,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 7,
+      "Casa": "Perugia-Bomber69",
+      "Ospite": "Rimini-Legnaro72",
+      "GolCasa": 2,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 7,
+      "Casa": "V. Entella-Crazy Doc",
+      "Ospite": "Sestri Levante-Marco",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 7,
+      "Casa": "Padova-Niko nn",
+      "Ospite": "Potenza-Polve",
+      "GolCasa": 3,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 7,
+      "Casa": "Latina-Gimmy87",
+      "Ospite": "Cavese-Futzal",
+      "GolCasa": 0,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 7,
+      "Casa": "Pescara-FabioMarce",
+      "Ospite": "Spal-L'unico",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 8,
+      "Casa": "Rimini-Legnaro72",
+      "Ospite": "V. Entella-Crazy Doc",
+      "GolCasa": 3,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 8,
+      "Casa": "Carpi-Celtico69",
+      "Ospite": "Perugia-Bomber69",
+      "GolCasa": 1,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 8,
+      "Casa": "Ascoli-SampElvio",
+      "Ospite": "Pro Patria-Steven71",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 8,
+      "Casa": "Pro Vercelli-Lord Sinc",
+      "Ospite": "Ternana-Cicciuz",
+      "GolCasa": 3,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 8,
+      "Casa": "Cavese-Futzal",
+      "Ospite": "Pescara-FabioMarce",
+      "GolCasa": 0,
+      "GolOspite": 2,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 8,
+      "Casa": "Potenza-Polve",
+      "Ospite": "Latina-Gimmy87",
+      "GolCasa": 3,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 8,
+      "Casa": "Sestri Levante-Marco",
+      "Ospite": "Padova-Niko nn",
+      "GolCasa": 0,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 8,
+      "Casa": "Spal-L'unico",
+      "Ospite": "Avellino-Ruben Paz",
+      "GolCasa": 2,
+      "GolOspite": 2,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 9,
+      "Casa": "Ternana-Cicciuz",
+      "Ospite": "Avellino-Ruben Paz",
+      "GolCasa": 0,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 9,
+      "Casa": "Pro Patria-Steven71",
+      "Ospite": "Pro Vercelli-Lord Sinc",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 9,
+      "Casa": "Perugia-Bomber69",
+      "Ospite": "Ascoli-SampElvio",
+      "GolCasa": 3,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 9,
+      "Casa": "V. Entella-Crazy Doc",
+      "Ospite": "Carpi-Celtico69",
+      "GolCasa": 0,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 9,
+      "Casa": "Padova-Niko nn",
+      "Ospite": "Rimini-Legnaro72",
+      "GolCasa": 2,
+      "GolOspite": 1,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 9,
+      "Casa": "Latina-Gimmy87",
+      "Ospite": "Sestri Levante-Marco",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 9,
+      "Casa": "Pescara-FabioMarce",
+      "Ospite": "Potenza-Polve",
+      "GolCasa": 2,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 9,
+      "Casa": "Spal-L'unico",
+      "Ospite": "Cavese-Futzal",
+      "GolCasa": 4,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 10,
+      "Casa": "Rimini-Legnaro72",
+      "Ospite": "Latina-Gimmy87",
+      "GolCasa": 3,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 10,
+      "Casa": "Carpi-Celtico69",
+      "Ospite": "Padova-Niko nn",
+      "GolCasa": 3,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 10,
+      "Casa": "Ascoli-SampElvio",
+      "Ospite": "V. Entella-Crazy Doc",
+      "GolCasa": 3,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 10,
+      "Casa": "Pro Vercelli-Lord Sinc",
+      "Ospite": "Perugia-Bomber69",
+      "GolCasa": 3,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 10,
+      "Casa": "Avellino-Ruben Paz",
+      "Ospite": "Pro Patria-Steven71",
+      "GolCasa": 2,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 10,
+      "Casa": "Ternana-Cicciuz",
+      "Ospite": "Spal-L'unico",
+      "GolCasa": 0,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 10,
+      "Casa": "Potenza-Polve",
+      "Ospite": "Cavese-Futzal",
+      "GolCasa": 0,
+      "GolOspite": 4,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 10,
+      "Casa": "Sestri Levante-Marco",
+      "Ospite": "Pescara-FabioMarce",
+      "GolCasa": 0,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 11,
+      "Casa": "Pro Patria-Steven71",
+      "Ospite": "Ternana-Cicciuz",
+      "GolCasa": 3,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 11,
+      "Casa": "Perugia-Bomber69",
+      "Ospite": "Avellino-Ruben Paz",
+      "GolCasa": 2,
+      "GolOspite": 1,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 11,
+      "Casa": "V. Entella-Crazy Doc",
+      "Ospite": "Pro Vercelli-Lord Sinc",
+      "GolCasa": 0,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 11,
+      "Casa": "Padova-Niko nn",
+      "Ospite": "Ascoli-SampElvio",
+      "GolCasa": 1,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 11,
+      "Casa": "Latina-Gimmy87",
+      "Ospite": "Carpi-Celtico69",
+      "GolCasa": 0,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 11,
+      "Casa": "Pescara-FabioMarce",
+      "Ospite": "Rimini-Legnaro72",
+      "GolCasa": 2,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 11,
+      "Casa": "Cavese-Futzal",
+      "Ospite": "Sestri Levante-Marco",
+      "GolCasa": 3,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 11,
+      "Casa": "Potenza-Polve",
+      "Ospite": "Spal-L'unico",
+      "GolCasa": 0,
+      "GolOspite": 4,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 12,
+      "Casa": "Rimini-Legnaro72",
+      "Ospite": "Cavese-Futzal",
+      "GolCasa": 0,
+      "GolOspite": 2,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 12,
+      "Casa": "Carpi-Celtico69",
+      "Ospite": "Pescara-FabioMarce",
+      "GolCasa": 1,
+      "GolOspite": 1,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 12,
+      "Casa": "Ascoli-SampElvio",
+      "Ospite": "Latina-Gimmy87",
+      "GolCasa": 3,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 12,
+      "Casa": "Pro Vercelli-Lord Sinc",
+      "Ospite": "Padova-Niko nn",
+      "GolCasa": 2,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 12,
+      "Casa": "Avellino-Ruben Paz",
+      "Ospite": "V. Entella-Crazy Doc",
+      "GolCasa": 3,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 12,
+      "Casa": "Ternana-Cicciuz",
+      "Ospite": "Perugia-Bomber69",
+      "GolCasa": 0,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 12,
+      "Casa": "Sestri Levante-Marco",
+      "Ospite": "Potenza-Polve",
+      "GolCasa": 0,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 12,
+      "Casa": "Spal-L'unico",
+      "Ospite": "Pro Patria-Steven71",
+      "GolCasa": 1,
+      "GolOspite": 1,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 13,
+      "Casa": "Perugia-Bomber69",
+      "Ospite": "Pro Patria-Steven71",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 13,
+      "Casa": "V. Entella-Crazy Doc",
+      "Ospite": "Ternana-Cicciuz",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 13,
+      "Casa": "Padova-Niko nn",
+      "Ospite": "Avellino-Ruben Paz",
+      "GolCasa": 0,
+      "GolOspite": 2,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 13,
+      "Casa": "Latina-Gimmy87",
+      "Ospite": "Pro Vercelli-Lord Sinc",
+      "GolCasa": 0,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 13,
+      "Casa": "Pescara-FabioMarce",
+      "Ospite": "Ascoli-SampElvio",
+      "GolCasa": 2,
+      "GolOspite": 2,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 13,
+      "Casa": "Cavese-Futzal",
+      "Ospite": "Carpi-Celtico69",
+      "GolCasa": 0,
+      "GolOspite": 5,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 13,
+      "Casa": "Potenza-Polve",
+      "Ospite": "Rimini-Legnaro72",
+      "GolCasa": 1,
+      "GolOspite": 1,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 13,
+      "Casa": "Spal-L'unico",
+      "Ospite": "Sestri Levante-Marco",
+      "GolCasa": 3,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 14,
+      "Casa": "Rimini-Legnaro72",
+      "Ospite": "Sestri Levante-Marco",
+      "GolCasa": 3,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 14,
+      "Casa": "Carpi-Celtico69",
+      "Ospite": "Potenza-Polve",
+      "GolCasa": 2,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 14,
+      "Casa": "Ascoli-SampElvio",
+      "Ospite": "Cavese-Futzal",
+      "GolCasa": 2,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 14,
+      "Casa": "Pro Vercelli-Lord Sinc",
+      "Ospite": "Pescara-FabioMarce",
+      "GolCasa": 2,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 14,
+      "Casa": "Avellino-Ruben Paz",
+      "Ospite": "Latina-Gimmy87",
+      "GolCasa": 3,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 14,
+      "Casa": "Ternana-Cicciuz",
+      "Ospite": "Padova-Niko nn",
+      "GolCasa": 0,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 14,
+      "Casa": "Pro Patria-Steven71",
+      "Ospite": "V. Entella-Crazy Doc",
+      "GolCasa": 3,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 14,
+      "Casa": "Perugia-Bomber69",
+      "Ospite": "Spal-L'unico",
+      "GolCasa": 5,
+      "GolOspite": 2,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 15,
+      "Casa": "V. Entella-Crazy Doc",
+      "Ospite": "Perugia-Bomber69",
+      "GolCasa": 0,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 15,
+      "Casa": "Padova-Niko nn",
+      "Ospite": "Pro Patria-Steven71",
+      "GolCasa": 1,
+      "GolOspite": 2,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 15,
+      "Casa": "Latina-Gimmy87",
+      "Ospite": "Ternana-Cicciuz",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 15,
+      "Casa": "Pescara-FabioMarce",
+      "Ospite": "Avellino-Ruben Paz",
+      "GolCasa": 1,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 15,
+      "Casa": "Cavese-Futzal",
+      "Ospite": "Pro Vercelli-Lord Sinc",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 15,
+      "Casa": "Potenza-Polve",
+      "Ospite": "Ascoli-SampElvio",
+      "GolCasa": 1,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 15,
+      "Casa": "Sestri Levante-Marco",
+      "Ospite": "Carpi-Celtico69",
+      "GolCasa": 0,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 15,
+      "Casa": "Spal-L'unico",
+      "Ospite": "Rimini-Legnaro72",
+      "GolCasa": 2,
+      "GolOspite": 1,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 16,
+      "Casa": "Rimini-Legnaro72",
+      "Ospite": "Carpi-Celtico69",
+      "GolCasa": 2,
+      "GolOspite": 5,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 16,
+      "Casa": "Sestri Levante-Marco",
+      "Ospite": "Ascoli-SampElvio",
+      "GolCasa": 0,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 16,
+      "Casa": "Potenza-Polve",
+      "Ospite": "Pro Vercelli-Lord Sinc",
+      "GolCasa": 0,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 16,
+      "Casa": "Cavese-Futzal",
+      "Ospite": "Avellino-Ruben Paz",
+      "GolCasa": 0,
+      "GolOspite": 1,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 16,
+      "Casa": "Pescara-FabioMarce",
+      "Ospite": "Ternana-Cicciuz",
+      "GolCasa": 3,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 16,
+      "Casa": "Latina-Gimmy87",
+      "Ospite": "Pro Patria-Steven71",
+      "GolCasa": 0,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 16,
+      "Casa": "Padova-Niko nn",
+      "Ospite": "Perugia-Bomber69",
+      "GolCasa": 1,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 16,
+      "Casa": "V. Entella-Crazy Doc",
+      "Ospite": "Spal-L'unico",
+      "GolCasa": 0,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 17,
+      "Casa": "Ascoli-SampElvio",
+      "Ospite": "Rimini-Legnaro72",
+      "GolCasa": 4,
+      "GolOspite": 1,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 17,
+      "Casa": "Spal-L'unico",
+      "Ospite": "Carpi-Celtico69",
+      "GolCasa": 2,
+      "GolOspite": 1,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 17,
+      "Casa": "V. Entella-Crazy Doc",
+      "Ospite": "Padova-Niko nn",
+      "GolCasa": 0,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 17,
+      "Casa": "Perugia-Bomber69",
+      "Ospite": "Latina-Gimmy87",
+      "GolCasa": 3,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 17,
+      "Casa": "Pro Patria-Steven71",
+      "Ospite": "Pescara-FabioMarce",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 17,
+      "Casa": "Ternana-Cicciuz",
+      "Ospite": "Cavese-Futzal",
+      "GolCasa": 0,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 17,
+      "Casa": "Avellino-Ruben Paz",
+      "Ospite": "Potenza-Polve",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 17,
+      "Casa": "Pro Vercelli-Lord Sinc",
+      "Ospite": "Sestri Levante-Marco",
+      "GolCasa": 3,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 18,
+      "Casa": "Carpi-Celtico69",
+      "Ospite": "Ascoli-SampElvio",
+      "GolCasa": 2,
+      "GolOspite": 2,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 18,
+      "Casa": "Rimini-Legnaro72",
+      "Ospite": "Pro Vercelli-Lord Sinc",
+      "GolCasa": 1,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 18,
+      "Casa": "Sestri Levante-Marco",
+      "Ospite": "Avellino-Ruben Paz",
+      "GolCasa": 0,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 18,
+      "Casa": "Potenza-Polve",
+      "Ospite": "Ternana-Cicciuz",
+      "GolCasa": 3,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 18,
+      "Casa": "Cavese-Futzal",
+      "Ospite": "Pro Patria-Steven71",
+      "GolCasa": 0,
+      "GolOspite": 1,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 18,
+      "Casa": "Pescara-FabioMarce",
+      "Ospite": "Perugia-Bomber69",
+      "GolCasa": 2,
+      "GolOspite": 4,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 18,
+      "Casa": "Latina-Gimmy87",
+      "Ospite": "V. Entella-Crazy Doc",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 18,
+      "Casa": "Spal-L'unico",
+      "Ospite": "Padova-Niko nn",
+      "GolCasa": 1,
+      "GolOspite": 1,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 19,
+      "Casa": "Avellino-Ruben Paz",
+      "Ospite": "Rimini-Legnaro72",
+      "GolCasa": 3,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 19,
+      "Casa": "Pro Vercelli-Lord Sinc",
+      "Ospite": "Carpi-Celtico69",
+      "GolCasa": 2,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 19,
+      "Casa": "Padova-Niko nn",
+      "Ospite": "Latina-Gimmy87",
+      "GolCasa": 3,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 19,
+      "Casa": "V. Entella-Crazy Doc",
+      "Ospite": "Pescara-FabioMarce",
+      "GolCasa": 0,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 19,
+      "Casa": "Perugia-Bomber69",
+      "Ospite": "Cavese-Futzal",
+      "GolCasa": 1,
+      "GolOspite": 1,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 19,
+      "Casa": "Pro Patria-Steven71",
+      "Ospite": "Potenza-Polve",
+      "GolCasa": 4,
+      "GolOspite": 1,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 19,
+      "Casa": "Ternana-Cicciuz",
+      "Ospite": "Sestri Levante-Marco",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 19,
+      "Casa": "Ascoli-SampElvio",
+      "Ospite": "Spal-L'unico",
+      "GolCasa": 1,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 20,
+      "Casa": "Ascoli-SampElvio",
+      "Ospite": "Pro Vercelli-Lord Sinc",
+      "GolCasa": 1,
+      "GolOspite": 2,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 20,
+      "Casa": "Carpi-Celtico69",
+      "Ospite": "Avellino-Ruben Paz",
+      "GolCasa": 4,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 20,
+      "Casa": "Rimini-Legnaro72",
+      "Ospite": "Ternana-Cicciuz",
+      "GolCasa": 3,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 20,
+      "Casa": "Sestri Levante-Marco",
+      "Ospite": "Pro Patria-Steven71",
+      "GolCasa": 0,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 20,
+      "Casa": "Potenza-Polve",
+      "Ospite": "Perugia-Bomber69",
+      "GolCasa": 0,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 20,
+      "Casa": "Cavese-Futzal",
+      "Ospite": "V. Entella-Crazy Doc",
+      "GolCasa": 3,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 20,
+      "Casa": "Pescara-FabioMarce",
+      "Ospite": "Padova-Niko nn",
+      "GolCasa": 0,
+      "GolOspite": 2,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 20,
+      "Casa": "Latina-Gimmy87",
+      "Ospite": "Spal-L'unico",
+      "GolCasa": 0,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 21,
+      "Casa": "Pro Patria-Steven71",
+      "Ospite": "Rimini-Legnaro72",
+      "GolCasa": 2,
+      "GolOspite": 1,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 21,
+      "Casa": "Ternana-Cicciuz",
+      "Ospite": "Carpi-Celtico69",
+      "GolCasa": 0,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 21,
+      "Casa": "Avellino-Ruben Paz",
+      "Ospite": "Ascoli-SampElvio",
+      "GolCasa": 3,
+      "GolOspite": 2,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 21,
+      "Casa": "Spal-L'unico",
+      "Ospite": "Pro Vercelli-Lord Sinc",
+      "GolCasa": 0,
+      "GolOspite": 1,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 21,
+      "Casa": "Latina-Gimmy87",
+      "Ospite": "Pescara-FabioMarce",
+      "GolCasa": 0,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 21,
+      "Casa": "Padova-Niko nn",
+      "Ospite": "Cavese-Futzal",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 21,
+      "Casa": "V. Entella-Crazy Doc",
+      "Ospite": "Potenza-Polve",
+      "GolCasa": 0,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 21,
+      "Casa": "Perugia-Bomber69",
+      "Ospite": "Sestri Levante-Marco",
+      "GolCasa": 3,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 22,
+      "Casa": "Pro Vercelli-Lord Sinc",
+      "Ospite": "Avellino-Ruben Paz",
+      "GolCasa": 4,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 22,
+      "Casa": "Ascoli-SampElvio",
+      "Ospite": "Ternana-Cicciuz",
+      "GolCasa": 3,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 22,
+      "Casa": "Carpi-Celtico69",
+      "Ospite": "Pro Patria-Steven71",
+      "GolCasa": 1,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 22,
+      "Casa": "Rimini-Legnaro72",
+      "Ospite": "Perugia-Bomber69",
+      "GolCasa": 0,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 22,
+      "Casa": "Sestri Levante-Marco",
+      "Ospite": "V. Entella-Crazy Doc",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 22,
+      "Casa": "Potenza-Polve",
+      "Ospite": "Padova-Niko nn",
+      "GolCasa": 0,
+      "GolOspite": 1,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 22,
+      "Casa": "Cavese-Futzal",
+      "Ospite": "Latina-Gimmy87",
+      "GolCasa": 3,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 22,
+      "Casa": "Spal-L'unico",
+      "Ospite": "Pescara-FabioMarce",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 23,
+      "Casa": "V. Entella-Crazy Doc",
+      "Ospite": "Rimini-Legnaro72",
+      "GolCasa": 0,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 23,
+      "Casa": "Perugia-Bomber69",
+      "Ospite": "Carpi-Celtico69",
+      "GolCasa": 1,
+      "GolOspite": 2,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 23,
+      "Casa": "Pro Patria-Steven71",
+      "Ospite": "Ascoli-SampElvio",
+      "GolCasa": 2,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 23,
+      "Casa": "Ternana-Cicciuz",
+      "Ospite": "Pro Vercelli-Lord Sinc",
+      "GolCasa": 0,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 23,
+      "Casa": "Pescara-FabioMarce",
+      "Ospite": "Cavese-Futzal",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 23,
+      "Casa": "Latina-Gimmy87",
+      "Ospite": "Potenza-Polve",
+      "GolCasa": 0,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 23,
+      "Casa": "Padova-Niko nn",
+      "Ospite": "Sestri Levante-Marco",
+      "GolCasa": 3,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 23,
+      "Casa": "Avellino-Ruben Paz",
+      "Ospite": "Spal-L'unico",
+      "GolCasa": 1,
+      "GolOspite": 2,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 24,
+      "Casa": "Avellino-Ruben Paz",
+      "Ospite": "Ternana-Cicciuz",
+      "GolCasa": 3,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 24,
+      "Casa": "Pro Vercelli-Lord Sinc",
+      "Ospite": "Pro Patria-Steven71",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 24,
+      "Casa": "Ascoli-SampElvio",
+      "Ospite": "Perugia-Bomber69",
+      "GolCasa": 1,
+      "GolOspite": 2,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 24,
+      "Casa": "Carpi-Celtico69",
+      "Ospite": "V. Entella-Crazy Doc",
+      "GolCasa": 3,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 24,
+      "Casa": "Rimini-Legnaro72",
+      "Ospite": "Padova-Niko nn",
+      "GolCasa": 0,
+      "GolOspite": 1,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 24,
+      "Casa": "Sestri Levante-Marco",
+      "Ospite": "Latina-Gimmy87",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 24,
+      "Casa": "Potenza-Polve",
+      "Ospite": "Pescara-FabioMarce",
+      "GolCasa": 0,
+      "GolOspite": 1,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 24,
+      "Casa": "Cavese-Futzal",
+      "Ospite": "Spal-L'unico",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 25,
+      "Casa": "Latina-Gimmy87",
+      "Ospite": "Rimini-Legnaro72",
+      "GolCasa": 0,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 25,
+      "Casa": "Padova-Niko nn",
+      "Ospite": "Carpi-Celtico69",
+      "GolCasa": 2,
+      "GolOspite": 1,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 25,
+      "Casa": "V. Entella-Crazy Doc",
+      "Ospite": "Ascoli-SampElvio",
+      "GolCasa": 0,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 25,
+      "Casa": "Perugia-Bomber69",
+      "Ospite": "Pro Vercelli-Lord Sinc",
+      "GolCasa": 3,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 25,
+      "Casa": "Pro Patria-Steven71",
+      "Ospite": "Avellino-Ruben Paz",
+      "GolCasa": 1,
+      "GolOspite": 1,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 25,
+      "Casa": "Spal-L'unico",
+      "Ospite": "Ternana-Cicciuz",
+      "GolCasa": 3,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 25,
+      "Casa": "Cavese-Futzal",
+      "Ospite": "Potenza-Polve",
+      "GolCasa": 1,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 25,
+      "Casa": "Pescara-FabioMarce",
+      "Ospite": "Sestri Levante-Marco",
+      "GolCasa": 3,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 26,
+      "Casa": "Ternana-Cicciuz",
+      "Ospite": "Pro Patria-Steven71",
+      "GolCasa": 0,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 26,
+      "Casa": "Avellino-Ruben Paz",
+      "Ospite": "Perugia-Bomber69",
+      "GolCasa": 1,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 26,
+      "Casa": "Pro Vercelli-Lord Sinc",
+      "Ospite": "V. Entella-Crazy Doc",
+      "GolCasa": 3,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 26,
+      "Casa": "Ascoli-SampElvio",
+      "Ospite": "Padova-Niko nn",
+      "GolCasa": 1,
+      "GolOspite": 1,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 26,
+      "Casa": "Carpi-Celtico69",
+      "Ospite": "Latina-Gimmy87",
+      "GolCasa": 3,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 26,
+      "Casa": "Rimini-Legnaro72",
+      "Ospite": "Pescara-FabioMarce",
+      "GolCasa": 0,
+      "GolOspite": 2,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 26,
+      "Casa": "Sestri Levante-Marco",
+      "Ospite": "Cavese-Futzal",
+      "GolCasa": 0,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 26,
+      "Casa": "Spal-L'unico",
+      "Ospite": "Potenza-Polve",
+      "GolCasa": 1,
+      "GolOspite": 1,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 27,
+      "Casa": "Cavese-Futzal",
+      "Ospite": "Rimini-Legnaro72",
+      "GolCasa": 3,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 27,
+      "Casa": "Pescara-FabioMarce",
+      "Ospite": "Carpi-Celtico69",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 27,
+      "Casa": "Latina-Gimmy87",
+      "Ospite": "Ascoli-SampElvio",
+      "GolCasa": 0,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 27,
+      "Casa": "Padova-Niko nn",
+      "Ospite": "Pro Vercelli-Lord Sinc",
+      "GolCasa": 1,
+      "GolOspite": 1,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 27,
+      "Casa": "V. Entella-Crazy Doc",
+      "Ospite": "Avellino-Ruben Paz",
+      "GolCasa": 0,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 27,
+      "Casa": "Perugia-Bomber69",
+      "Ospite": "Ternana-Cicciuz",
+      "GolCasa": 3,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 27,
+      "Casa": "Potenza-Polve",
+      "Ospite": "Sestri Levante-Marco",
+      "GolCasa": 3,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 27,
+      "Casa": "Pro Patria-Steven71",
+      "Ospite": "Spal-L'unico",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 28,
+      "Casa": "Pro Patria-Steven71",
+      "Ospite": "Perugia-Bomber69",
+      "GolCasa": 3,
+      "GolOspite": 1,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 28,
+      "Casa": "Ternana-Cicciuz",
+      "Ospite": "V. Entella-Crazy Doc",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 28,
+      "Casa": "Avellino-Ruben Paz",
+      "Ospite": "Padova-Niko nn",
+      "GolCasa": 0,
+      "GolOspite": 1,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 28,
+      "Casa": "Pro Vercelli-Lord Sinc",
+      "Ospite": "Latina-Gimmy87",
+      "GolCasa": 3,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 28,
+      "Casa": "Ascoli-SampElvio",
+      "Ospite": "Pescara-FabioMarce",
+      "GolCasa": 2,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 28,
+      "Casa": "Carpi-Celtico69",
+      "Ospite": "Cavese-Futzal",
+      "GolCasa": 2,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 28,
+      "Casa": "Rimini-Legnaro72",
+      "Ospite": "Potenza-Polve",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 28,
+      "Casa": "Sestri Levante-Marco",
+      "Ospite": "Spal-L'unico",
+      "GolCasa": 0,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 29,
+      "Casa": "Sestri Levante-Marco",
+      "Ospite": "Rimini-Legnaro72",
+      "GolCasa": 0,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 29,
+      "Casa": "Potenza-Polve",
+      "Ospite": "Carpi-Celtico69",
+      "GolCasa": 0,
+      "GolOspite": 4,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 29,
+      "Casa": "Cavese-Futzal",
+      "Ospite": "Ascoli-SampElvio",
+      "GolCasa": 1,
+      "GolOspite": 2,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 29,
+      "Casa": "Pescara-FabioMarce",
+      "Ospite": "Pro Vercelli-Lord Sinc",
+      "GolCasa": 1,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 29,
+      "Casa": "Latina-Gimmy87",
+      "Ospite": "Avellino-Ruben Paz",
+      "GolCasa": 0,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 29,
+      "Casa": "Padova-Niko nn",
+      "Ospite": "Ternana-Cicciuz",
+      "GolCasa": 3,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 29,
+      "Casa": "V. Entella-Crazy Doc",
+      "Ospite": "Pro Patria-Steven71",
+      "GolCasa": 0,
+      "GolOspite": 3,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 29,
+      "Casa": "Spal-L'unico",
+      "Ospite": "Perugia-Bomber69",
+      "GolCasa": 1,
+      "GolOspite": 1,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 30,
+      "Casa": "Perugia-Bomber69",
+      "Ospite": "V. Entella-Crazy Doc",
+      "GolCasa": 3,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 30,
+      "Casa": "Pro Patria-Steven71",
+      "Ospite": "Padova-Niko nn",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 30,
+      "Casa": "Ternana-Cicciuz",
+      "Ospite": "Latina-Gimmy87",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 30,
+      "Casa": "Avellino-Ruben Paz",
+      "Ospite": "Pescara-FabioMarce",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 30,
+      "Casa": "Pro Vercelli-Lord Sinc",
+      "Ospite": "Cavese-Futzal",
+      "GolCasa": 2,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 30,
+      "Casa": "Ascoli-SampElvio",
+      "Ospite": "Potenza-Polve",
+      "GolCasa": 0,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 30,
+      "Casa": "Carpi-Celtico69",
+      "Ospite": "Sestri Levante-Marco",
+      "GolCasa": 3,
+      "GolOspite": 0,
+      "Valida": true
+    },
+    {
+      "Girone": "Girone 1",
+      "Giornata": 30,
+      "Casa": "Rimini-Legnaro72",
+      "Ospite": "Spal-L'unico",
+      "GolCasa": 0,
+      "GolOspite": 4,
+      "Valida": true
+    }
+  ]
+}]
