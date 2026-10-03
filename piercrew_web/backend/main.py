@@ -15,7 +15,7 @@ from pymongo import ReturnDocument
 from pymongo.errors import DuplicateKeyError, PyMongoError
 
 from .domain import genera_calendario_from_list
-from .models import Activate, ActivationLookup, Complete, CreateTournament, Login, Rename, SaveBadges, SaveResults, Withdrawal
+from .models import Activate, ActivationLookup, Complete, CreateTournament, Login, Rename, SaveBadges, SaveResults, Withdrawal, PlayNowExport
 from .report import render_tournament_pdf
 from .security import generate_token, hash_password, hash_token, password_needs_upgrade, verify_password
 from .store import Store, get_store
@@ -444,6 +444,36 @@ def export_csv(tournament_id: str, user=Depends(current_user), store: Store = De
 def export_pdf(tournament_id: str, user=Depends(current_user), store: Store = Depends(store_dep)):
     data = with_club_badges(store, view(load(store, tournament_id)))
     return Response(render_tournament_pdf(data), media_type='application/pdf', headers={'Content-Disposition': 'attachment; filename="gazzettino-piercrew.pdf"'})
+
+
+@app.post('/api/{kind}/{tournament_id}/play-now.pdf')
+def export_play_now(kind: str, tournament_id: str, request: PlayNowExport, user=Depends(current_user), store: Store = Depends(store_dep)):
+    if kind == 'tournaments':
+        data = view(load(store, tournament_id))
+    elif kind == 'finals':
+        from .finals import load as load_final, view as view_final
+        data = view_final(load_final(store, tournament_id))
+    elif kind == 'swiss':
+        from .swiss import load as load_swiss, view as view_swiss
+        data = view_swiss(load_swiss(store, tournament_id))
+    else:
+        raise HTTPException(404, 'Tipo di torneo non trovato.')
+    if data['version'] != request.version or data.get('closed') or data.get('finished'):
+        raise HTTPException(409, 'Il torneo è cambiato. Ricaricalo e aggiorna i suggerimenti prima di scaricare il PDF.')
+    wanted = set(request.indices)
+    selected = [m for m in data['matches'] if m['index'] in wanted]
+    if len(wanted) != len(request.indices) or len(selected) != len(wanted):
+        raise HTTPException(422, 'Elenco delle partite non valido.')
+    retired = set(data.get('withdrawals', []))
+    if any(m['valid'] or m['home'] in retired or m['away'] in retired or
+           m['home'].strip().lower() in ('riposo', 'riposa', 'bye') or
+           m['away'].strip().lower() in ('riposo', 'riposa', 'bye') or
+           ('active_round' in data and m.get('round') != data['active_round']) for m in selected):
+        raise HTTPException(409, 'Alcune partite non sono più disponibili. Ricarica il torneo e riprova.')
+    selected.sort(key=lambda m: (m.get('day', m.get('round', 1)), m.get('group', ''), m['index']))
+    from .play_now_report import render_play_now_pdf
+    return Response(render_play_now_pdf(with_club_badges(store, data), selected), media_type='application/pdf',
+                    headers={'Content-Disposition': 'attachment; filename="partite-disponibili-piercrew.pdf"'})
 
 
 from .club import install as install_club_routes

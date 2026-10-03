@@ -8,9 +8,9 @@ from urllib.request import Request, urlopen
 from fpdf import FPDF
 
 
-NAVY = (26, 54, 93)
-GOLD = (212, 175, 55)
-PALE = (230, 235, 245)
+NAVY = (22, 77, 50)
+GOLD = (255, 218, 69)
+PALE = (242, 248, 233)
 
 
 def printable(value, limit=None):

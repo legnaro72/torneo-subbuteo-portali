@@ -9,6 +9,11 @@ class Input(BaseModel):
     model_config = ConfigDict(extra='forbid')
 
 
+class PlayNowExport(Input):
+    version: str = Field(min_length=1, max_length=128)
+    indices: list[Annotated[int, Field(strict=True, ge=0)]] = Field(min_length=1, max_length=4096)
+
+
 class Login(Input):
     username: Name
     password: str = Field(default='', max_length=256)
