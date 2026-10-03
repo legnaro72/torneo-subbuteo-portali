@@ -3,3 +3,4 @@
 .play-now .play-players{max-height:360px;overflow-y:auto;padding:3px}
 .play-now .results-note{font-size:13px;line-height:1.6}
 .play-preview-switch{padding:16px 16px 0}.play-preview-switch .segmented{display:flex;flex-wrap:wrap;gap:5px}.play-preview-switch button{flex:1;min-height:42px;padding:10px;font-size:13px}
+.play-pdf-actions{display:flex;align-items:center;gap:14px;padding:16px;flex-wrap:wrap}.play-pdf-actions p{flex:1;min-width:200px;font-size:13px}.play-pdf-actions button{min-height:42px}

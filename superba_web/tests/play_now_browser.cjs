@@ -16,8 +16,13 @@ const rounds={...league,active_round:2,finished:false,participants:teams.map(Squ
  try{
   const page=await browser.newPage({viewport:{width:1280,height:900},serviceWorkers:'block'});
   const errors=[];page.on('pageerror',e=>errors.push(e.message));
+  const exports=[];
   await page.route('**/api/**',route=>{
    const p=new URL(route.request().url()).pathname;
+   if(p.endsWith('/play-now.pdf')){
+    exports.push(route.request().postDataJSON());
+    return route.fulfill({contentType:'application/pdf',body:Buffer.from('%PDF-1.4\n% mocked download for browser UI test\n')});
+   }
    if(p==='/api/tournaments/one/results'&&route.request().method()==='PATCH'){
     for(const result of route.request().postDataJSON().results){const row=league.matches.find(m=>m.index===result.index);Object.assign(row,{home_goals:result.home,away_goals:result.away,valid:result.valid});}
     league.version='v2';return route.fulfill({json:league});
@@ -33,6 +38,28 @@ const rounds={...league,active_round:2,finished:false,participants:teams.map(Squ
    await page.getByRole('button',{name:'Tutti presenti',exact:true}).click();
    await page.locator('.play-game').first().waitFor();
    assert.equal(await page.locator('.play-game').count(),kind==='italiana'?4:2,'complete preview hides available matches');
+   await page.getByRole('button',{name:'In campo insieme (2)',exact:true}).click();
+   const download=page.waitForEvent('download');
+   await page.getByRole('button',{name:/Scarica PDF/}).click();
+   assert.equal((await download).suggestedFilename(),'partite-disponibili-superba.pdf');
+   assert.equal(exports.at(-1).indices.length,kind==='italiana'?4:2,'PDF must contain the full list even in simultaneous view');
+   await page.evaluate(()=>{
+    Object.defineProperty(navigator,'canShare',{configurable:true,value:()=>true});
+    Object.defineProperty(navigator,'share',{configurable:true,value:async data=>{window.sharedPdf={name:data.files[0].name,size:data.files[0].size};}});
+   });
+   await page.getByRole('button',{name:'WhatsApp',exact:true}).click();
+   await page.getByRole('button',{name:'WhatsApp · PDF pronto',exact:true}).click();
+   assert.equal((await page.evaluate(()=>window.sharedPdf)).name,'partite-disponibili-superba.pdf');
+   await page.evaluate(()=>Object.defineProperty(navigator,'share',{configurable:true,value:async()=>{throw new DOMException('Cancelled','AbortError');}}));
+   await page.getByRole('button',{name:'WhatsApp · PDF pronto',exact:true}).click();
+   assert.equal(await page.locator('.play-proposals [role="alert"]').count(),0,'share cancellation should not be an error');
+   await page.getByRole('button',{name:'Partite',exact:true}).click();
+   await page.getByRole('button',{name:'Gioca ora',exact:true}).click();
+   await page.evaluate(()=>Object.defineProperty(navigator,'canShare',{configurable:true,value:()=>false}));
+   const fallbackDownload=page.waitForEvent('download');
+   await page.getByRole('button',{name:'WhatsApp',exact:true}).click();
+   assert.equal((await fallbackDownload).suggestedFilename(),'partite-disponibili-superba.pdf');
+   await page.getByRole('link',{name:'Apri WhatsApp'}).waitFor();
    await page.getByRole('button',{name:'In campo insieme (2)',exact:true}).click();
    assert.equal(await page.locator('.play-game').count(),2);
    assert.ok(await page.locator('.play-game .team-mark').first().isVisible(),'Premium team mark hidden');
