@@ -2,3 +2,4 @@
 .play-now .team-mark{display:grid;place-items:center;border-radius:9px;padding:3px;font-weight:800;color:var(--club-primary)}
 .play-now .play-players{max-height:360px;overflow-y:auto;padding:3px}
 .play-now .results-note{font-size:13px;line-height:1.6}
+.play-preview-switch{padding:16px 16px 0}.play-preview-switch .segmented{display:flex;flex-wrap:wrap;gap:5px}.play-preview-switch button{flex:1;min-height:42px;padding:10px;font-size:13px}

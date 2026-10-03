@@ -5,6 +5,13 @@ const ts=require('typescript');
 require.extensions['.ts']=(module,filename)=>module._compile(ts.transpileModule(fs.readFileSync(filename,'utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022}}).outputText,filename);
 const {attendees,suggestMatches}=require('../src/matchSuggestions.ts');
 const match=(index,home,away,day=1,extra={})=>({index,home,away,day,group:'Girone 1',valid:false,...extra});
+test('complete preview exposes all 50 playable matches, not just four simultaneous games',()=>{
+ const rows=[];for(let a=0;a<8;a++)for(let b=0;b<8;b++)if(a!==b)rows.push(match(rows.length,`P${a}`,`P${b}`,1+Math.floor(rows.length/4)));
+ const result=suggest(rows.slice(0,50).reverse());
+ assert.equal(result.eligible.length,50);assert.equal(result.available,50);
+ assert.ok(result.proposed.length<=4);
+ assert.ok(result.eligible.every((m,i,all)=>i===0||all[i-1].day<=m.day));
+});
 function suggest(matches,options={},present){const people=attendees(matches.flatMap(m=>[m.home,m.away]));return suggestMatches(matches,people,present||people.map(p=>p.id),options);}
 test('earliest pending day wins even over more simultaneous later games',()=>{
  const rows=[match(0,'A','B',1),match(1,'A','C',2),match(2,'B','D',2),match(3,'E','F',3)];

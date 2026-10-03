@@ -63,5 +63,5 @@ export function suggestMatches(matches:PlayableMatch[],players:Attendee[],presen
   }
   proposed.sort((a,b)=>sorted.indexOf(a)-sorted.indexOf(b));
   const playing=new Set(proposed.flatMap(m=>[teamIds.get(m.home),teamIds.get(m.away)]));
-  return {proposed,available:candidates.length,waiting:players.filter(p=>selected.has(p.id)&&!playing.has(p.id))};
+  return {proposed,eligible:sorted,available:candidates.length,waiting:players.filter(p=>selected.has(p.id)&&!playing.has(p.id))};
 }

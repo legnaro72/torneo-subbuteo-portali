@@ -32,6 +32,8 @@ const rounds={...league,active_round:2,finished:false,participants:teams.map(Squ
    await page.getByRole('button',{name:'Gioca ora',exact:true}).click();
    await page.getByRole('button',{name:'Tutti presenti',exact:true}).click();
    await page.locator('.play-game').first().waitFor();
+   assert.equal(await page.locator('.play-game').count(),kind==='italiana'?4:2,'complete preview hides available matches');
+   await page.getByRole('button',{name:'In campo insieme (2)',exact:true}).click();
    assert.equal(await page.locator('.play-game').count(),2);
    assert.ok(await page.locator('.play-game .team-mark').first().isVisible(),'Premium team mark hidden');
    assert.match(await page.locator('.play-game').first().innerText(),kind==='italiana'?/Giornata 1/:/Finale/);
@@ -46,11 +48,13 @@ const rounds={...league,active_round:2,finished:false,participants:teams.map(Squ
    if(kind==='italiana'){
     await page.getByRole('checkbox',{name:`Valida ${teams[0]} contro ${teams[1]}`}).check();
     await page.getByRole('button',{name:'Gioca ora',exact:true}).click();
+    await page.getByRole('button',{name:'In campo insieme (1)',exact:true}).click();
     assert.equal(await page.locator('.play-game').count(),1,'draft was proposed again');
     await page.getByRole('button',{name:'Salva risultati',exact:true}).click();
     await page.locator('.savebar').waitFor({state:'hidden'});
    }
    await page.getByRole('button',{name:'Gioca ora',exact:true}).click();
+   await page.getByRole('button',{name:kind==='italiana'?'In campo insieme (1)':'In campo insieme (2)',exact:true}).click();
    assert.equal(await page.locator('.play-game').count(),kind==='italiana'?1:2,'attendance or saved results not reflected');
    await page.getByRole('button',{name:'Svuota',exact:true}).click();
    assert.equal(await page.locator('.play-game').count(),0);
