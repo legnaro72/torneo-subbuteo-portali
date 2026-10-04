@@ -1,10 +1,11 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {createRoot} from 'react-dom/client';
-import {ArrowUpRight, ArrowRight, Check, LogOut, BookOpen, Info, Plus, Search, ShieldCheck, X, CalendarDays, LockKeyhole} from 'lucide-react';
+import {ArrowUpRight, ArrowRight, Check, LogOut, Info, Plus, Search, ShieldCheck, X, CalendarDays, LockKeyhole} from 'lucide-react';
 import {api, ApiError, type User, type Tournament, type Summary} from './api';
 import {reconcileFavourite, removeFavourite, type Favourite, type FavouriteKind, type Favourites} from './favourites';
 import CreateTournament from './CreateTournament';
 import MusicControl from './MusicControl';
+import ManualLink from './ManualLink';
 import TournamentView from './TournamentView';
 import ClubView from './ClubView';
 import CompetitionArea from './CompetitionArea';
@@ -150,7 +151,7 @@ function App() {
       <div className="profile"><span className="avatar">{user.username.slice(0,1)}</span><span><strong>{user.username}</strong><small>{canWrite ? 'Gestione tornei' : 'Sola lettura'}</small></span><button title="Esci dal portale" aria-label="Esci dal portale" disabled={busy} onClick={logout}><LogOut size={18}/></button></div>
     </aside>
     <main>
-      <header className="topbar"><span>Il mondo Superba <span className="muted">/</span> <strong>{page === 'home' ? 'Panoramica' : page === 'club' ? 'Gestione club' : page==='finali'?'Fasi finali':page==='svizzero'?'Svizzero':'All’italiana'}</strong></span><div className="topbar-controls"><MusicControl src={page==='club'?'https://raw.githubusercontent.com/legnaro72/torneo-Subbuteo-webapp/main/Gli%20Amici%20(Remastered%202007).mp3':page==='finali'?finalMusic:page==='svizzero'?swissMusic:'/TraLeDita.mp3'}/><a className="manual-control" href="/api/manuale-utente.pdf" target="_blank" rel="noopener noreferrer" title="Manuale utente Superba" aria-label="Manuale utente Superba"><BookOpen size={17}/><span>Manuale</span></a><button type="button" className="info-control" title="Informazioni applicazione" aria-label="Informazioni applicazione" onClick={()=>setInfoOpen(true)}><Info size={17}/></button><span className="environment"><i/>{config.demo ? 'Ambiente dimostrativo' : 'Portale Superba'}</span></div><button className="mobile-logout" aria-label="Esci dal portale" disabled={busy} onClick={logout}><LogOut size={16}/></button></header>
+      <header className="topbar"><span>Il mondo Superba <span className="muted">/</span> <strong>{page === 'home' ? 'Panoramica' : page === 'club' ? 'Gestione club' : page==='finali'?'Fasi finali':page==='svizzero'?'Svizzero':'All’italiana'}</strong></span><div className="topbar-controls"><MusicControl src={page==='club'?'https://raw.githubusercontent.com/legnaro72/torneo-Subbuteo-webapp/main/Gli%20Amici%20(Remastered%202007).mp3':page==='finali'?finalMusic:page==='svizzero'?swissMusic:'/TraLeDita.mp3'}/><ManualLink onDownload={()=>setNotice("Manuale richiesto in download. Quando è pronto, aprilo dalla notifica o dalla cartella Download con il lettore PDF del telefono.")}/><button type="button" className="info-control" title="Informazioni applicazione" aria-label="Informazioni applicazione" onClick={()=>setInfoOpen(true)}><Info size={17}/></button><span className="environment"><i/>{config.demo ? 'Ambiente dimostrativo' : 'Portale Superba'}</span></div><button className="mobile-logout" aria-label="Esci dal portale" disabled={busy} onClick={logout}><LogOut size={16}/></button></header>
       <div className="content">
         {config.demo && <div className="demo-strip">Stai provando dati dimostrativi. Nessun torneo reale viene modificato.</div>}
         {!config.demo && !config.writes_enabled && <div className="demo-strip">Ambiente in sola lettura: i salvataggi non sono ancora abilitati.</div>}
