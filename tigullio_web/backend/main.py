@@ -142,11 +142,11 @@ def health(store: Store = Depends(store_dep)):
 
 
 @app.get('/api/manuale-utente.pdf')
-def manuale_utente(user=Depends(current_user)):
+def manuale_utente(download: bool = False, user=Depends(current_user)):
     path = Path(__file__).with_name('manuale-utente.pdf')
     if not path.is_file():
         raise HTTPException(503, 'Manuale momentaneamente non disponibile.')
-    return FileResponse(path, media_type='application/pdf', filename='Manuale_utente_Tigullio.pdf', content_disposition_type='inline')
+    return FileResponse(path, media_type='application/pdf', filename='Manuale_utente_Tigullio.pdf', content_disposition_type='attachment' if download else 'inline')
 
 
 @app.post('/api/auth/login')
