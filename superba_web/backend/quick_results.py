@@ -161,7 +161,7 @@ def rank(text1, text2, day, match):
     if not reversed_order:
         score = direct + (.06 if direct >= .45 else 0)
     else:
-        score = inverse - (.03 if inverse >= .45 else 0)
+        score = inverse - (.08 if inverse >= .45 else 0)
     if day is not None:
         actual = int(match.get('day', match.get('round', 1)))
         score += .12 if actual == day else -.18

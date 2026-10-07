@@ -71,6 +71,7 @@ class ParserTests(unittest.TestCase):
         row = parse('Ruben - Bomber 1-4', legs)[0]
         self.assertEqual(row['selected_match']['match_id'], '1')
         self.assertEqual((row['score1'], row['score2']), (1, 4))
+        self.assertEqual(row['status'], 'matched')
 
     def test_existing_unknown_duplicate_incomplete_and_invalid_are_independent(self):
         rows = parse('Gialli Blu 2-1, Rossi Bianchi 1-0, Rossi Bianchi 2-0, Rossi Bianchi, Pluto Pippo 3-2, Verdi Neri 21-0')
