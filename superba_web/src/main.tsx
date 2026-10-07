@@ -8,6 +8,7 @@ import MusicControl from './MusicControl';
 import ManualLink from './ManualLink';
 import TournamentView from './TournamentView';
 import ClubView from './ClubView';
+import ChangePassword from './ChangePassword';
 import CompetitionArea from './CompetitionArea';
 import PortalIcon from './PortalIcon';
 import {readTournamentRoute,tournamentPath} from './routes';
@@ -53,6 +54,7 @@ function App() {
   const [creating, setCreating] = useState(false);
   const [creationChooser, setCreationChooser] = useState(false);
   const [infoOpen, setInfoOpen] = useState(false);
+  const [passwordOpen,setPasswordOpen]=useState(false);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
   const [notice, setNotice] = useState('');
@@ -151,7 +153,7 @@ function App() {
       <div className="profile"><span className="avatar">{user.username.slice(0,1)}</span><span><strong>{user.username}</strong><small>{canWrite ? 'Gestione tornei' : 'Sola lettura'}</small></span><button title="Esci dal portale" aria-label="Esci dal portale" disabled={busy} onClick={logout}><LogOut size={18}/></button></div>
     </aside>
     <main>
-      <header className="topbar"><span>Il mondo Superba <span className="muted">/</span> <strong>{page === 'home' ? 'Panoramica' : page === 'club' ? 'Gestione club' : page==='finali'?'Fasi finali':page==='svizzero'?'Svizzero':'All’italiana'}</strong></span><div className="topbar-controls"><MusicControl src={page==='club'?'https://raw.githubusercontent.com/legnaro72/torneo-Subbuteo-webapp/main/Gli%20Amici%20(Remastered%202007).mp3':page==='finali'?finalMusic:page==='svizzero'?swissMusic:'/TraLeDita.mp3'}/><ManualLink onDownload={()=>setNotice("Manuale richiesto in download. Quando è pronto, aprilo dalla notifica o dalla cartella Download con il lettore PDF del telefono.")}/><button type="button" className="info-control" title="Informazioni applicazione" aria-label="Informazioni applicazione" onClick={()=>setInfoOpen(true)}><Info size={17}/></button><span className="environment"><i/>{config.demo ? 'Ambiente dimostrativo' : 'Portale Superba'}</span></div><button className="mobile-logout" aria-label="Esci dal portale" disabled={busy} onClick={logout}><LogOut size={16}/></button></header>
+      <header className="topbar"><span>Il mondo Superba <span className="muted">/</span> <strong>{page === 'home' ? 'Panoramica' : page === 'club' ? 'Gestione club' : page==='finali'?'Fasi finali':page==='svizzero'?'Svizzero':'All’italiana'}</strong></span><div className="topbar-controls"><>{canWrite&&<button type="button" className="info-control" title="Cambia password" aria-label="Cambia password" onClick={()=>setPasswordOpen(true)}><LockKeyhole size={17}/></button>}</><MusicControl src={page==='club'?'https://raw.githubusercontent.com/legnaro72/torneo-Subbuteo-webapp/main/Gli%20Amici%20(Remastered%202007).mp3':page==='finali'?finalMusic:page==='svizzero'?swissMusic:'/TraLeDita.mp3'}/><ManualLink onDownload={()=>setNotice("Manuale richiesto in download. Quando è pronto, aprilo dalla notifica o dalla cartella Download con il lettore PDF del telefono.")}/><button type="button" className="info-control" title="Informazioni applicazione" aria-label="Informazioni applicazione" onClick={()=>setInfoOpen(true)}><Info size={17}/></button><span className="environment"><i/>{config.demo ? 'Ambiente dimostrativo' : 'Portale Superba'}</span></div><button className="mobile-logout" aria-label="Esci dal portale" disabled={busy} onClick={logout}><LogOut size={16}/></button></header>
       <div className="content">
         {config.demo && <div className="demo-strip">Stai provando dati dimostrativi. Nessun torneo reale viene modificato.</div>}
         {!config.demo && !config.writes_enabled && <div className="demo-strip">Ambiente in sola lettura: i salvataggi non sono ancora abilitati.</div>}
@@ -178,6 +180,7 @@ function App() {
     </main>
     {infoOpen && <div className="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="app-info-title"><section className="modal app-info-modal"><div className="section-heading"><div><span className="eyebrow">INFORMAZIONI APPLICAZIONE</span><h2 id="app-info-title">Portale Superba</h2><p>Gestione tornei di Subbuteo.</p></div><button type="button" aria-label="Chiudi" onClick={()=>setInfoOpen(false)}><X/></button></div><img className="app-info-logo" src="/max-ferrando-legnaro72.png" alt="Logo Max Ferrando Legnaro72"/><dl className="app-info-details"><dt>Versione</dt><dd>1.0</dd><dt>Descrizione</dt><dd>Primo rilascio</dd><dt>Data di rilascio</dt><dd>27 settembre 2026</dd><dt>Autore</dt><dd>Max Ferrando alias Legnaro72</dd></dl><div className="modal-actions"><button type="button" className="primary" onClick={()=>setInfoOpen(false)}>Chiudi</button></div></section></div>}
     {creationChooser && <div className="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="creation-choice-title"><section className="modal creation-choice"><div className="section-heading"><div><span className="eyebrow">SCEGLI IL FORMATO</span><h2 id="creation-choice-title">Che torneo vuoi creare?</h2><p>Seleziona consapevolmente la formula prima di iniziare.</p></div><button aria-label="Chiudi" onClick={()=>setCreationChooser(false)}><X/></button></div><div className="creation-choice-grid"><button type="button" onClick={()=>{setCreationChooser(false);setCreating(true);}}><span><PortalIcon kind="italiana"/></span><strong>All’italiana</strong><small>Gironi, giornate, andata e ritorno.</small></button><button type="button" onClick={()=>{setCreationChooser(false);navigate('finali');}}><span><PortalIcon kind="finali"/></span><strong>Fasi finali</strong><small>Tabellone a eliminazione o fase a gironi.</small></button><button type="button" onClick={()=>{setCreationChooser(false);navigate('svizzero');}}><span><PortalIcon kind="svizzero"/></span><strong>Torneo svizzero</strong><small>Accoppiamenti progressivi per turno.</small></button></div><div className="modal-actions"><button className="secondary" onClick={()=>setCreationChooser(false)}>Annulla</button></div></section></div>}
+    {passwordOpen&&<ChangePassword onClose={()=>setPasswordOpen(false)} onChanged={next=>{setUser(next);setPasswordOpen(false);setNotice('Password aggiornata. Gli altri accessi sono stati chiusi.');}}/>}
     {creating && <CreateTournament onClose={()=>setCreating(false)} onCreated={t=>{setActive(t); setPage('italiana'); setCreating(false);window.history.pushState({},'',tournamentPath(t.name));void refresh();}}/>}
   </div>;
 }

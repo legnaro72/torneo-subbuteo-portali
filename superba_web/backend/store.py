@@ -9,21 +9,28 @@ from pymongo import MongoClient
 
 from .domain import genera_calendario_from_list
 from .security import hash_password
+from .audit import VisibleCollection
 
 
 class Store:
     def __init__(self, players_client, tournaments_client, auth_client, *, demo=False):
         self.demo = demo
-        self.players = players_client['giocatori_subbuteo']['superba_players']
-        self.tournaments = tournaments_client['TorneiSubbuteo']['Superba']
-        self.swiss_tournaments = tournaments_client['TorneiSubbuteo']['SuperbaSvizzero']
+        self.players = VisibleCollection(players_client['giocatori_subbuteo']['superba_players'])
+        self.tournaments = VisibleCollection(tournaments_client['TorneiSubbuteo']['Superba'])
+        self.swiss_tournaments = VisibleCollection(tournaments_client['TorneiSubbuteo']['SuperbaSvizzero'])
         auth = auth_client['auth_subbuteo']
         self.sessions = auth['portal_sessions']
         self.handoffs = auth['auth_handoffs']
         self.attempts = auth['portal_login_attempts']
         self.audit = auth['portal_audit']
-        self.team_badges = auth['superba_team_badges']
+        self.log_db = auth_client['Log']
+        self.login_logs = self.log_db['Login']
+        self.action_logs = self.log_db['Actions']
+        self.audit_queue = auth['superba_audit_outbox']
+        self.team_badges = VisibleCollection(auth['superba_team_badges'])
         self.system_passwords = auth_client['Password']['auth_password']
+        self.audit_sources = (self.players, self.tournaments, self.swiss_tournaments,
+                              self.team_badges, self.sessions, self.audit_queue)
 
     def user(self, name):
         return self.players.find_one({'Giocatore': {'$regex': '^' + re.escape(name.strip()) + '$', '$options': 'i'}})

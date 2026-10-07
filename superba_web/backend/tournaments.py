@@ -7,11 +7,13 @@ from bson import ObjectId, json_util
 from fastapi import HTTPException
 
 from .domain import aggiorna_classifica
+from .audit import INTERNAL, update as audited_update
 
 
 def version(document):
     # Full document fingerprint also detects writers that do not increment revisions.
-    return hashlib.sha256(json_util.dumps(document, sort_keys=True).encode()).hexdigest()
+    business = {k: v for k, v in document.items() if k not in INTERNAL}
+    return hashlib.sha256(json_util.dumps(business, sort_keys=True).encode()).hexdigest()
 
 
 def is_italiana(document):
@@ -64,11 +66,11 @@ def view(doc):
             'archived': bool(doc.get('_superba_source_id')) or doc['nome_torneo'].startswith('completato_')}
 
 
-def save(store, original, expected_version, changes, *, collection=None):
+def save(store, original, expected_version, changes, *, user, action, collection=None):
     if version(original) != expected_version:
         raise HTTPException(409, 'Il torneo è cambiato su un altro dispositivo. Le tue modifiche sono ancora disponibili: ricarica il torneo prima di riprovare.')
     # Snapshot compare + atomic write. Preserve unknown legacy fields.
-    conditions = [{field: {'$eq': value, '$exists': True}} for field, value in original.items() if field != '_id']
+    conditions = [{field: {'$eq': value, '$exists': True}} for field, value in original.items() if field != '_id' and field not in INTERNAL]
     if '_superba_revision' not in original:
         conditions.append({'_superba_revision': {'$exists': False}})
     updated = deepcopy(changes)
@@ -76,7 +78,7 @@ def save(store, original, expected_version, changes, *, collection=None):
     updated['data_modifica'] = now.replace(microsecond=now.microsecond // 1000 * 1000)
     updated['_superba_revision'] = int(original.get('_superba_revision', 0)) + 1
     target = collection if collection is not None else store.tournaments
-    result = target.update_one({'_id': original['_id'], '$and': conditions}, {'$set': updated})
+    result = audited_update(store, user, target, {'_id': original['_id'], '$and': conditions}, {'$set': updated}, action)
     if result.matched_count != 1:
         raise HTTPException(409, 'Salvataggio concorrente rilevato. Ricarica il torneo; le bozze sono conservate.')
     return {**original, **updated}

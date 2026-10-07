@@ -11,7 +11,7 @@ import TableScroller from './TableScroller';
 import {BadgeEditor, TeamMark, type TeamBadge} from './TeamBadges';
 
 type Role='R'|'W'|'A';
-type ClubPlayer={id:string;version:string;name:string;team:string;potential:number;role:Role;password_set:boolean;badge?:TeamBadge;
+type ClubPlayer={id:string;version:string;name:string;team:string;potential:number;role:Role;password_set:boolean;activation_state:'active'|'pending'|'reader'|'review';badge?:TeamBadge;
   NCampionatiVinti:number;listaCampionatiVinti:string[];NGironiFFVinti:number;listaGironiFFVinti:string[];NFFElimDirettaVinte:number;listaFFElimDirettaVinte:string[]};
 type ClubTournament={id:string;scope:'italiana'|'svizzero';name:string;championship:boolean};
 type PlayerFields={name:string;team:string;potential:number;role:Role;badge?:TeamBadge};
@@ -120,7 +120,7 @@ export default function ClubView({user,canWrite,onDirty,onLegacy}:{user:User;can
         <td><span className="club-team-cell"><span className="team-mark"><TeamMark name={p.team||p.name} badge={p.badge}/></span>{admin?<input aria-label={`Squadra ${p.name}`} value={drafts[p.id]?.team??p.team} onChange={e=>patch(p.id,{team:e.target.value})}/>:p.team}</span></td>
         <td>{admin?<input aria-label={`Potenziale ${p.name}`} type="number" min={1} max={10} value={drafts[p.id]?.potential??p.potential} onChange={e=>patch(p.id,{potential:Number(e.target.value)})}/>:p.potential}</td>
         <td>{admin?<select aria-label={`Ruolo ${p.name}`} value={drafts[p.id]?.role??p.role} onChange={e=>patch(p.id,{role:e.target.value as Role})}>{(['R','W','A'] as Role[]).map(role=><option key={role} value={role}>{roleName[role]}</option>)}</select>:roleName[p.role]}</td>
-        <td>{p.password_set?'Attivo':'Da attivare'}</td><td>{canWrite&&<button className="text-button" onClick={()=>edit(p)}>Modifica</button>}</td>
+        <td>{({active:'Attivo',pending:'Da attivare',reader:'Lettore — accesso senza password',review:'Da verificare'})[p.activation_state]}</td><td>{canWrite&&<button className="text-button" onClick={()=>edit(p)}>Modifica</button>}</td>
       </tr>)}</tbody></table>{!filteredPlayers.length&&<div className="empty">Nessun giocatore trovato.</div>}</TableScroller>
       {admin&&Object.keys(drafts).length>0&&<div className="club-save"><span>{Object.keys(drafts).length} righe modificate</span><button className="secondary" disabled={busy} onClick={()=>setDrafts({})}>Annulla</button><button className="primary" disabled={busy||players.some(p=>{const d=drafts[p.id];return !!d&&(!String(d.name??p.name).trim()||!Number.isInteger(d.potential??p.potential)||(d.potential??p.potential)<1||(d.potential??p.potential)>10);})} onClick={()=>void saveTable()}><Save size={16}/>Salva modifiche tabella</button></div>}
     </section>}

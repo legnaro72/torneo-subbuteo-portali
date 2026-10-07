@@ -61,6 +61,26 @@ Per la pulizia automatica delle sessioni e dei tentativi scaduti sono consigliat
 
 Il portale è pubblicato su [superbaweb.vercel.app](https://superbaweb.vercel.app) nel progetto Vercel `superba_web`. Gli URI MongoDB sono variabili segrete Vercel; `SUPERBA_APP_ORIGIN` punta a quell’indirizzo e `SUPERBA_WRITE_ENABLED=true` è impostato solo in produzione. La route `GET /api/health` ha verificato dal server Vercel entrambe le connessioni MongoDB tramite sole letture, senza esporre documenti. La preview senza scritture resta separata. Non sono stati inseriti giocatori o tornei di prova nel database reale.
 
+## Tracking e attivazione Superba
+
+Il tracking Vercel riutilizza **`Log.Login`** e **`Log.Actions`** sul client `MONGO_URI_AUTH` (oppure `MONGO_URI` quando la variabile dedicata è assente). Maiuscole e plurale corrispondono alle collection Streamlit esistenti. I documenti storici e `auth_subbuteo.portal_audit` restano conservati; i nuovi eventi sono scritti esclusivamente nelle due collection storiche. Le operazioni che in passato non furono registrate non vengono ricostruite artificialmente.
+
+Gli eventi hanno `schema_version: 2`, `club: "Superba"`, `source: "vercel"`, data UTC `timestamp`, nome autore `username` sempre stringa, ID autore `user_id`, area, collection, ID e nome dell'oggetto. `operation_id` collega le modifiche della stessa richiesta (per esempio chiusura, copia archivio e palmarès). `_id` identifica il singolo evento e rende i tentativi di consegna idempotenti. I login mantengono `esito` e `dettagli`; le azioni mantengono `action`, `torneo` e `details`. I nuovi documenti non raccolgono IP o user agent.
+
+Sono registrati gli accessi con password, lettore, ospite, attivazione e cambio password, gli accessi rifiutati elaborati dal login e i limiti sui tentativi. Riaprire una sessione già valida tramite `/api/auth/me` non genera un nuovo login. I salvataggi coprono Club, italiana, svizzero e finali (KO e gironi): creazione, rinomina, risultati, validazione e revoca della validazione, ritiri, avanzamento, conclusione, archivio, palmarès, immagini, propagazioni, impostazione/cambio/reset password e singole eliminazioni. Le sole modifiche di revisione o data non producono eventi di business duplicati.
+
+`details.changes` conserva valori prima/dopo solo per campi esplicitamente ammessi. Per i calendari conserva le sole righe cambiate, identificandole con indice, squadre e giornata/turno. Password, hash, token, cookie, fingerprint delle credenziali e corpi delle richieste sono esclusi anche dalla coda. Gli eventi password contengono solamente il tipo di operazione e le eventuali variazioni del flag.
+
+Ogni scrittura significativa inserisce atomicamente il proprio evento in `_superba_audit_outbox` sul documento modificato; dopo la consegna il contenuto della coda viene rimosso. Un guasto del logging lascia la modifica salvata e l'evento persistente. Il recupero avviene durante i successivi login/salvataggi o con `POST /api/club/audit/retry` (amministratore, header e controlli delle scritture ordinari). `GET /api/club/audit/status` restituisce il numero di documenti da recuperare senza consegnare eventi. Il recupero è limitato per richiesta: ripetere finché il conteggio diventa zero. Non è un servizio automatico in background: se nessuno accede o salva, gli eventi restano in attesa.
+
+Le eliminazioni marcano atomicamente il documento con `_superba_deleted` e il relativo evento. Il portale lo esclude immediatamente dalle letture; la rimozione fisica avviene dopo la consegna di tutti gli eventi. Anche un'interruzione fra consegna e pulizia è recuperabile. Le vecchie app Streamlit non conoscono questa esclusione e possono ancora vedere temporaneamente un documento marcato se il servizio di logging è indisponibile: completare il recupero prima di gestire la stessa anagrafica/archivio dalla versione classica.
+
+Le nuove sessioni usano `valid_until` per conservare la scadenza mentre un evento è in attesa; `expires_at` viene valorizzato dopo la consegna. L'indice TTL storico su `expires_at` può quindi essere mantenuto senza cancellare eventi pendenti. Non creare TTL su `valid_until`, sulla coda o sui log. Le sessioni precedenti continuano a usare `expires_at`. Il deploy non esegue bonifiche, crea indici o modifica credenziali all'importazione.
+
+La tabella Club distingue **Attivo**, **Da attivare**, **Lettore — accesso senza password** e **Da verificare**. Le credenziali personali rimangono in `giocatori_subbuteo.superba_players.Password`; la password di sistema è in `Password.auth_password`. Il criterio è condiviso da tabella, login e lista del primo accesso. Una credenziale esistente con `SetPwd` incoerente non è sovrascrivibile dal primo accesso: dopo un login con password verificata si normalizza solo `SetPwd=1`, registrando `activation_recovered`. Il login ordinario non modifica la password, neppure quando è legacy in chiaro. Un flag attivo senza credenziale richiede verifica/reset amministrativo. I lettori accedono con il nome e non richiedono attivazione password.
+
+Il comando **Cambia password** è disponibile ai profili A/W con scritture abilitate. Richiede la password corrente, registra `password_change`, revoca le sessioni precedenti e apre una nuova sessione sul dispositivo corrente. Solo l'impostazione esplicita di una nuova password o un reset modifica la credenziale.
+
 ## Verifiche
 
 ### Presentazione sportiva Superba
@@ -89,6 +109,8 @@ npm run build
 ```
 
 I test confrontano i calcoli estratti con le funzioni Streamlit originali e usano MongoDB simulato per login, permessi, salvataggi, conflitti, ritiri, conclusione, finali, svizzero, gestione club e passaggio alle vecchie app. Non sostituiscono prove con MongoDB reale né una verifica completa del browser in produzione.
+
+Se il file Streamlit non è presente nella root, impostare `SUPERBA_LEGACY_SOURCE` con il percorso di `TorneoSubbuteoItalianaSuperbaAllDB.py` per eseguire anche i due test di parità; senza sorgente questi due test sono saltati. `tests/test_audit.py` verifica anche guasti nella consegna/pulizia, recupero senza duplicati, cancellazioni parziali, protezione TTL e assenza di segreti nei log.
 
 ## Ambito della migrazione
 

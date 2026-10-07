@@ -11,7 +11,7 @@ from unittest.mock import patch
 
 import mongomock
 import pandas as pd
-from bson import ObjectId
+from bson import ObjectId, json_util
 from fastapi.testclient import TestClient
 
 from backend.domain import aggiorna_classifica, genera_calendario_from_list
@@ -23,7 +23,9 @@ from backend.store import Store
 class DomainParity(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        path = Path(__file__).resolve().parents[2] / 'TorneoSubbuteoItalianaSuperbaAllDB.py'
+        path = Path(os.getenv('SUPERBA_LEGACY_SOURCE') or (Path(__file__).resolve().parents[2] / 'TorneoSubbuteoItalianaSuperbaAllDB.py'))
+        if not path.is_file():
+            raise unittest.SkipTest('Impostare SUPERBA_LEGACY_SOURCE per il confronto con Streamlit originale.')
         tree = ast.parse(path.read_text(encoding='utf-8-sig'))
         nodes = [n for n in tree.body if isinstance(n, ast.FunctionDef) and n.name in ('genera_calendario_from_list', 'aggiorna_classifica')]
         cls.namespace = {'pd': pd, 'st': SimpleNamespace(session_state={'giocatori_ritirati': ['B']})}
@@ -111,7 +113,8 @@ class PortalTests(unittest.TestCase):
         self.assertNotIn('test-password',response.text)
         self.assertNotIn('token',response.text)
         players=self.client.get('/api/players').json()
-        self.assertEqual(set(players[0]),{'id','name','team','potential'})
+        self.assertEqual(set(players[0]),{'id','name','team','potential','badge'})
+        self.assertNotIn(self.password, json_util.dumps(players))
 
     def test_reader_cannot_write_even_without_password(self):
         self.login('Reader','')
@@ -276,10 +279,10 @@ class PortalTests(unittest.TestCase):
         self.assertEqual(pdf.status_code,200,pdf.text[:100] if pdf.status_code!=200 else '')
         self.assertTrue(pdf.content.startswith(b'%PDF'))
 
-    def test_rate_limit_and_legacy_password_upgrade(self):
+    def test_rate_limit_and_legacy_password_preserved(self):
         self.store.players.update_one({'_id':self.writer_id},{'$set':{'Password':'legacy-pass'}})
         self.login(password='legacy-pass')
-        self.assertTrue(self.store.players.find_one({'_id':self.writer_id})['Password'].startswith('$2'))
+        self.assertEqual(self.store.players.find_one({'_id':self.writer_id})['Password'], 'legacy-pass')
         for _ in range(9):self.client.post('/api/auth/login',json={'username':'Writer','password':'bad'})
         self.assertEqual(self.client.post('/api/auth/login',json={'username':'Writer','password':'bad'}).status_code,429)
 

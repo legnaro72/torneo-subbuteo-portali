@@ -8,6 +8,7 @@ from pydantic import BaseModel, ConfigDict, Field
 from pymongo.errors import DuplicateKeyError
 
 from .badges import with_club_badges
+from .audit import insert as audited_insert, update as audited_update
 from .domain import genera_calendario_from_list
 from .models import Result
 from .report import render_knockout_pdf
@@ -110,7 +111,7 @@ def view(doc):
                 active_round=current, finished=bool(doc.get('_superba_closed')) or doc['nome_torneo'].startswith('finito_'), winner=winner)
 
 
-def award(store, doc, winner):
+def award(store, doc, winner, user):
     if not winner:
         return
     name = base_name(doc['nome_torneo']).strip()
@@ -121,8 +122,8 @@ def award(store, doc, winner):
     previous = player.get('listaFFElimDirettaVinte', [])
     if not isinstance(previous, list) or any(base_name(str(p)).casefold() == name.casefold() for p in previous):
         return
-    store.players.update_one({'_id': player['_id'], '_superba_award_ids': {'$ne': f"ff:{doc['_id']}"}, 'listaFFElimDirettaVinte': {'$ne': name}},
-                             {'$addToSet': {'listaFFElimDirettaVinte': name, '_superba_award_ids': f"ff:{doc['_id']}"}, '$inc': {'NFFElimDirettaVinte': 1}})
+    audited_update(store, user, store.players, {'_id': player['_id'], '_superba_award_ids': {'$ne': f"ff:{doc['_id']}"}, 'listaFFElimDirettaVinte': {'$ne': name}},
+                             {'$addToSet': {'listaFFElimDirettaVinte': name, '_superba_award_ids': f"ff:{doc['_id']}"}, '$inc': {'NFFElimDirettaVinte': 1}}, 'palmares_award')
 
 
 def install(app, current_user, writer, store_dep, require_tournament_write):
@@ -204,7 +205,7 @@ def install(app, current_user, writer, store_dep, require_tournament_write):
                    phase_metadata=dict(phase_id=str(object_id), phase_mode='KO' if data.mode=='ko' else 'GIRONI'),
                    _superba_preliminary_id=data.source_id, _superba_create_hash=digest, _superba_revision=0)
         try:
-            store.tournaments.insert_one(doc)
+            audited_insert(store, user, store.tournaments, doc, 'finals_create')
         except DuplicateKeyError:
             existing = store.tournaments.find_one({'_id': object_id})
             if not existing or existing.get('_superba_create_hash') != digest:
@@ -230,7 +231,7 @@ def install(app, current_user, writer, store_dep, require_tournament_write):
                 raise HTTPException(422, 'In eliminazione diretta il risultato validato non può essere pari.')
             row.update(GolCasa=change.home, GolOspite=change.away, Valida=change.valid,
                        Vincitore=(row['Casa'] if change.home > change.away else row['Ospite']) if change.valid else None)
-        return with_club_badges(store, view(save(store, doc, data.version, {'calendario': rows})))
+        return with_club_badges(store, view(save(store, doc, data.version, {'calendario': rows}, user=user, action='results_save')))
 
     @app.post('/api/finals/{tournament_id}/advance')
     def advance(tournament_id: str, data: FinalAction, user=Depends(writer), store=Depends(store_dep)):
@@ -244,13 +245,13 @@ def install(app, current_user, writer, store_dep, require_tournament_write):
             raise HTTPException(422, 'Valida tutte le partite con un vincitore prima di avanzare.')
         winners = [r.get('Vincitore') or (r['Casa'] if r['GolCasa'] > r['GolOspite'] else r['Ospite']) for r in current]
         if len(winners) == 1:
-            saved = save(store, doc, data.version, {'nome_torneo': 'finito_'+doc['nome_torneo'], '_superba_closed': True})
-            award(store, saved, winners[0])
+            saved = save(store, doc, data.version, {'nome_torneo': 'finito_'+doc['nome_torneo'], '_superba_closed': True}, user=user, action='finals_complete')
+            award(store, saved, winners[0], user)
             return with_club_badges(store, view(saved))
         player_map = {r['Casa']: r.get('GiocatoreCasa') for r in current} | {r['Ospite']: r.get('GiocatoreOspite') for r in current}
         phase = doc.get('phase_metadata', {}).get('phase_id', str(doc['_id']))
         new_rows = ko_rows(winners, active+1, phase, player_map)
-        return with_club_badges(store, view(save(store, doc, data.version, {'calendario': doc['calendario'] + new_rows})))
+        return with_club_badges(store, view(save(store, doc, data.version, {'calendario': doc['calendario'] + new_rows}, user=user, action='finals_advance')))
 
     @app.get('/api/finals/{tournament_id}/export.pdf')
     def pdf(tournament_id: str, user=Depends(current_user), store=Depends(store_dep)):

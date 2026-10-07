@@ -8,6 +8,7 @@ from pydantic import BaseModel, Field, ConfigDict
 from pymongo.errors import DuplicateKeyError
 
 from .badges import with_club_badges
+from .audit import insert as audited_insert, update as audited_update
 from .models import CreateParticipant, Result, TeamBadge
 from .report import render_tournament_pdf
 from .tournaments import save, version
@@ -138,7 +139,7 @@ def view(doc):
                 participants=doc.get('df_squadre', []), byes=[dict(team=r['Casa'], round=int(r.get('Turno') or 1)) for r in doc.get('df_torneo', []) if r.get('Ospite') == 'RIPOSA'])
 
 
-def award(store, doc):
+def award(store, doc, user):
     ranking = standings(doc)
     if not ranking:
         return
@@ -151,8 +152,8 @@ def award(store, doc):
     previous = player.get('listaCampionatiVinti', [])
     if not isinstance(previous, list) or any(str(value).removeprefix('finito_').strip().casefold() == name.casefold() for value in previous):
         return
-    store.players.update_one({'_id': player['_id'], '_superba_award_ids': {'$ne': f"swiss:{doc['_id']}"}, 'listaCampionatiVinti': {'$ne': name}},
-                             {'$addToSet': {'listaCampionatiVinti': name, '_superba_award_ids': f"swiss:{doc['_id']}"}, '$inc': {'NCampionatiVinti': 1}})
+    audited_update(store, user, store.players, {'_id': player['_id'], '_superba_award_ids': {'$ne': f"swiss:{doc['_id']}"}, 'listaCampionatiVinti': {'$ne': name}},
+                             {'$addToSet': {'listaCampionatiVinti': name, '_superba_award_ids': f"swiss:{doc['_id']}"}, '$inc': {'NCampionatiVinti': 1}}, 'palmares_award')
 
 
 def install(app, current_user, writer, store_dep, require_tournament_write):
@@ -201,7 +202,7 @@ def install(app, current_user, writer, store_dep, require_tournament_write):
         if not doc['df_torneo']:
             raise HTTPException(422, 'Impossibile generare il primo turno.')
         try:
-            store.swiss_tournaments.insert_one(doc)
+            audited_insert(store, user, store.swiss_tournaments, doc, 'swiss_create')
         except DuplicateKeyError:
             return with_club_badges(store, view(load(store, str(object_id))))
         return with_club_badges(store, view(doc))
@@ -221,7 +222,7 @@ def install(app, current_user, writer, store_dep, require_tournament_write):
             if row.get('Turno') != doc.get('turno_attivo') or row.get('Ospite') == 'RIPOSA':
                 raise HTTPException(422, 'Puoi modificare solo le partite del turno attivo.')
             row.update(GolCasa=change.home, GolOspite=change.away, Validata=change.valid)
-        return with_club_badges(store, view(save(store, doc, data.version, {'df_torneo': rows}, collection=store.swiss_tournaments)))
+        return with_club_badges(store, view(save(store, doc, data.version, {'df_torneo': rows}, user=user, action='results_save', collection=store.swiss_tournaments)))
 
     @app.post('/api/swiss/{tournament_id}/advance')
     def advance(tournament_id: str, data: SwissAction, user=Depends(writer), store=Depends(store_dep)):
@@ -238,9 +239,9 @@ def install(app, current_user, writer, store_dep, require_tournament_write):
         changes = {'turno_attivo': new_round if more else round_number, 'df_torneo': doc['df_torneo'] + more}
         if not more:
             changes['torneo_finito'] = True
-        saved = save(store, doc, data.version, changes, collection=store.swiss_tournaments)
+        saved = save(store, doc, data.version, changes, user=user, action='swiss_advance' if more else 'swiss_complete', collection=store.swiss_tournaments)
         if not more:
-            award(store, saved)
+            award(store, saved, user)
         return with_club_badges(store, view(saved))
 
     @app.post('/api/swiss/{tournament_id}/finish')
@@ -251,8 +252,8 @@ def install(app, current_user, writer, store_dep, require_tournament_write):
             raise HTTPException(409, 'Torneo già concluso.')
         if not all(r.get('Validata') for r in doc['df_torneo']):
             raise HTTPException(422, 'Valida tutte le partite prima di concludere.')
-        saved = save(store, doc, data.version, {'torneo_finito': True}, collection=store.swiss_tournaments)
-        award(store, saved)
+        saved = save(store, doc, data.version, {'torneo_finito': True}, user=user, action='swiss_complete', collection=store.swiss_tournaments)
+        award(store, saved, user)
         return with_club_badges(store, view(saved))
 
     @app.get('/api/swiss/{tournament_id}/export.pdf')
