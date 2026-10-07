@@ -11,7 +11,6 @@ export default function ChangePassword({onClose,onChanged}:{onClose:()=>void;onC
   async function submit(e:FormEvent) {
     e.preventDefault();setError('');
     if(password!==repeat){setError('Le nuove password non coincidono.');return;}
-    if(new TextEncoder().encode(password).length>72){setError('La password supera il limite di 72 byte.');return;}
     setBusy(true);
     try {onChanged(await api<User>('/auth/password','POST',{current_password:current,password}));}
     catch(e){setError(e instanceof Error?e.message:'Cambio password non riuscito.');}
@@ -23,7 +22,7 @@ export default function ChangePassword({onClose,onChanged}:{onClose:()=>void;onC
     {error&&<div className="alert error" role="alert">{error}</div>}
     <form onSubmit={submit}>
       <label>Password corrente<input type="password" autoComplete="current-password" required value={current} onChange={e=>setCurrent(e.target.value)}/></label>
-      <label>Nuova password<input type="password" autoComplete="new-password" required minLength={10} maxLength={72} value={password} onChange={e=>setPassword(e.target.value)}/></label>
+      <label>Nuova password<input type="password" autoComplete="new-password" required minLength={1} maxLength={256} value={password} onChange={e=>setPassword(e.target.value)}/></label>
       <label>Conferma nuova password<input type="password" autoComplete="new-password" required value={repeat} onChange={e=>setRepeat(e.target.value)}/></label>
       <div className="modal-actions"><button className="secondary" type="button" disabled={busy} onClick={onClose}>Annulla</button><button className="primary" disabled={busy}>{busy?'Salvataggio…':'Salva password'}</button></div>
     </form>

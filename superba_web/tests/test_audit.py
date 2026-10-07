@@ -98,8 +98,9 @@ class AuditTests(unittest.TestCase):
 
     def test_activation_logs_both_password_setting_and_new_session(self):
         response = self.client.post('/api/auth/activate', json={'username': 'Pending',
-            'system_password': 'system-secret', 'password': 'new-secret-password'})
+            'system_password': 'system-secret', 'password': 'x'})
         self.assertEqual(response.status_code, 200, response.text)
+        self.assertEqual(self.store.players.find_one({'_id': self.pending})['Password'], 'x')
         self.assertEqual(self.store.action_logs.count_documents({'action': 'password_set'}), 1)
         self.assertEqual(self.store.login_logs.count_documents({'dettagli.method': 'activation'}), 1)
         self.assert_no_secrets()
@@ -125,6 +126,7 @@ class AuditTests(unittest.TestCase):
             self.assertEqual(self.client.get('/api/auth/me').status_code, 200)
             self.assertEqual(other.get('/api/auth/me').status_code, 401)
             self.assertTrue(verify_password('new-secret-password', self.store.players.find_one({'_id': self.admin})['Password']))
+            self.assertEqual(self.store.players.find_one({'_id': self.admin})['Password'], 'new-secret-password')
             self.assertEqual(self.store.action_logs.count_documents({'action': 'password_change'}), 1)
             self.assert_no_secrets()
         finally:

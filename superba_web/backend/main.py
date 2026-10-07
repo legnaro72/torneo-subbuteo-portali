@@ -18,7 +18,7 @@ from pymongo.errors import DuplicateKeyError, PyMongoError
 from .domain import genera_calendario_from_list
 from .models import Activate, ActivationLookup, ChangePassword, Complete, CreateTournament, Login, Rename, SaveBadges, SaveResults, Withdrawal, PlayNowExport
 from .report import render_tournament_pdf
-from .security import generate_token, hash_password, hash_token, verify_password
+from .security import generate_token, hash_token, verify_password
 from .activation import activation_state, credential_present, password_flag
 from .audit import OUTBOX, operation_id, event as audit_event, deliver, record_login, retry_pending, insert as audited_insert, update as audited_update
 from .store import Store, get_store
@@ -202,15 +202,12 @@ def activate(data: Activate, request: Request, response: Response, store: Store 
     if not player or activation_state(player) != 'pending' or not store.system_passwords.find_one({'Password': data.system_password}):
         record_login(store, {'username': data.username, 'role': '', 'id': ''}, 'Attivazione non consentita', 'activation')
         raise HTTPException(403, 'Attivazione non consentita. Verifica i dati con il gestore.')
-    if len(data.password.encode()) > 72:
-        raise HTTPException(422, 'Password troppo lunga: usa al massimo 72 byte UTF-8.')
-    password = hash_password(data.password)
     result = audited_update(store, identity(player), store.players,
                             {'_id': player['_id'], 'Password': player.get('Password'), 'SetPwd': player.get('SetPwd')},
-                            {'$set': {'Password': password, 'SetPwd': 1}}, 'password_set')
+                            {'$set': {'Password': data.password, 'SetPwd': 1}}, 'password_set')
     if result.matched_count != 1:
         raise HTTPException(409, 'Account già attivato. Accedi con la password.')
-    player.update(Password=password, SetPwd=1)
+    player.update(Password=data.password, SetPwd=1)
     return establish(response, store, player, verified=True, method='activation')
 
 
@@ -232,15 +229,12 @@ def change_password(data: ChangePassword, request: Request, response: Response,
     player = store.players.find_one({'_id': ObjectId(user['id'])})
     if not player or not verify_password(data.current_password, player.get('Password')):
         raise HTTPException(403, 'Password corrente non valida.')
-    if len(data.password.encode('utf-8')) > 72:
-        raise HTTPException(422, 'Password troppo lunga: usa al massimo 72 byte UTF-8.')
-    password = hash_password(data.password)
     result = audited_update(store, user, store.players, {'_id': player['_id'], 'Password': player['Password']},
-                            {'$set': {'Password': password, 'SetPwd': 1}, '$inc': {'_club_revision': 1}}, 'password_change')
+                            {'$set': {'Password': data.password, 'SetPwd': 1}, '$inc': {'_club_revision': 1}}, 'password_change')
     if result.matched_count != 1:
         raise HTTPException(409, 'Credenziali modificate. Accedi nuovamente.')
     store.sessions.update_many({'user_id': user['id']}, {'$set': {'revoked': True}})
-    player.update(Password=password, SetPwd=1)
+    player.update(Password=data.password, SetPwd=1)
     return establish(response, store, player, verified=True, method='password_change')
 
 
