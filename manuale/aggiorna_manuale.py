@@ -14,6 +14,7 @@ from reportlab.lib.styles import ParagraphStyle
 from reportlab.platypus import Paragraph
 from pypdf import PdfReader, PdfWriter
 from pypdf.annotations import Link
+from pypdf.generic import ArrayObject, NumberObject, NameObject
 
 ROOT = Path(__file__).resolve().parent
 ASSETS = ROOT / 'risorse'
@@ -164,6 +165,79 @@ def new_pages():
     return PdfReader(buf)
 
 
+# Original page numbers identify stable chapter layouts, not their final position.
+PAGE_ORDER = [1, 2, 3, 6, 10, 11, 12, 13, 14, 17, 18, 4,
+              22, 23, 24, 25, 5, 15, 7, 19, 20, 21, 8, 9, 16]
+
+
+def reorder_manual(source, original_titles):
+    """Reorder complete pages and rebuild navigation without reflowing chapters."""
+    for page in source.pages[:2]:
+        if '/Annots' in page: del page['/Annots']
+    data=BytesIO(); source.write(data); data.seek(0)
+    reader=PdfReader(data)
+    writer=PdfWriter()
+    writer.append(reader, pages=[number-1 for number in PAGE_ORDER], import_outline=False)
+    new_number={old:new for new,old in enumerate(PAGE_ORDER,1)}
+    for old_number,page in zip(PAGE_ORDER,writer.pages):
+        for annotation in page.get('/Annots',[]):
+            annotation=annotation.get_object()
+            destination=annotation.get('/Dest')
+            action=annotation.get('/A')
+            if action is not None:
+                action=action.get_object()
+                if action.get('/S')=='/GoTo': destination=action.get('/D')
+            if isinstance(destination,ArrayObject) and isinstance(destination[0],NumberObject):
+                destination[0]=NumberObject(new_number[int(destination[0])+1]-1)
+    chapters=[(original_titles[old-3],index) for index,old in enumerate(PAGE_ORDER) if old>=3]
+
+    cover=BytesIO(); c=canvas.Canvas(cover,pagesize=(W,H))
+    c.setFillColor(HexColor(NAVY));c.rect(0,0,W,H,fill=1,stroke=0)
+    text(c,'MANUALE UTENTE',42,786,510,12,GOLD,True)
+    text(c,'Il portale dei tornei<br/>Subbuteo',42,746,510,30,'#ffffff',True)
+    text(c,'Organizza, gioca, registra i risultati e condividi.<br/>Edizione aggiornata · ottobre 2026',42,649,510,10.5,'#dbe2e8')
+    text(c,'Sommario',42,589,510,18,GOLD,True)
+    for i,(title,page_index) in enumerate(chapters):
+        top=551-i*21
+        text(c,f'{i+1:02d}  {title}',42,top,480,10,'#ffffff')
+        c.setFillColor(HexColor(GOLD));c.setFont('Helvetica',10);c.drawRightString(550,top-10,str(page_index+1))
+    c.setFont('Helvetica',9);c.setFillColor(HexColor(GOLD));c.drawString(42,32,'© 2026 Legnaro 72')
+    c.save();cover.seek(0)
+    # Replace the old cover content as well as its links, rather than overlaying
+    # another searchable table of contents on top of previous editions.
+    cover_page=PdfReader(cover).pages[0]
+    writer.pages[0].replace_contents(cover_page.get_contents())
+    writer.pages[0][NameObject('/Resources')]=cover_page['/Resources'].clone(writer)
+    if '/Annots' in writer.pages[0]: del writer.pages[0]['/Annots']
+    for i,(title,page_index) in enumerate(chapters):
+        top=551-i*21
+        writer.add_annotation(0,Link(rect=(40,top-19,556,top+2),target_page_index=page_index))
+        writer.add_outline_item(title,page_index)
+
+    figures=BytesIO();c=canvas.Canvas(figures,pagesize=(W,H))
+    frame(c,2,'CONSULTAZIONE','Guide illustrate','Tocca il titolo per raggiungere la guida e le sue schermate.')
+    for i,(title,page_index) in enumerate(chapters):
+        top=655-i*24
+        text(c,f'{i+1:02d}  {title}',34,top,475,10)
+        c.setFont('Helvetica',10);c.setFillColor(HexColor(MUTED));c.drawRightString(561,top-10,str(page_index+1))
+    c.save();figures.seek(0)
+    figure_page=PdfReader(figures).pages[0]
+    writer.pages[1].replace_contents(figure_page.get_contents())
+    writer.pages[1][NameObject('/Resources')]=figure_page['/Resources'].clone(writer)
+    if '/Annots' in writer.pages[1]: del writer.pages[1]['/Annots']
+    for i,(_,page_index) in enumerate(chapters):
+        top=655-i*24
+        writer.add_annotation(1,Link(rect=(32,top-19,563,top+2),target_page_index=page_index))
+
+    for index,page in enumerate(writer.pages[2:],2):
+        overlay=BytesIO();c=canvas.Canvas(overlay,pagesize=(W,H));footer(c,index+1)
+        if PAGE_ORDER[index]==7:
+            c.setFillColor(HexColor(PAPER));c.rect(34,55,527,25,fill=1,stroke=0)
+            text(c,f'Condivisione dei PDF su WhatsApp: guida a pagina {new_number[19]}.',34,70,527,9)
+        c.save();overlay.seek(0);page.merge_page(PdfReader(overlay).pages[0])
+    return writer
+
+
 def main():
     ASSETS.mkdir(exist_ok=True)
     if not BASE.exists(): shutil.copy2(TARGET,BASE)
@@ -230,6 +304,7 @@ def main():
             c.setFillColor(HexColor(PAPER));c.rect(317,H-315,244,45,fill=1,stroke=0)
             text(c,'Mostra titolo dell’applicazione, versione <b>2.0</b>, descrizione <b>Inserimento Gioca Ora e Inserimento rapido</b>, data di rilascio e autore <b>Max Ferrando alias Legnaro72</b> con il logo.',317,H-272,244,10.5)
         c.save();overlay.seek(0);writer.pages[page_index].merge_page(PdfReader(overlay).pages[0])
+    writer=reorder_manual(writer,titles)
     writer.add_metadata({'/Title':'Superba - Manuale utente - ottobre 2026','/Author':'Legnaro 72',
                          '/Subject':'Guida aggiornata: inserimento rapido e dettatura da smartphone, Gioca ora, PDF, WhatsApp e Modalità Regia'})
     with TARGET.open('wb') as out: writer.write(out)
