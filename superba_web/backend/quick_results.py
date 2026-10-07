@@ -156,7 +156,12 @@ def rank(text1, text2, day, match):
     direct = (similarity(text1, match['home']) + similarity(text2, match['away'])) / 2
     inverse = (similarity(text1, match['away']) + similarity(text2, match['home'])) / 2
     reversed_order = inverse > direct
-    score = max(direct, inverse)
+    # Spoken order is meaningful, especially when both home/away legs exist.
+    # An inverted fixture remains a fallback when only that pairing exists.
+    if not reversed_order:
+        score = direct + (.06 if direct >= .45 else 0)
+    else:
+        score = inverse - (.03 if inverse >= .45 else 0)
     if day is not None:
         actual = int(match.get('day', match.get('round', 1)))
         score += .12 if actual == day else -.18

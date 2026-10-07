@@ -353,3 +353,4 @@ body{background:radial-gradient(circle at 85% 0,#fff1d4 0,transparent 27%),radia
 .player-multiselect-options .checkbox span{min-width:0}
 .player-multiselect-options .checkbox small{display:block;color:#758b79}
 .player-multiselect-menu .text-button{width:100%;justify-content:center}
+.quick-score strong{display:flex;align-items:center;gap:7px}.quick-score strong .team-mark{width:25px;height:28px;flex:0 0 25px}

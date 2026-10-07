@@ -61,6 +61,17 @@ class ParserTests(unittest.TestCase):
         self.assertEqual(selected['selected_match']['match_id'], '9')
         self.assertEqual(selected['status'], 'matched')
 
+    def test_home_away_order_wins_when_both_legs_already_have_results(self):
+        legs = [
+            {'index': 0, 'group': 'A', 'day': 1, 'home': 'Bomber', 'away': 'Ruben',
+             'home_goals': 3, 'away_goals': 1, 'valid': True},
+            {'index': 1, 'group': 'A', 'day': 4, 'home': 'Ruben', 'away': 'Bomber',
+             'home_goals': 0, 'away_goals': 0, 'valid': True},
+        ]
+        row = parse('Ruben - Bomber 1-4', legs)[0]
+        self.assertEqual(row['selected_match']['match_id'], '1')
+        self.assertEqual((row['score1'], row['score2']), (1, 4))
+
     def test_existing_unknown_duplicate_incomplete_and_invalid_are_independent(self):
         rows = parse('Gialli Blu 2-1, Rossi Bianchi 1-0, Rossi Bianchi 2-0, Rossi Bianchi, Pluto Pippo 3-2, Verdi Neri 21-0')
         self.assertTrue(rows[0]['selected_match']['has_result'])
