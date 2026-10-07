@@ -517,10 +517,12 @@ from .club import install as install_club_routes
 from .club_logos import lookup as lookup_club_logos
 from .swiss import install as install_swiss_routes
 from .finals import install as install_finals_routes
+from .quick_results import install as install_quick_results_routes
 
 install_club_routes(app, current_user, writer, store_dep)
 install_swiss_routes(app, current_user, writer, store_dep, require_tournament_write)
 install_finals_routes(app, current_user, writer, store_dep, require_tournament_write)
+install_quick_results_routes(app, writer, store_dep, require_tournament_write)
 
 
 @app.get('/api/club-logos')

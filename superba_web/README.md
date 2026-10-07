@@ -81,6 +81,14 @@ La tabella Club distingue **Attivo**, **Da attivare**, **Lettore — accesso sen
 
 Il comando **Cambia password** è disponibile ai profili A/W con scritture abilitate. Richiede la password corrente, registra `password_change`, revoca le sessioni precedenti e apre una nuova sessione sul dispositivo corrente. Solo l'impostazione esplicita di una nuova password o un reset modifica la credenziale.
 
+## Inserimento rapido risultati
+
+Nelle schermate Partite di italiana, svizzero e fasi finali, gli utenti abilitati trovano **Inserimento rapido**. Il testo incollato viene inviato a `POST /api/{kind}/{id}/rapid-results/analyze`: il backend normalizza numeri e separatori, segmenta usando punteggi e testo, confronta deterministicamente ogni blocco soltanto con le partite reali del torneo e restituisce fino a tre candidati con confidenza. La giornata o il turno derivano sempre dalla partita salvata; una giornata scritta nel testo influenza il ranking ma non modifica il calendario.
+
+La finestra mantiene il testo originale, permette di selezionare la partita, correggere o invertire il punteggio, eliminare righe e confermare esplicitamente la sostituzione di risultati esistenti. `PATCH /api/{kind}/{id}/rapid-results` riceve soltanto indice partita, punteggi, conferma di sovrascrittura e versione. Il server ricontrolla permessi, appartenenza, duplicati, turno attivo, risultati preesistenti e concorrenza, quindi aggiorna l'unico documento torneo atomicamente e registra `results_quick_save` in `Log.Actions`.
+
+Non servono nuove variabili d'ambiente. Il campo `source` accetta già `text` e `voice`: una futura trascrizione vocale potrà usare lo stesso parser, matching, revisione e salvataggio senza duplicare la logica.
+
 ## Verifiche
 
 ### Presentazione sportiva Superba

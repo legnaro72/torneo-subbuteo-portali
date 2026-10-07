@@ -57,6 +57,27 @@ class CompetitionTests(unittest.TestCase):
                          {'swiss_create', 'results_save', 'swiss_advance'})
         self.assertEqual(self.client.post(f"/api/swiss/{data['id']}/advance", json={'version':data['version']}).status_code, 422)
 
+    def test_quick_results_reuses_the_same_flow_for_swiss_and_knockout(self):
+        swiss = self.swiss()
+        match = swiss['matches'][0]
+        analyzed = self.client.post(f"/api/swiss/{swiss['id']}/rapid-results/analyze", json={
+            'source': 'text', 'raw_text': f"{match['home']} contro {match['away']} 2-1"})
+        self.assertEqual(analyzed.status_code, 200, analyzed.text)
+        row = analyzed.json()['results'][0]
+        saved = self.client.patch(f"/api/swiss/{swiss['id']}/rapid-results", json={'version': swiss['version'],
+            'results': [{'match_id': row['selected_match']['match_id'], 'score1': 2, 'score2': 1, 'overwrite': False}]})
+        self.assertEqual(saved.status_code, 200, saved.text)
+        self.assertTrue(saved.json()['matches'][match['index']]['valid'])
+
+        created = self.client.post('/api/finals', json={'source_id': self.source_id, 'mode': 'ko', 'qualifiers': 4,
+            'request_id': str(uuid4())}).json()
+        final = self.client.get(f"/api/finals/{created['id']}").json()
+        match = final['matches'][0]
+        saved = self.client.patch(f"/api/finals/{created['id']}/rapid-results", json={'version': final['version'],
+            'results': [{'match_id': str(match['index']), 'score1': 1, 'score2': 0, 'overwrite': False}]})
+        self.assertEqual(saved.status_code, 200, saved.text)
+        self.assertTrue(saved.json()['matches'][0]['valid'])
+
     def test_swiss_odd_players_have_bye_without_points(self):
         data = self.swiss(self.players[:3])
         self.assertEqual(len(data['matches']), 1)
