@@ -23,11 +23,16 @@ class Login(Input):
 class Activate(Input):
     username: Name
     system_password: str = Field(min_length=1, max_length=256)
-    password: str = Field(min_length=10, max_length=72)
+    password: str = Field(min_length=1, max_length=256)
 
 
 class ActivationLookup(Input):
     system_password: str = Field(min_length=1, max_length=256)
+
+
+class ChangePassword(Input):
+    current_password: str = Field(min_length=1, max_length=256)
+    password: str = Field(min_length=1, max_length=256)
 
 
 class CreateParticipant(Input):

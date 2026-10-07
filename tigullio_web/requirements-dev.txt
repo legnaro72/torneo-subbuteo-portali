@@ -2,3 +2,4 @@
 httpx>=0.27,<1
 mongomock>=4.3,<5
 Pillow>=10,<12
+pypdf>=5,<7

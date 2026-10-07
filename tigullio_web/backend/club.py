@@ -8,13 +8,14 @@ from bson import ObjectId
 from fastapi import Depends, HTTPException, Response
 from pydantic import BaseModel, ConfigDict, Field, StrictInt, StringConstraints
 from typing import Annotated
-from pymongo.errors import PyMongoError
 
 from .club_report import render_club_pdf
 from .badges import badge_for_team, persist_club_badges
 from .models import TeamBadge
 from .security import verify_password
 from .tournaments import version
+from .activation import activation_state, credential_present, password_flag
+from .audit import INTERNAL, insert as audited_insert, update as audited_update, delete as audited_delete, retry_pending, pending_query, raw
 
 
 Name = Annotated[str, StringConstraints(strip_whitespace=True, min_length=1, max_length=160)]
@@ -86,14 +87,8 @@ def player_view(doc, store=None):
     return {'id': str(doc['_id']), 'version': version(doc), 'name': str(doc.get('Giocatore') or ''),
             'team': str(doc.get('Squadra') or ''), 'potential': potential,
             'role': doc.get('Ruolo') if doc.get('Ruolo') in ('R', 'W', 'A') else 'R',
-            'password_set': doc.get('SetPwd') == 1, 'badge': badge_for_team(store, doc.get('Squadra')) if store else doc.get('_tigullio_badge'), **trophies}
-
-
-def audit(store, user, action, details):
-    try:
-        store.audit.insert_one({'at': datetime.utcnow(), 'user_id': user['id'], 'action': action, 'details': details})
-    except PyMongoError:
-        pass
+            'password_set': credential_present(doc) and password_flag(doc), 'activation_state': activation_state(doc),
+            'badge': badge_for_team(store, doc.get('Squadra')) if store else doc.get('_tigullio_badge'), **trophies}
 
 
 def require_admin(user):
@@ -125,16 +120,15 @@ def update_one(store, original, data, user):
         changes['_tigullio_badge'] = data.badge.model_dump(exclude_none=True)
     if data.role is not None:
         changes['Ruolo'] = data.role
-    conditions = [{field: {'$eq': value, '$exists': True}} for field, value in original.items() if field != '_id']
+    conditions = [{field: {'$eq': value, '$exists': True}} for field, value in original.items() if field != '_id' and field not in INTERNAL]
     if '_club_revision' not in original:
         conditions.append({'_club_revision': {'$exists': False}})
     changes['_club_revision'] = int(original.get('_club_revision', 0)) + 1
-    result = store.players.update_one({'_id': original['_id'], '$and': conditions}, {'$set': changes})
+    result = audited_update(store, user, store.players, {'_id': original['_id'], '$and': conditions}, {'$set': changes}, 'club_player_edit')
     if result.matched_count != 1:
         raise HTTPException(409, 'Modifica concorrente: ricarica l’anagrafica.')
     if data.badge is not None:
-        persist_club_badges(store, {data.team: changes['_tigullio_badge']})
-    audit(store, user, 'club_player_edit', {'id': str(original['_id']), 'fields': list(changes)})
+        persist_club_badges(store, {data.team: changes['_tigullio_badge']}, user=user, labels_are_teams=True)
     return player_view({**original, **changes}, store)
 
 
@@ -142,6 +136,15 @@ def install(app, current_user, writer, store_dep):
     def admin(user=Depends(writer)):
         require_admin(user)
         return user
+
+    @app.get('/api/club/audit/status')
+    def audit_status(user=Depends(current_user), store=Depends(store_dep)):
+        require_admin(user)
+        return {'pending_documents': sum(raw(c).count_documents(pending_query(store, c)) for c in store.audit_sources)}
+
+    @app.post('/api/club/audit/retry')
+    def audit_retry(user=Depends(admin), store=Depends(store_dep)):
+        return retry_pending(store)
 
     @app.get('/api/club/players')
     def club_players(user=Depends(current_user), store=Depends(store_dep)):
@@ -160,11 +163,10 @@ def install(app, current_user, writer, store_dep):
             doc['_tigullio_badge'] = data.badge.model_dump(exclude_none=True)
         for count, names in TROPHIES:
             doc[count], doc[names] = 0, []
-        result = store.players.insert_one(doc)
+        result = audited_insert(store, user, store.players, doc, 'club_player_create')
         doc['_id'] = result.inserted_id
         if data.badge is not None:
-            persist_club_badges(store, {data.team: doc['_tigullio_badge']})
-        audit(store, user, 'club_player_create', {'id': str(doc['_id'])})
+            persist_club_badges(store, {data.team: doc['_tigullio_badge']}, user=user, labels_are_teams=True)
         return player_view(doc, store)
 
     @app.patch('/api/club/players/{player_id}')
@@ -205,10 +207,10 @@ def install(app, current_user, writer, store_dep):
             raise HTTPException(409, 'Non puoi eliminare il tuo account mentre sei connesso.')
         if version(original) != data.version:
             raise HTTPException(409, 'Il giocatore è cambiato. Ricarica prima di eliminare.')
-        result = store.players.delete_one({'_id': original['_id'], 'Giocatore': original.get('Giocatore'), '_club_revision': original.get('_club_revision', 0)}) if '_club_revision' in original else store.players.delete_one({'_id': original['_id'], 'Giocatore': original.get('Giocatore'), '_club_revision': {'$exists': False}})
+        query = {'_id': original['_id'], 'Giocatore': original.get('Giocatore'), '_club_revision': original.get('_club_revision', 0) if '_club_revision' in original else {'$exists': False}}
+        result = audited_delete(store, user, store.players, query, 'club_player_delete')
         if result.deleted_count != 1:
             raise HTTPException(409, 'Il giocatore è cambiato. Ricarica prima di eliminare.')
-        audit(store, user, 'club_player_delete', {'id': player_id, 'name': original.get('Giocatore')})
         return {'deleted': 1}
 
     @app.post('/api/club/players/{player_id}/reset-password')
@@ -218,12 +220,11 @@ def install(app, current_user, writer, store_dep):
             raise HTTPException(404, 'Giocatore non trovato.')
         if player_id == user['id']:
             raise HTTPException(409, 'Per cambiare la tua password usa il percorso del tuo account.')
-        result = store.players.update_one({'_id': original['_id'], 'Password': original.get('Password')},
-                                          {'$set': {'Password': None, 'SetPwd': 0}, '$inc': {'_club_revision': 1}})
+        result = audited_update(store, user, store.players, {'_id': original['_id'], 'Password': original.get('Password')},
+                                          {'$set': {'Password': None, 'SetPwd': 0}, '$inc': {'_club_revision': 1}}, 'password_reset')
         if result.matched_count != 1:
             raise HTTPException(409, 'Il giocatore è cambiato. Ricarica prima del reset.')
         store.sessions.update_many({'user_id': player_id}, {'$set': {'revoked': True}})
-        audit(store, user, 'club_password_reset', {'id': player_id})
         return {'ok': True}
 
     @app.get('/api/club/tournaments')
@@ -262,12 +263,10 @@ def install(app, current_user, writer, store_dep):
             check_password(store, user, data.password)
         deleted = 0
         for scope, doc in docs:
-            result = collections[scope].delete_one({'_id': doc['_id'], 'nome_torneo': doc['nome_torneo']})
+            result = audited_delete(store, user, collections[scope], {'_id': doc['_id'], 'nome_torneo': doc['nome_torneo']}, 'club_tournament_delete')
             if result.deleted_count != 1:
                 raise HTTPException(409, f'{deleted} eliminati; un torneo è cambiato. Ricarica l’archivio.')
             deleted += 1
-        audit(store, user, 'club_tournament_delete', {'count': deleted, 'scopes': sorted({scope for scope, _ in docs}),
-                                                     'all_except_championships': data.all_except_championships})
         return {'deleted': deleted}
 
     @app.get('/api/club/export.csv')

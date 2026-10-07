@@ -53,7 +53,30 @@ class CompetitionTests(unittest.TestCase):
         self.assertEqual(advanced.json()['active_round'], 2)
         self.assertEqual(len(advanced.json()['matches']), 4)
         self.assertEqual(len({frozenset((r['home'],r['away'])) for r in advanced.json()['matches']}), 4)
+        self.assertEqual({e['action'] for e in self.store.action_logs.find({'area': 'svizzero'})},
+                         {'swiss_create', 'results_save', 'swiss_advance'})
         self.assertEqual(self.client.post(f"/api/swiss/{data['id']}/advance", json={'version':data['version']}).status_code, 422)
+
+    def test_quick_results_reuses_the_same_flow_for_swiss_and_knockout(self):
+        swiss = self.swiss()
+        match = swiss['matches'][0]
+        analyzed = self.client.post(f"/api/swiss/{swiss['id']}/rapid-results/analyze", json={
+            'source': 'text', 'raw_text': f"{match['home']} contro {match['away']} 2-1"})
+        self.assertEqual(analyzed.status_code, 200, analyzed.text)
+        row = analyzed.json()['results'][0]
+        saved = self.client.patch(f"/api/swiss/{swiss['id']}/rapid-results", json={'version': swiss['version'],
+            'results': [{'match_id': row['selected_match']['match_id'], 'score1': 2, 'score2': 1, 'overwrite': False}]})
+        self.assertEqual(saved.status_code, 200, saved.text)
+        self.assertTrue(saved.json()['matches'][match['index']]['valid'])
+
+        created = self.client.post('/api/finals', json={'source_id': self.source_id, 'mode': 'ko', 'qualifiers': 4,
+            'request_id': str(uuid4())}).json()
+        final = self.client.get(f"/api/finals/{created['id']}").json()
+        match = final['matches'][0]
+        saved = self.client.patch(f"/api/finals/{created['id']}/rapid-results", json={'version': final['version'],
+            'results': [{'match_id': str(match['index']), 'score1': 1, 'score2': 0, 'overwrite': False}]})
+        self.assertEqual(saved.status_code, 200, saved.text)
+        self.assertTrue(saved.json()['matches'][0]['valid'])
 
     def test_swiss_odd_players_have_bye_without_points(self):
         data = self.swiss(self.players[:3])
@@ -96,6 +119,9 @@ class CompetitionTests(unittest.TestCase):
         done = self.client.post(f'/api/finals/{ident}/advance', json={'version':result.json()['version']})
         self.assertEqual(done.status_code, 200, done.text)
         self.assertTrue(done.json()['finished'])
+        self.assertEqual({e['action'] for e in self.store.action_logs.find({'area': 'finali'})},
+                         {'finals_create', 'results_save', 'finals_advance', 'finals_complete'})
+        self.assertEqual(self.store.action_logs.count_documents({'action': 'palmares_award'}), 1)
         self.assertEqual(self.store.tournaments.find_one({'_id':self.store.tournaments.find_one({'nome_torneo':'completato_Test'})['_id']})['nome_torneo'],'completato_Test')
 
     def test_final_inherits_premium_badges_from_preliminary(self):
@@ -130,6 +156,7 @@ class CompetitionTests(unittest.TestCase):
         self.assertEqual(group.status_code,200,group.text)
         self.assertEqual({m['group'] for m in group.json()['matches']},{'Girone 1'})
         self.assertIsNotNone(self.store.tournaments.find_one({'nome_torneo':'completato_Test'}))
+        self.assertEqual(self.store.action_logs.count_documents({'action': 'finals_create', 'area': 'finali'}), 1)
 
     def test_reader_cannot_create_or_change_competitions(self):
         self.client.post('/api/auth/logout')

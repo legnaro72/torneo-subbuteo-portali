@@ -7,6 +7,7 @@ import time
 from datetime import datetime, timedelta
 from pathlib import Path
 from urllib.parse import urlencode
+from uuid import uuid4
 
 from bson import ObjectId
 from fastapi import Depends, FastAPI, HTTPException, Request, Response
@@ -15,9 +16,11 @@ from pymongo import ReturnDocument
 from pymongo.errors import DuplicateKeyError, PyMongoError
 
 from .domain import genera_calendario_from_list
-from .models import Activate, ActivationLookup, Complete, CreateTournament, Login, Rename, SaveBadges, SaveResults, Withdrawal, PlayNowExport
+from .models import Activate, ActivationLookup, ChangePassword, Complete, CreateTournament, Login, Rename, SaveBadges, SaveResults, Withdrawal, PlayNowExport
 from .report import render_tournament_pdf
-from .security import generate_token, hash_password, hash_token, password_needs_upgrade, verify_password
+from .security import generate_token, hash_token, verify_password
+from .activation import activation_state, credential_present, password_flag
+from .audit import OUTBOX, operation_id, event as audit_event, deliver, record_login, retry_pending, insert as audited_insert, update as audited_update
 from .store import Store, get_store
 from .tournaments import is_italiana, load, save, view
 from .badges import badge_for_team, persist_club_badges, with_club_badges
@@ -41,7 +44,11 @@ async def guard(request: Request, call_next):
         origin = request.headers.get('origin')
         if request.headers.get('x-tigullio-request') != '1' or (origin and origin != expected):
             return JSONResponse({'detail': 'Richiesta non autorizzata.'}, status_code=403)
-    response = await call_next(request)
+    context_token = operation_id.set(str(uuid4()))
+    try:
+        response = await call_next(request)
+    finally:
+        operation_id.reset(context_token)
     response.headers['Cache-Control'] = 'no-store'
     response.headers['X-Content-Type-Options'] = 'nosniff'
     response.headers['Referrer-Policy'] = 'no-referrer'
@@ -67,7 +74,10 @@ def identity(player, password_verified=False):
 
 def current_user(request: Request, store: Store = Depends(store_dep)):
     token = request.cookies.get(COOKIE)
-    session = store.sessions.find_one({'_id': hash_token(token), 'expires_at': {'$gt': datetime.utcnow()}, 'revoked': False}) if token else None
+    now = datetime.utcnow()
+    session = store.sessions.find_one({'_id': hash_token(token), 'revoked': False,
+                                      '$or': [{'expires_at': {'$gt': now}},
+                                              {'expires_at': {'$exists': False}, 'valid_until': {'$gt': now}}]}) if token else None
     if not session:
         raise HTTPException(401, 'Accedi al portale per continuare.')
     if session['user_id'] == 'guest':
@@ -90,11 +100,13 @@ def badge_image(url: str, user=Depends(current_user)):
     })
 
 
-def writer(user=Depends(current_user), store: Store = Depends(store_dep)):
+def writer(request: Request, user=Depends(current_user), store: Store = Depends(store_dep)):
     if user['role'] not in ('A', 'W') or not user['password_verified']:
         raise HTTPException(403, 'Il tuo profilo è in sola lettura.')
     if not store.demo and os.getenv('TIGULLIO_WRITE_ENABLED', '').lower() != 'true':
         raise HTTPException(403, 'Questo ambiente è in sola lettura. I salvataggi devono essere abilitati dal gestore.')
+    if request.method not in ('GET', 'HEAD') and request.url.path != '/api/club/audit/retry':
+        retry_pending(store, limit=20)
     return user
 
 
@@ -110,17 +122,23 @@ def rate_limit(request, store, username):
         key = f'{scope}:{hash_token(value)}:{bucket}'
         item = store.attempts.find_one_and_update({'_id': key}, {'$inc': {'count': 1}, '$setOnInsert': {'expires_at': datetime.utcnow() + timedelta(minutes=30)}}, upsert=True, return_document=ReturnDocument.AFTER)
         if item['count'] > limit:
+            record_login(store, {'username': username, 'id': '', 'role': ''}, 'Accesso limitato', 'rate_limit')
             raise HTTPException(429, 'Troppi tentativi. Riprova tra 15 minuti.')
 
 
-def establish(response, store, player=None, *, remember=False, verified=False):
+def establish(response, store, player=None, *, remember=False, verified=False, method=None):
+    retry_pending(store, limit=20)
     token = generate_token()
     hours = 720 if remember else 2
     now = datetime.utcnow()
     user = identity(player, verified) if player else {'id': 'guest', 'username': 'Ospite', 'role': 'G', 'password_verified': False}
-    store.sessions.insert_one({'_id': hash_token(token), 'user_id': user['id'], 'created_at': now,
-                              'expires_at': now + timedelta(hours=hours), 'revoked': False,
-                              'password_verified': verified, 'credential_version': hash_token(str(player.get('Password', ''))) if player else None})
+    session_id = hash_token(token)
+    store.sessions.insert_one({'_id': session_id, 'user_id': user['id'], 'created_at': now,
+                              'valid_until': now + timedelta(hours=hours), 'revoked': False,
+                              'password_verified': verified, 'credential_version': hash_token(str(player.get('Password', ''))) if player else None,
+                              OUTBOX: [audit_event(user, 'login', store.sessions, login=True,
+                                                  method=method or ('guest' if not player else 'password' if verified else 'reader'))]})
+    deliver(store, store.sessions, session_id)
     secure = bool(os.getenv('VERCEL')) or os.getenv('TIGULLIO_APP_ORIGIN', '').startswith('https://')
     response.set_cookie(COOKIE, token, max_age=hours*3600, httponly=True, secure=secure, samesite='lax', path='/')
     return user
@@ -151,23 +169,29 @@ def manuale_utente(download: bool = False, user=Depends(current_user)):
 
 @app.post('/api/auth/login')
 def login(data: Login, request: Request, response: Response, store: Store = Depends(store_dep)):
+    attempt = {'username': data.username, 'role': '', 'id': ''}
     rate_limit(request, store, data.username)
     player = store.user(data.username)
     if not player or player.get('Ruolo', 'R') not in ('A', 'W', 'R'):
+        record_login(store, attempt, 'Credenziali non valide', 'password')
         raise HTTPException(401, 'Credenziali non valide.')
     if player.get('Ruolo', 'R') == 'R':
         return establish(response, store, player, remember=data.remember)
-    if player.get('SetPwd') != 1:
-        raise HTTPException(403, 'Account da attivare: usa “Primo accesso”.')
+    attempt = identity(player)
+    if not credential_present(player):
+        record_login(store, attempt, 'Account da attivare' if not password_flag(player) else 'Account da verificare', 'password')
+        raise HTTPException(403, 'Account da verificare: contatta il gestore.' if password_flag(player) else 'Account da attivare: usa “Primo accesso”.')
     stored = str(player.get('Password', ''))
     if not verify_password(data.password, stored):
+        record_login(store, attempt, 'Credenziali non valide', 'password')
         raise HTTPException(401, 'Credenziali non valide.')
-    if password_needs_upgrade(stored):
-        upgraded = hash_password(data.password)
-        changed = store.players.update_one({'_id': player['_id'], 'Password': player['Password']}, {'$set': {'Password': upgraded}})
+    if player.get('SetPwd') != 1:
+        changed = audited_update(store, identity(player, True), store.players,
+                                 {'_id': player['_id'], 'Password': player['Password']},
+                                 {'$set': {'SetPwd': 1}}, 'activation_recovered')
         if changed.matched_count != 1:
             raise HTTPException(409, 'Credenziali modificate. Riprova il login.')
-        player['Password'] = upgraded
+        player['SetPwd'] = 1
     return establish(response, store, player, remember=data.remember, verified=True)
 
 
@@ -175,16 +199,16 @@ def login(data: Login, request: Request, response: Response, store: Store = Depe
 def activate(data: Activate, request: Request, response: Response, store: Store = Depends(store_dep)):
     rate_limit(request, store, data.username)
     player = store.user(data.username)
-    if not player or player.get('SetPwd') == 1 or player.get('Ruolo') not in ('A', 'W') or not store.system_passwords.find_one({'Password': data.system_password}):
+    if not player or activation_state(player) != 'pending' or not store.system_passwords.find_one({'Password': data.system_password}):
+        record_login(store, {'username': data.username, 'role': '', 'id': ''}, 'Attivazione non consentita', 'activation')
         raise HTTPException(403, 'Attivazione non consentita. Verifica i dati con il gestore.')
-    if len(data.password.encode()) > 72:
-        raise HTTPException(422, 'Password troppo lunga: usa al massimo 72 byte UTF-8.')
-    password = hash_password(data.password)
-    result = store.players.update_one({'_id': player['_id'], 'SetPwd': {'$ne': 1}}, {'$set': {'Password': password, 'SetPwd': 1}})
+    result = audited_update(store, identity(player), store.players,
+                            {'_id': player['_id'], 'Password': player.get('Password'), 'SetPwd': player.get('SetPwd')},
+                            {'$set': {'Password': data.password, 'SetPwd': 1}}, 'password_set')
     if result.matched_count != 1:
         raise HTTPException(409, 'Account già attivato. Accedi con la password.')
-    player.update(Password=password, SetPwd=1)
-    return establish(response, store, player, verified=True)
+    player.update(Password=data.password, SetPwd=1)
+    return establish(response, store, player, verified=True, method='activation')
 
 
 @app.post('/api/auth/activation-users')
@@ -193,8 +217,25 @@ def activation_users(data: ActivationLookup, request: Request, store: Store = De
     if not store.system_passwords.find_one({'Password': data.system_password}):
         raise HTTPException(403, 'Password di sistema non valida.')
     names = (p.get('Giocatore', '').strip() for p in store.players.find(
-        {'Ruolo': {'$in': ['A', 'W']}, 'SetPwd': {'$ne': 1}}, {'Giocatore': 1}))
+        {'Ruolo': {'$in': ['A', 'W']}}, {'Giocatore': 1, 'Ruolo': 1, 'Password': 1, 'SetPwd': 1})
+        if activation_state(p) == 'pending')
     return sorted((name for name in names if name), key=str.casefold)
+
+
+@app.post('/api/auth/password')
+def change_password(data: ChangePassword, request: Request, response: Response,
+                    user=Depends(writer), store: Store = Depends(store_dep)):
+    rate_limit(request, store, user['username'])
+    player = store.players.find_one({'_id': ObjectId(user['id'])})
+    if not player or not verify_password(data.current_password, player.get('Password')):
+        raise HTTPException(403, 'Password corrente non valida.')
+    result = audited_update(store, user, store.players, {'_id': player['_id'], 'Password': player['Password']},
+                            {'$set': {'Password': data.password, 'SetPwd': 1}, '$inc': {'_club_revision': 1}}, 'password_change')
+    if result.matched_count != 1:
+        raise HTTPException(409, 'Credenziali modificate. Accedi nuovamente.')
+    store.sessions.update_many({'user_id': user['id']}, {'$set': {'revoked': True}})
+    player.update(Password=data.password, SetPwd=1)
+    return establish(response, store, player, verified=True, method='password_change')
 
 
 @app.get('/api/auth/user-suggestions')
@@ -319,7 +360,7 @@ def create(data: CreateTournament, user=Depends(writer), store: Store = Depends(
     if data.participants is not None:
         doc['_tigullio_participants'] = [p.model_dump() for p in data.participants]
     try:
-        store.tournaments.insert_one(doc)
+        audited_insert(store, user, store.tournaments, doc, 'tournament_create')
     except DuplicateKeyError:
         existing = store.tournaments.find_one({'_id': new_id})
         if not existing or existing.get('_tigullio_create_hash') != payload_hash:
@@ -340,12 +381,7 @@ def results(tournament_id: str, data: SaveResults, user=Depends(writer), store: 
         raise HTTPException(422, 'Selezione delle partite non valida.')
     for change in data.results:
         rows[change.index].update(GolCasa=change.home, GolOspite=change.away, Valida=change.valid)
-    saved = save(store, doc, data.version, {'calendario': rows})
-    # Logging failure must never turn a successful tournament write into an apparent failure.
-    try:
-        store.audit.insert_one({'at': datetime.utcnow(), 'user_id': user['id'], 'tournament_id': tournament_id, 'action': 'results', 'indices': indices})
-    except PyMongoError:
-        pass
+    saved = save(store, doc, data.version, {'calendario': rows}, user=user, action='results_save')
     return with_club_badges(store, view(saved))
 
 
@@ -356,7 +392,7 @@ def rename(tournament_id: str, data: Rename, user=Depends(writer), store: Store 
     require_tournament_write(user, data.name)
     if view(doc)['closed'] or data.name.lower().startswith(('fasefinale', 'finito_', 'completato_')):
         raise HTTPException(422, 'Rinomina non consentita per questo nome o stato.')
-    return with_club_badges(store, view(save(store, doc, data.version, {'nome_torneo': data.name})))
+    return with_club_badges(store, view(save(store, doc, data.version, {'nome_torneo': data.name}, user=user, action='tournament_rename')))
 
 
 @app.post('/api/tournaments/{tournament_id}/withdrawals')
@@ -374,7 +410,7 @@ def withdrawal(tournament_id: str, data: Withdrawal, user=Depends(writer), store
         home, away = row['Casa'] in retired, row['Ospite'] in retired
         if home or away:
             row.update(GolCasa=3 if away and not home else 0, GolOspite=3 if home and not away else 0, Valida=True)
-    return with_club_badges(store, view(save(store, doc, data.version, {'calendario': rows, '_tigullio_withdrawals': sorted(retired)})))
+    return with_club_badges(store, view(save(store, doc, data.version, {'calendario': rows, '_tigullio_withdrawals': sorted(retired)}, user=user, action='players_withdraw')))
 
 
 @app.post('/api/tournaments/{tournament_id}/complete')
@@ -390,13 +426,14 @@ def complete(tournament_id: str, data: Complete, user=Depends(writer), store: St
         if doc.get('_tigullio_closed_from') != data.version and rendered['version'] != data.version:
             raise HTTPException(409, 'Ricarica il torneo prima di concluderlo.')
     else:
-        doc = save(store, doc, data.version, {'_tigullio_closed': True, '_tigullio_closed_from': data.version})
+        doc = save(store, doc, data.version, {'_tigullio_closed': True, '_tigullio_closed_from': data.version}, user=user, action='tournament_complete')
     # Preserve the legacy completed snapshot. Deterministic ID makes retries harmless.
     archive_id = ObjectId(hashlib.sha256(('complete:' + tournament_id).encode()).hexdigest()[:24])
     completed_name = 'completato_' + doc['nome_torneo']
     if not store.tournaments.find_one({'nome_torneo': completed_name}):
         archive = {**doc, '_id': archive_id, 'nome_torneo': completed_name, '_tigullio_source_id': tournament_id}
-        store.tournaments.update_one({'_id': archive_id}, {'$setOnInsert': archive}, upsert=True)
+        archive.pop(OUTBOX, None)
+        audited_update(store, user, store.tournaments, {'_id': archive_id}, {'$setOnInsert': archive}, 'tournament_archive', upsert=True)
     groups = list(dict.fromkeys(r['group'] for r in rendered['matches']))
     list_field, count_field = ('listaGironiFFVinti', 'NGironiFFVinti') if doc['nome_torneo'].startswith('fasefinaleAGironi_') or len(groups) > 1 else ('listaCampionatiVinti', 'NCampionatiVinti')
     name = doc['nome_torneo']
@@ -422,8 +459,8 @@ def complete(tournament_id: str, data: Complete, user=Depends(writer), store: St
         if any(normalized(value) == name.casefold() for value in previous):
             continue
         award_id = f'{tournament_id}:{group}'
-        store.players.update_one({'_id': player['_id'], '_tigullio_award_ids': {'$ne': award_id}, list_field: {'$ne': name}},
-                                 {'$addToSet': {list_field: name, '_tigullio_award_ids': award_id}, '$inc': {count_field: 1}})
+        audited_update(store, user, store.players, {'_id': player['_id'], '_tigullio_award_ids': {'$ne': award_id}, list_field: {'$ne': name}},
+                                 {'$addToSet': {list_field: name, '_tigullio_award_ids': award_id}, '$inc': {count_field: 1}}, 'palmares_award')
     return {**with_club_badges(store, view(doc)), 'completion_warnings': warnings}
 
 
@@ -480,10 +517,12 @@ from .club import install as install_club_routes
 from .club_logos import lookup as lookup_club_logos
 from .swiss import install as install_swiss_routes
 from .finals import install as install_finals_routes
+from .quick_results import install as install_quick_results_routes
 
 install_club_routes(app, current_user, writer, store_dep)
 install_swiss_routes(app, current_user, writer, store_dep, require_tournament_write)
 install_finals_routes(app, current_user, writer, store_dep, require_tournament_write)
+install_quick_results_routes(app, writer, store_dep, require_tournament_write)
 
 
 @app.get('/api/club-logos')
@@ -510,8 +549,9 @@ def save_badges(kind: str, tournament_id: str, data: SaveBadges, user=Depends(wr
     if not set(data.badges) <= participants:
         raise HTTPException(422, 'Associa immagini solo ai partecipanti di questo torneo.')
     saved_badges = {key: badge.model_dump(exclude_none=True) for key, badge in data.badges.items()}
-    persist_club_badges(store, saved_badges)
-    return with_club_badges(store, render(save(store, doc, data.version, {'_tigullio_badges': saved_badges}, collection=collection)))
+    saved = save(store, doc, data.version, {'_tigullio_badges': saved_badges}, user=user, action='tournament_badges_change', collection=collection)
+    persist_club_badges(store, saved_badges, user=user)
+    return with_club_badges(store, render(saved))
 
 
 

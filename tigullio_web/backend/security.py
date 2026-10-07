@@ -56,7 +56,7 @@ def verify_password(password: str, stored: str) -> bool:
             return False
 
     # Legacy compatibility: existing Tigullio records may still contain plaintext.
-    # Successful legacy login is upgraded immediately by users.update_user_password().
+    # Checking an existing credential never rewrites it.
     return hmac.compare_digest(password, stored)
 
 
