@@ -125,6 +125,41 @@ def new_pages():
     y=step(c,3,'Apri la premiazione','Quando Celebra vincitore è disponibile, aprilo per mostrare coppa, nome e stemma. Ripeti riavvia la celebrazione; Audio attivo / spento controlla la musica. Torna al torneo chiude la schermata.',34,380,527)
     y=step(c,4,'Scarica la cartolina','Premi Scarica cartolina del campione: ottieni un’immagine PNG, con lo stemma disponibile, non un PDF. Se ci sono più vincitori di girone, scegli prima il nome in Cartolina per.',34,y,527)
     note(c,'La sequenza consigliata per una serata al club','Seleziona i presenti, consulta gli abbinamenti e condividi il PDF. Dopo le partite, salva i risultati e aggiorna i suggerimenti. Usa la Regia per presentarli sullo schermo e la cartolina per festeggiare il campione.',top=168)
+    c.showPage()
+
+    frame(c,22,'RISULTATI DAL TELEFONO','Inserimento rapido: scrivi o detta','Inserisci uno o più risultati e controllali prima di salvarli. Anche da smartphone.')
+    picture(c,'rapido-testo.png',34,648,235,395)
+    y=step(c,1,'Apri Inserimento rapido','Nel torneo premi Inserimento rapido. È disponibile per chi può modificare i risultati: all’italiana, fasi finali e svizzero.',292,648,269)
+    y=step(c,2,'Scrivi o incolla','Nel campo Testo originale scrivi, per esempio, Ruben - Bomber 1-4. Puoi aggiungere più risultati, preferibilmente uno per riga, oppure incollare un elenco.',292,y,269)
+    y=step(c,3,'Puoi già dettare','Tocca il campo e usa il microfono della tastiera del cellulare, se disponibile. Detta nomi e punteggi con chiarezza, una partita alla volta.',292,y,269)
+    text(c,'La dettatura può dare buoni risultati, anche se è meno precisa del testo digitato. Prima di analizzare correggi eventuali nomi o numeri trascritti male. È la funzione della tastiera, non un pulsante vocale del portale.',34,220,527,11)
+    note(c,'Il testo non viene salvato come risultato automaticamente','Premi Analizza risultati per ottenere l’anteprima. Se cambi il testo, analizzalo di nuovo. Il salvataggio avviene solo dopo la revisione e il comando finale di conferma.',top=160)
+    c.showPage()
+
+    frame(c,23,'REVISIONE PRIMA DEL SALVATAGGIO','Verifica partita e punteggio','Ogni riga mostra la partita proposta e i punteggi da controllare.')
+    picture(c,'rapido-verifica.png',34,648,235,420)
+    y=step(c,1,'Controlla la giornata','Verifica squadra, giocatore e giornata o turno. Il girone compare solo quando il torneo all’italiana ne contiene più di uno. Bandiere e stemmi aiutano a riconoscere i partecipanti.',292,648,269)
+    y=step(c,2,'Rispetta l’ordine','Ruben - Bomber 1-4 significa un gol a Ruben e quattro a Bomber. Andata e ritorno sono partite diverse: non basta riconoscere gli stessi nomi.',292,y,269)
+    y=step(c,3,'Accetta dopo il controllo','Associata indica una corrispondenza già accettata. Se compare Da verificare, controlla la partita e premi Conferma associazione, oppure scegli un’alternativa.',292,y,269)
+    note(c,'La confidenza non sostituisce la verifica','Anche una confidenza alta può richiedere conferma se esistono più incontri simili. Puoi correggere i punteggi nei due campi o invertirli con la freccia centrale. Una riga non verificata mantiene bloccato il salvataggio.',top=179)
+    c.showPage()
+
+    frame(c,24,'SCEGLI LA PARTITA CORRETTA','Selettore e proposte alternative','Il menu Partita usa schede su più righe, leggibili anche su schermi stretti.')
+    picture(c,'rapido-selettore.png',34,648,235,410)
+    y=step(c,1,'Apri Partita','Tocca la scheda con giornata e partecipanti. Usa Cerca partita per cercare un giocatore, una squadra o la giornata. Scegli l’incontro corretto dall’elenco.',292,648,269)
+    y=step(c,2,'Confronta le proposte','Visualizza … proposte apre le alternative suggerite dall’analisi. Ogni scheda riporta giornata o turno, nomi, confidenza e presenza di un risultato precedente.',292,y,269)
+    y=step(c,3,'Conferma la scelta','Toccando una proposta, la riga diventa Associata. Ricontrolla sempre i punteggi dopo una nuova scelta, soprattutto quando cambia l’ordine dei partecipanti.',292,y,269)
+    picture(c,'rapido-proposte.png',292,y-3,269,170,False)
+    text(c,'Esempio dimostrativo: due proposte per andata e ritorno.',292,198,269,8,MUTED)
+    note(c,'Una partita sola per ogni riga','Se due righe indicano lo stesso incontro, compare Possibile duplicato. Correggi la scelta oppure elimina la riga superflua con il cestino prima di salvare.',top=158)
+    c.showPage()
+
+    frame(c,25,'CONFERMA FINALE','Salva solo dopo la revisione','Tutti i risultati devono essere associati e completi prima della conferma finale.')
+    picture(c,'rapido-conferma.png',34,648,235,420)
+    y=step(c,1,'Quando il risultato esiste','Se la partita è già validata, compare Sostituisci il risultato già presente con il vecchio punteggio. Spunta la casella soltanto se vuoi davvero sostituirlo.',292,648,269)
+    y=step(c,2,'Sblocca il salvataggio','Controlla tutte le righe: associazioni confermate, nessun duplicato e punteggi da 0 a 20. Nel tabellone a eliminazione diretta il pareggio non è ammesso.',292,y,269)
+    y=step(c,3,'Conferma e salva risultati','Il pulsante salva e valida insieme i risultati scelti. Compare Risultati inseriti e salvati. Se un altro utente ha modificato il torneo, ricarica e ripeti la verifica.',292,y,269)
+    note(c,'Il salvataggio entra nel log attività','L’inserimento rapido registra chi ha salvato, quando e le modifiche ai risultati. Nello svizzero e nell’eliminazione diretta si opera sul turno attivo; un torneo concluso non consente nuovi inserimenti. La Regia presenta i risultati salvati: non sostituisce questa revisione.',top=179)
     c.showPage(); c.save(); buf.seek(0)
     return PdfReader(buf)
 
@@ -142,7 +177,9 @@ def main():
             'Dai qualificati alla finale','Bandiere e stemmi','Disegna uno stemma',
             'Dopo ogni giornata','Manuale e informazioni','Gioca ora: scegli i presenti',
             'Tutte le partite o in campo insieme?','Condividi le partite della serata',
-            'Modalità Regia','Preferiti e cartolina del campione']
+            'Modalità Regia','Preferiti e cartolina del campione',
+            'Inserimento rapido: scrivi o detta','Verifica partita e punteggio',
+            'Selettore e proposte alternative','Salva solo dopo la revisione']
     cover=BytesIO(); c=canvas.Canvas(cover,pagesize=(W,H))
     c.setFillColor(HexColor(NAVY));c.rect(0,0,W,H,fill=1,stroke=0)
     text(c,'MANUALE UTENTE',42,786,510,12,GOLD,True)
@@ -150,7 +187,7 @@ def main():
     text(c,'Panoramica, gestione club e tutte le formule di torneo.<br/>Edizione aggiornata · ottobre 2026',42,649,510,10.5,'#dbe2e8')
     text(c,'Sommario',42,589,510,18,GOLD,True)
     for i,title in enumerate(titles):
-        top=551-i*24
+        top=551-i*21
         text(c,f'{i+1:02d}  {title}',42,top,480,10,'#ffffff')
         c.setFillColor(HexColor(GOLD));c.setFont('Helvetica',10);c.drawRightString(550,top-10,str(i+3))
     c.setFont('Helvetica',9);c.setFillColor(HexColor(GOLD));c.drawString(42,32,'© 2026 Legnaro 72')
@@ -158,19 +195,43 @@ def main():
     writer.pages[0].merge_page(PdfReader(cover).pages[0])
     if '/Annots' in writer.pages[0]: del writer.pages[0]['/Annots']
     for i,title in enumerate(titles):
-        top=551-i*24
+        top=551-i*21
         writer.add_annotation(0,Link(rect=(40,top-19,556,top+2),target_page_index=i+2))
         if i>=14: writer.add_outline_item(title,i+2)
     for i in range(1,16):
         overlay=BytesIO();c=canvas.Canvas(overlay,pagesize=(W,H));footer(c,i+1)
         if i==1:
             text(c,'Nuove guide illustrate',34,150,527,12,bold=True)
-            text(c,'Gioca ora e presenze: pagina 17 · Abbinamenti: pagina 18<br/>PDF e WhatsApp: pagina 19 · Modalità Regia: pagina 20<br/>Preferiti e premiazione: pagina 21',34,125,527,10)
+            text(c,'Gioca ora e presenze: pagina 17 · Abbinamenti: pagina 18<br/>PDF e WhatsApp: pagina 19 · Modalità Regia: pagina 20<br/>Preferiti e premiazione: pagina 21<br/>Inserimento rapido, anche dettato: pagine 22-25',34,125,527,10)
         if i==6:
             text(c,'Novità: condivisione dei PDF su WhatsApp, guida a pagina 19.',34,70,527,9)
         c.save();overlay.seek(0);writer.pages[i].merge_page(PdfReader(overlay).pages[0])
+    # Refresh obsolete UI details inside their original image boxes. Text and
+    # surrounding page layout stay intact; the September source stays immutable.
+    replacements = {3:[('risultati-schermo.png',47,192,240,394)],
+                    4:[('impostazioni-aggiornate.png',40,198,224,368)],
+                    6:[('comandi-aggiornati.png',52,195,190,312)],
+                    15:[('info-aggiornate.png',42,148,235,470)]}
+    for page_index, images in replacements.items():
+        overlay=BytesIO(); c=canvas.Canvas(overlay,pagesize=(W,H))
+        for name,x,top,width,height in images:
+            c.setFillColor(HexColor(PAPER));c.rect(x-3,H-top-height-3,width+6,height+6,fill=1,stroke=0)
+            picture(c,name,x,H-top,width,height,False)
+        # Old captures were labelled as live data. These are current UI demo captures.
+        caption_positions={3:(47,599,260),4:(40,578,224),6:(52,520,190)}
+        if page_index in caption_positions:
+            x,top,width=caption_positions[page_index]
+            c.setFillColor(HexColor(PAPER));c.rect(x,H-top-13,width,16,fill=1,stroke=0)
+            text(c,'Schermata aggiornata · dati di esempio',x,H-top,width,7.5,MUTED)
+        if page_index==3:
+            c.setFillColor(HexColor(PAPER));c.rect(34,H-149,527,17,fill=1,stroke=0)
+            text(c,'Esempio dimostrativo: una giornata con i comandi aggiornati.',34,H-134,527,10,MUTED)
+        if page_index==15:
+            c.setFillColor(HexColor(PAPER));c.rect(317,H-315,244,45,fill=1,stroke=0)
+            text(c,'Mostra titolo dell’applicazione, versione <b>2.0</b>, descrizione <b>Inserimento Gioca Ora e Inserimento rapido</b>, data di rilascio e autore <b>Max Ferrando alias Legnaro72</b> con il logo.',317,H-272,244,10.5)
+        c.save();overlay.seek(0);writer.pages[page_index].merge_page(PdfReader(overlay).pages[0])
     writer.add_metadata({'/Title':'Superba - Manuale utente - ottobre 2026','/Author':'Legnaro 72',
-                         '/Subject':'Guida aggiornata: Gioca ora, PDF, WhatsApp e Modalità Regia'})
+                         '/Subject':'Guida aggiornata: inserimento rapido e dettatura da smartphone, Gioca ora, PDF, WhatsApp e Modalità Regia'})
     with TARGET.open('wb') as out: writer.write(out)
     shutil.copy2(TARGET,ROOT.parent/'superba_web/backend/manuale-utente.pdf')
     print(f'Updated {TARGET}: {len(writer.pages)} pages')
