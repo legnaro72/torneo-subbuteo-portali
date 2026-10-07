@@ -5,11 +5,14 @@ Run from the repository root:
   python ClonaMigrazione.py sync piercrew|tigullio|all
 
 `sync` updates shared code from Superba without deleting clone files. It preserves
-the club logo, database mapping, environment examples and documentation. Shared CSS is copied from Superba and recolored for the target club.
+the club logo, database mapping, environment examples and documentation. Store
+implementation is updated while existing collection mappings are retained.
+Shared CSS is copied from Superba and recolored for the target club.
 """
 from __future__ import annotations
 
 import argparse
+import ast
 import json
 import os
 import shutil
@@ -23,7 +26,7 @@ SOURCE = ROOT / "superba_web"
 EXCLUDE = {".venv", ".vercel", "node_modules", "dist", "tmp", "__pycache__", "test-results", ".env", ".env.local", "tsconfig.tsbuildinfo"}
 TEXT_SUFFIXES = {".py", ".ts", ".tsx", ".cjs", ".css", ".html", ".json", ".md", ".txt", ".example"}
 SYNC_PRESERVE = {
-    Path("backend/store.py"), Path("backend/manuale-utente.pdf"), Path(".env.example"),
+    Path("backend/manuale-utente.pdf"), Path(".env.example"),
     Path("README.md"), Path("CLONE_INFO.json"), Path("public/logo-superba.jpg"),
     Path("public/manifest.webmanifest"), Path("public/pwa-192.png"),
     Path("public/pwa-512.png"), Path("public/pwa-maskable-192.png"),
@@ -101,6 +104,44 @@ def _club_text(content: str, relative: Path, club: dict) -> str:
             "    'italiana-classica': os.getenv('LEGACY_ITALIANA_URL', ''),\n"
             "}"
         ) + content[end:]
+    return content
+
+
+def _sync_store(content: str, existing: str) -> str:
+    """Keep local DB/collection paths, but upgrade the Store API and wrappers."""
+    fields = {'players', 'tournaments', 'swiss_tournaments', 'sessions', 'handoffs',
+              'attempts', 'audit', 'log_db', 'login_logs', 'action_logs', 'audit_queue',
+              'team_badges', 'system_passwords'}
+
+    def assignments(source):
+        tree = ast.parse(source)
+        store = next(node for node in tree.body if isinstance(node, ast.ClassDef) and node.name == 'Store')
+        init = next(node for node in store.body if isinstance(node, ast.FunctionDef) and node.name == '__init__')
+        result = {}
+        for node in init.body:
+            if not isinstance(node, ast.Assign) or len(node.targets) != 1:
+                continue
+            target = node.targets[0]
+            if isinstance(target, ast.Name) and target.id == 'auth':
+                result['auth'] = node.value
+            elif (isinstance(target, ast.Attribute) and isinstance(target.value, ast.Name)
+                  and target.value.id == 'self' and target.attr in fields):
+                result[target.attr] = node.value
+        return result
+
+    local = assignments(existing)
+    for field, value in assignments(content).items():
+        if field not in local:
+            continue
+        previous = local[field]
+        if isinstance(previous, ast.Call) and isinstance(previous.func, ast.Name) and previous.func.id == 'VisibleCollection':
+            previous = previous.args[0]
+        if not isinstance(previous, ast.Subscript):
+            raise ValueError(f'Mapping Store non riconosciuto per {field}: verifica backend/store.py prima della sincronizzazione.')
+        replacement = ast.unparse(previous)
+        if isinstance(value, ast.Call) and isinstance(value.func, ast.Name) and value.func.id == 'VisibleCollection':
+            replacement = f'VisibleCollection({replacement})'
+        content = content.replace(ast.get_source_segment(content, value), replacement, 1)
     return content
 
 
@@ -204,6 +245,10 @@ def sync(club_key: str) -> int:
         raise FileNotFoundError(f"Clone mancante: {target}. Esegui prima la clonazione iniziale.")
     club = {**CLUBS[club_key], "key": club_key}
     updated = 0
+    store_path = Path('backend/store.py')
+    store_content = _club_text((SOURCE / store_path).read_text(encoding='utf-8'), store_path, club)
+    if (target / store_path).exists():
+        store_content = _sync_store(store_content, (target / store_path).read_text(encoding='utf-8'))
     # Prune ignored directories before walking them (including PDF test dependencies).
     source_files = []
     for directory, directories, filenames in os.walk(SOURCE):
@@ -216,7 +261,7 @@ def sync(club_key: str) -> int:
         destination = target / relative
         destination.parent.mkdir(parents=True, exist_ok=True)
         if source_file.suffix in TEXT_SUFFIXES:
-            content = _club_text(source_file.read_text(encoding="utf-8"), relative, club)
+            content = store_content if relative == store_path else _club_text(source_file.read_text(encoding="utf-8"), relative, club)
             if not destination.exists() or destination.read_text(encoding="utf-8") != content:
                 destination.write_text(content, encoding="utf-8")
                 updated += 1
