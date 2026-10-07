@@ -18,10 +18,13 @@ const option=(i,confidence=1,reversed=false)=>{const m=league.matches[i];return 
    const p=new URL(route.request().url()).pathname;
    if(p.endsWith('/rapid-results/analyze'))return route.fulfill({json:{source:'text',original_text:route.request().postDataJSON().raw_text,results:[{raw_segment:'Ruben - Bomber 1-4',spoken_matchday:null,participant1_text:'Ruben',participant2_text:'Bomber',score1:1,score2:4,selected_match:option(0,.85),confidence:.85,alternatives:[option(0,.85),option(2,.74,true)],status:'ambiguous'}]}});
    if(p.endsWith('/rapid-results')){Object.assign(league.matches[0],{home_goals:1,away_goals:4,valid:true});league.version='v2';return route.fulfill({json:league});}
+   if(p.endsWith('/results'))return route.fulfill({json:league});
    return route.fulfill({json:p==='/api/config'?{demo:true,writes_enabled:true}:p==='/api/auth/me'?{id:'tester',username:'Andrea',role:'A',password_verified:true}:p==='/api/tournaments'?[{id:'one',name:league.name,matches:4,played:1,groups:1}]:p==='/api/tournaments/one'?league:[]});
   });
-  await page.goto('http://127.0.0.1:5179/torneo/italiana/Serata%20al%20club');
+  await page.goto('http://127.0.0.1:5179/torneo/italiana/Serata%20al%20club',{waitUntil:'domcontentloaded'});
   await page.getByRole('button',{name:'Inserimento rapido',exact:true}).waitFor();
+  await page.locator('.topbar').screenshot({path:path.join(out,'manuale-controlli.png')});
+  await page.getByRole('button',{name:'Inserimento rapido',exact:true}).screenshot({path:path.join(out,'rapido-apri.png')});
   // Hide only the fixed navigation in detail crops, so it cannot cover controls.
   await page.addStyleTag({content:'nav[aria-label="Navigazione principale"]{visibility:hidden!important}'});
   await page.locator('.tournament-toolbar').screenshot({path:path.join(out,'comandi-aggiornati.png')});
@@ -33,6 +36,12 @@ const option=(i,confidence=1,reversed=false)=>{const m=league.matches[i];return 
   await page.getByRole('button',{name:'Impostazioni',exact:true}).click();
   await page.locator('.tournament-results').screenshot({path:path.join(out,'risultati-aggiornati.png')});
   await page.screenshot({path:path.join(out,'risultati-schermo.png')});
+  await page.locator('.match-row input[type="number"]').first().fill('1');
+  await page.locator('.match-row input[type="checkbox"]').first().check();
+  await page.locator('.tournament-results').scrollIntoViewIfNeeded();
+  await page.screenshot({path:path.join(out,'risultati-salvataggio.png')});
+  await page.getByRole('button',{name:'Salva risultati',exact:true}).click();
+  await page.getByRole('button',{name:'Inserimento rapido',exact:true}).waitFor();
   await page.getByRole('button',{name:'Inserimento rapido',exact:true}).click();
   await page.getByRole('textbox',{name:'Testo originale'}).fill('Ruben - Bomber 1-4');
   await page.locator('.quick-results').screenshot({path:path.join(out,'rapido-testo.png')});
@@ -55,6 +64,12 @@ const option=(i,confidence=1,reversed=false)=>{const m=league.matches[i];return 
   await page.screenshot({path:path.join(out,'rapido-conferma.png'),clip:{x:reviewBox.x,y:reviewBox.y,width:reviewBox.width,height:actionsBox.y+actionsBox.height-reviewBox.y}});
   await page.getByRole('button',{name:'Conferma e salva risultati',exact:true}).click();
   await page.getByText('Risultati inseriti e salvati.',{exact:true}).waitFor();
+  await page.getByRole('button',{name:'Inserimento rapido',exact:true}).click();
+  await page.getByRole('textbox',{name:'Testo originale'}).fill('Ruben - Bomber 1-4');
+  await page.getByRole('button',{name:'Analizza risultati',exact:true}).click();
+  await page.locator('.quick-row').first().waitFor();
+  await page.locator('.overwrite').screenshot({path:path.join(out,'rapido-sostituisci.png')});
+  await page.getByRole('button',{name:'Annulla',exact:true}).click();
   await page.getByRole('button',{name:'Informazioni applicazione',exact:true}).click();
   await page.locator('.app-info-modal').screenshot({path:path.join(out,'info-aggiornate.png')});
   console.log('Captured smartphone screenshots; analyze, confirm and save flow checked with mocked data.');

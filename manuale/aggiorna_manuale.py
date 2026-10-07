@@ -23,6 +23,31 @@ BASE = ASSETS / 'manuale-base-settembre.pdf'
 NAVY, PAPER, GOLD, MUTED = '#123052', '#fcfaf3', '#d6ad43', '#62758b'
 W, H = 595, 842
 
+# Coordinates are fractions of each screenshot, measured from its top left.
+# The numbered disks sit in the margin; a fine line identifies the control.
+CALLOUTS = {
+    'presenze.png': [(1,.12,.50,-.035,.50),(2,.22,.36,-.035,.36)],
+    'proposte.png': [(1,.24,.11,-.045,.11),(2,.72,.11,1.045,.11),(3,.50,.59,1.045,.59)],
+    'whatsapp-dettaglio.png': [(1,.22,.43,-.045,.43),(2,.50,.60,1.045,.60)],
+    'regia.png': [(1,.17,.13,-.018,.13),(2,.49,.56,.49,.65),(3,.69,.56,.72,.65),(4,.94,.07,.975,.07)],
+    'rapido-testo.png': [(2,.38,.38,-.035,.38)],
+    'dettatura-campo.png': [(2,.025,.40,-.035,.40)],
+    'dettatura-microfono.png': [(3,.05,.50,-.45,.50)],
+    'rapido-verifica.png': [(1,.31,.51,-.035,.51),(2,.45,.67,1.035,.67),(3,.57,.81,1.035,.81)],
+    'rapido-selettore.png': [(1,.44,.23,-.035,.23)],
+    'rapido-proposte.png': [(2,.20,.07,-.035,.07),(3,.48,.35,1.035,.35)],
+    'rapido-conferma.png': [(2,.40,.50,-.035,.50),(3,.75,.94,1.035,.94)],
+    'rapido-sostituisci.png': [(1,.03,.50,-.035,.50)],
+    'risultati-schermo.png': [(1,.47,.43,-.035,.43),(2,.51,.61,1.035,.61)],
+    'risultati-partita-dettaglio.png': [(1,.13,.10,-.035,.10),(2,.54,.53,1.035,.53),(3,.94,.53,1.035,.66)],
+    'risultati-salva-dettaglio.png': [(3,.78,.64,1.035,.64)],
+    'impostazioni-aggiornate.png': [(1,.32,.035,-.04,.035),(2,.62,.43,1.04,.43)],
+    'comandi-aggiornati.png': [(1,.13,.67,-.045,.67),(2,.52,.67,1.045,.67),(2,.06,.88,-.045,.88)],
+    'info-aggiornate.png': [(2,.38,.10,-.035,.10)],
+    'manuale-controlli.png': [(1,.40,.62,-.035,.62)],
+    'rapido-apri.png': [(1,.045,.50,-.035,.50)],
+}
+
 
 def text(c, value, x, top, width, size=11, color=NAVY, bold=False):
     style = ParagraphStyle('body', fontName='Helvetica-Bold' if bold else 'Helvetica',
@@ -71,7 +96,15 @@ def picture(c, name, x, top, width, max_height, caption=True):
     p=ASSETS/name
     with Image.open(p) as im: iw, ih=im.size
     scale=min(width/iw,max_height/ih); rw,rh=iw*scale,ih*scale
-    c.drawImage(str(p), x+(width-rw)/2, top-rh, rw, rh)
+    left=x+(width-rw)/2
+    c.drawImage(str(p), left, top-rh, rw, rh)
+    for number,tx,ty,bx,by in CALLOUTS.get(name,[]):
+        px,py=left+bx*rw,top-by*rh
+        c.setStrokeColor(HexColor(GOLD)); c.setLineWidth(.8)
+        c.line(px,py,left+tx*rw,top-ty*rh)
+        c.setFillColor(HexColor(GOLD)); c.circle(px,py,7,fill=1,stroke=0)
+        c.setFillColor(HexColor(NAVY)); c.setFont('Helvetica-Bold',9)
+        c.drawCentredString(px,py-3,str(number))
     if caption: text(c, 'Schermata dimostrativa · dati di esempio', x, top-rh-8, width, 7.5, MUTED)
 
 
@@ -81,7 +114,7 @@ def new_pages():
     picture(c,'presenze.png',34,649,235,427)
     y=step(c,1,'Chi c’è stasera?','Spunta i giocatori presenti al club. La lista contiene i partecipanti di quel torneo; cerca per giocatore o squadra.',292,648,269)
     y=step(c,2,'Seleziona con pochi tocchi','Usa Tutti presenti per selezionare l’intera lista e togli chi manca. Svuota azzera le presenze. Servono almeno due giocatori.',292,y,269)
-    y=step(c,3,'Controlla gli incontri','L’anteprima si aggiorna subito. Aggiungi chi arriva e deseleziona chi va via: cambieranno anche le partite disponibili.',292,y,269)
+    y=step(c,3,'Controlla gli incontri','L’anteprima si aggiorna subito: è illustrata nella pagina successiva. Aggiungi chi arriva e deseleziona chi va via: cambieranno anche le partite disponibili.',292,y,269)
     text(c,'Le presenze restano nella sessione della scheda del browser. Controllale all’inizio di ogni serata: non sono un registro presenze del club.',292,y,269,10,MUTED)
     note(c,'“Stasera” indica chi è presente, non una data di calendario.','La ricerca considera le partite ancora da validare tra i presenti, dando precedenza alle giornate più vicine all’inizio del torneo. Può quindi proporre anche recuperi di giornate precedenti.')
     c.showPage()
@@ -103,7 +136,7 @@ def new_pages():
     text(c,'Dettaglio dimostrativo · PDF pronto',34,406,220,8,MUTED)
     y=step(c,1,'Scarica PDF','Esporta tutti gli incontri disponibili, anche se stai guardando In campo insieme. Il documento riporta torneo, data di creazione, giornate o turni e stemmi disponibili.',279,648,282)
     y=step(c,2,'Premi WhatsApp','Il pulsante verde prepara il PDF. Se il dispositivo supporta gli allegati, compare WhatsApp · PDF pronto: premilo una seconda volta per aprire la condivisione.',279,y,282)
-    y=step(c,3,'Scegli il gruppo e invia','Seleziona WhatsApp, cerca Campionato Superba e conferma l’invio dell’allegato. L’app installata può essere proposta dal dispositivo; il gruppo va scelto da te.',279,y,282)
+    y=step(c,3,'Scegli il gruppo e invia','Nella condivisione del telefono, non illustrata qui, seleziona WhatsApp, cerca Campionato Superba e conferma l’invio dell’allegato. Il gruppo va scelto da te.',279,y,282)
     text(c,'Il portale non seleziona automaticamente il gruppo e non invia messaggi senza la tua conferma.',34,358,220,10,MUTED)
     text(c,'Se il browser non condivide allegati',34,280,527,12,bold=True)
     text(c,'Il PDF viene scaricato. Usa Apri WhatsApp (apre WhatsApp Web), oppure apri l’app sul telefono. Entra in Campionato Superba e allega il PDF dalla cartella Download come documento.',34,254,527,10.5)
@@ -112,7 +145,7 @@ def new_pages():
 
     frame(c,20,'MATCH NIGHT','Modalità Regia','Una presentazione dei risultati salvati, adatta a uno schermo al club.')
     picture(c,'regia.png',34,650,527,350)
-    y=step(c,1,'Apri la Regia','Nel torneo premi Modalità Regia. I risultati entrano in sequenza; gli incontri non validati mostrano trattini e DA VALIDARE.',34,274,251)
+    y=step(c,1,'Apri la Regia','Nel torneo premi Modalità Regia: qui è già aperta. Il titolo identifica il torneo; gli incontri non validati mostrano trattini e DA VALIDARE.',34,274,251)
     step(c,2,'Cambia giornata o girone','Usa il selettore o le frecce. Su tastiera funzionano anche freccia destra e sinistra. Ripeti riavvia la presentazione.',34,y,251)
     y=step(c,3,'Mostra tutte le partite','Se non entrano nello schermo, usa Incontri … · Avanti per passare al blocco successivo. Schermo intero dipende dal supporto del browser.',310,274,251)
     step(c,4,'Esci per modificare','Chiudi con la X o Esc. La Regia mostra i dati salvati, non le bozze: torna al torneo per inserire e salvare i risultati.',310,y,251)
@@ -129,10 +162,14 @@ def new_pages():
     c.showPage()
 
     frame(c,22,'RISULTATI DAL TELEFONO','Inserimento rapido: scrivi o detta','Inserisci uno o più risultati e controllali prima di salvarli. Anche da smartphone.')
-    picture(c,'rapido-testo.png',34,648,235,395)
+    picture(c,'rapido-apri.png',34,648,235,34,False)
+    picture(c,'dettatura-campo.png',34,590,235,395)
+    picture(c,'dettatura-microfono.png',45,388,32,42,False)
+    text(c,'Microfono in basso a sinistra<br/>nella tastiera del telefono.',91,382,178,9)
+    text(c,'Dettagli della schermata fornita: campo testo e microfono.',34,330,235,8,MUTED)
     y=step(c,1,'Apri Inserimento rapido','Nel torneo premi Inserimento rapido. È disponibile per chi può modificare i risultati: all’italiana, fasi finali e svizzero.',292,648,269)
     y=step(c,2,'Scrivi o incolla','Nel campo Testo originale scrivi, per esempio, Ruben - Bomber 1-4. Puoi aggiungere più risultati, preferibilmente uno per riga, oppure incollare un elenco.',292,y,269)
-    y=step(c,3,'Puoi già dettare','Tocca il campo e usa il microfono della tastiera del cellulare, se disponibile. Detta nomi e punteggi con chiarezza, una partita alla volta.',292,y,269)
+    y=step(c,3,'Puoi già dettare','Tocca il campo e poi il microfono della tastiera: nell’esempio è in basso a sinistra. La posizione può cambiare secondo il telefono. Detta nomi e punteggi con chiarezza.',292,y,269)
     text(c,'La dettatura può dare buoni risultati, anche se è meno precisa del testo digitato. Prima di analizzare correggi eventuali nomi o numeri trascritti male. È la funzione della tastiera, non un pulsante vocale del portale.',34,220,527,11)
     note(c,'Il testo non viene salvato come risultato automaticamente','Premi Analizza risultati per ottenere l’anteprima. Se cambi il testo, analizzalo di nuovo. Il salvataggio avviene solo dopo la revisione e il comando finale di conferma.',top=160)
     c.showPage()
@@ -151,12 +188,13 @@ def new_pages():
     y=step(c,2,'Confronta le proposte','Visualizza … proposte apre le alternative suggerite dall’analisi. Ogni scheda riporta giornata o turno, nomi, confidenza e presenza di un risultato precedente.',292,y,269)
     y=step(c,3,'Conferma la scelta','Toccando una proposta, la riga diventa Associata. Ricontrolla sempre i punteggi dopo una nuova scelta, soprattutto quando cambia l’ordine dei partecipanti.',292,y,269)
     picture(c,'rapido-proposte.png',292,y-3,269,170,False)
-    text(c,'Esempio dimostrativo: due proposte per andata e ritorno.',292,198,269,8,MUTED)
     note(c,'Una partita sola per ogni riga','Se due righe indicano lo stesso incontro, compare Possibile duplicato. Correggi la scelta oppure elimina la riga superflua con il cestino prima di salvare.',top=158)
     c.showPage()
 
     frame(c,25,'CONFERMA FINALE','Salva solo dopo la revisione','Tutti i risultati devono essere associati e completi prima della conferma finale.')
     picture(c,'rapido-conferma.png',34,648,235,420)
+    picture(c,'rapido-sostituisci.png',34,294,235,30,False)
+    text(c,'Dettaglio: sostituzione di un risultato esistente.',34,254,235,8,MUTED)
     y=step(c,1,'Quando il risultato esiste','Se la partita è già validata, compare Sostituisci il risultato già presente con il vecchio punteggio. Spunta la casella soltanto se vuoi davvero sostituirlo.',292,648,269)
     y=step(c,2,'Sblocca il salvataggio','Controlla tutte le righe: associazioni confermate, nessun duplicato e punteggi da 0 a 20. Nel tabellone a eliminazione diretta il pareggio non è ammesso.',292,y,269)
     y=step(c,3,'Conferma e salva risultati','Il pulsante salva e valida insieme i risultati scelti. Compare Risultati inseriti e salvati. Se un altro utente ha modificato il torneo, ricarica e ripeti la verifica.',292,y,269)
@@ -240,6 +278,10 @@ def reorder_manual(source, original_titles):
 
 def main():
     ASSETS.mkdir(exist_ok=True)
+    with Image.open(ASSETS/'risultati-salvataggio.png') as im:
+        im.crop((30,1360,750,1540)).save(ASSETS/'risultati-salva-dettaglio.png')
+    with Image.open(ASSETS/'risultati-schermo.png') as im:
+        im.crop((30,690,750,1390)).save(ASSETS/'risultati-partita-dettaglio.png')
     if not BASE.exists(): shutil.copy2(TARGET,BASE)
     writer=PdfWriter(clone_from=BASE)
     assert len(writer.pages)==16, 'Expected the original 16-page source manual'
@@ -282,14 +324,16 @@ def main():
         c.save();overlay.seek(0);writer.pages[i].merge_page(PdfReader(overlay).pages[0])
     # Refresh obsolete UI details inside their original image boxes. Text and
     # surrounding page layout stay intact; the September source stays immutable.
-    replacements = {3:[('risultati-schermo.png',47,192,240,394)],
+    replacements = {3:[('risultati-partita-dettaglio.png',47,192,240,300),
+                      ('risultati-salva-dettaglio.png',47,512,240,70)],
                     4:[('impostazioni-aggiornate.png',40,198,224,368)],
                     6:[('comandi-aggiornati.png',52,195,190,312)],
                     15:[('info-aggiornate.png',42,148,235,470)]}
     for page_index, images in replacements.items():
         overlay=BytesIO(); c=canvas.Canvas(overlay,pagesize=(W,H))
         for name,x,top,width,height in images:
-            c.setFillColor(HexColor(PAPER));c.rect(x-3,H-top-height-3,width+6,height+6,fill=1,stroke=0)
+            mask_height=394 if name=='risultati-partita-dettaglio.png' else height
+            c.setFillColor(HexColor(PAPER));c.rect(x-3,H-top-mask_height-3,width+6,mask_height+6,fill=1,stroke=0)
             picture(c,name,x,H-top,width,height,False)
         # Old captures were labelled as live data. These are current UI demo captures.
         caption_positions={3:(47,599,260),4:(40,578,224),6:(52,520,190)}
@@ -301,6 +345,7 @@ def main():
             c.setFillColor(HexColor(PAPER));c.rect(34,H-149,527,17,fill=1,stroke=0)
             text(c,'Esempio dimostrativo: una giornata con i comandi aggiornati.',34,H-134,527,10,MUTED)
         if page_index==15:
+            picture(c,'manuale-controlli.png',42,294,235,60,False)
             c.setFillColor(HexColor(PAPER));c.rect(317,H-315,244,45,fill=1,stroke=0)
             text(c,'Mostra titolo dell’applicazione, versione <b>2.0</b>, descrizione <b>Inserimento Gioca Ora e Inserimento rapido</b>, data di rilascio e autore <b>Max Ferrando alias Legnaro72</b> con il logo.',317,H-272,244,10.5)
         c.save();overlay.seek(0);writer.pages[page_index].merge_page(PdfReader(overlay).pages[0])
