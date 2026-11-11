@@ -40,7 +40,8 @@ class LatestCloneTests(unittest.TestCase):
                      'backend/play_now_report.py', 'backend/report.py', 'backend/club_report.py',
                      'backend/store.py', 'backend/audit.py', 'backend/quick_results.py',
                      'src/QuickResults.tsx', 'src/style.css', 'src/CompetitionArea.tsx',
-                     'src/KnockoutBracket.tsx', 'backend/finals.py', 'tests/test_competitions.py']
+                     'src/KnockoutBracket.tsx', 'backend/finals.py', 'tests/test_competitions.py',
+                     'src/ClubTournamentEditor.tsx', 'backend/tournament_admin.py', 'tests/test_tournament_admin.py']
             for name in files:
                 target = source/name
                 target.parent.mkdir(parents=True, exist_ok=True)
@@ -149,6 +150,22 @@ class LatestCloneTests(unittest.TestCase):
                         self.assertEqual(finals['winner'], 'G1P1')
                         self.assertEqual([b['winner'] for b in finals['brackets']], [f'G1P{p}' for p in range(1, 5)])
                         self.assertEqual(store.action_logs.count_documents({'club': configuration['name'], 'action': 'finals_complete'}), 1)
+                        store.players.update_one({'Giocatore': 'Writer'}, {'$set': {'Ruolo': 'A'}})
+                        client.post('/api/auth/logout')
+                        client.post('/api/auth/login', json={'username': 'Writer', 'password': 'pw'})
+                        manage_url = f'/api/club/tournaments/{tid}'
+                        manage = client.get(manage_url+'/manage')
+                        self.assertEqual(manage.status_code, 200, manage.text)
+                        extended = client.patch(manage_url+'/calendar', json={'version': manage.json()['version'], 'return_matches': True})
+                        self.assertEqual(extended.status_code, 200, extended.text)
+                        replaced = client.patch(manage_url+'/participant', json={'version': extended.json()['version'], 'original': 'Rossi', 'name': 'Nuovo', 'team': 'Club', 'badge': {'kind': 'flag', 'ref': 'IT'}})
+                        self.assertEqual(replaced.status_code, 200, replaced.text)
+                        self.assertIn('Club - Nuovo', replaced.json()['participants'])
+                        self.assertEqual(replaced.json()['badges']['Club - Nuovo']['ref'], 'IT')
+                        calendar = client.get(f'/api/tournaments/{tid}').json()['matches']
+                        self.assertEqual(len(calendar), 2)
+                        self.assertEqual(calendar[0]['home_goals'], 3)
+                        self.assertEqual(store.action_logs.count_documents({'club': configuration['name'], 'action': 'club_participant_replace'}), 1)
                         self.assertEqual(mongo['TorneiSubbuteo']['Superba'].count_documents({}), 0)
                         self.assertEqual(mongo['giocatori_subbuteo']['superba_players'].count_documents({}), 0)
                 finally:

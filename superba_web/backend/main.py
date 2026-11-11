@@ -520,6 +520,8 @@ from .finals import install as install_finals_routes
 from .quick_results import install as install_quick_results_routes
 
 install_club_routes(app, current_user, writer, store_dep)
+from .tournament_admin import install as install_tournament_admin
+install_tournament_admin(app, writer, store_dep)
 install_swiss_routes(app, current_user, writer, store_dep, require_tournament_write)
 install_finals_routes(app, current_user, writer, store_dep, require_tournament_write)
 install_quick_results_routes(app, writer, store_dep, require_tournament_write)

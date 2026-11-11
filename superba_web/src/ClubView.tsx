@@ -8,12 +8,13 @@ import SeasonHonours from './SeasonHonours';
 import PortalIcon from './PortalIcon';
 import {api, type User} from './api';
 import TableScroller from './TableScroller';
+import ClubTournamentEditor from './ClubTournamentEditor';
 import {BadgeEditor, TeamMark, type TeamBadge} from './TeamBadges';
 
 type Role='R'|'W'|'A';
 type ClubPlayer={id:string;version:string;name:string;team:string;potential:number;role:Role;password_set:boolean;activation_state:'active'|'pending'|'reader'|'review';badge?:TeamBadge;
   NCampionatiVinti:number;listaCampionatiVinti:string[];NGironiFFVinti:number;listaGironiFFVinti:string[];NFFElimDirettaVinte:number;listaFFElimDirettaVinte:string[]};
-type ClubTournament={id:string;scope:'italiana'|'svizzero';name:string;championship:boolean};
+type ClubTournament={id:string;scope:'italiana'|'svizzero';name:string;championship:boolean;editable?:boolean};
 type PlayerFields={name:string;team:string;potential:number;role:Role;badge?:TeamBadge};
 type Deletion={targets:ClubTournament[];allExceptChampionships:boolean;clearScope?:'italiana'|'svizzero'|'all'};
 const roleName:Record<Role,string>={R:'Reader',W:'Writer',A:'Amministratore'};
@@ -23,6 +24,7 @@ export default function ClubView({user,canWrite,onDirty,onLegacy}:{user:User;can
   const admin=canWrite&&user.role==='A';
   const [players,setPlayers]=useState<ClubPlayer[]>([]);
   const [tournaments,setTournaments]=useState<ClubTournament[]>([]);
+  const [tournamentDirty,setTournamentDirty]=useState(false);
   const [tab,setTab]=useState<'players'|'palmares'|'tournaments'>('players');
   const [search,setSearch]=useState('');
   const [drafts,setDrafts]=useState<Record<string,Partial<PlayerFields>>>({});
@@ -38,7 +40,7 @@ export default function ClubView({user,canWrite,onDirty,onLegacy}:{user:User;can
   const [discardAction,setDiscardAction]=useState<'refresh'|'close'|null>(null);
   const [error,setError]=useState('');
   const [notice,setNotice]=useState('');
-  const dirty=Object.keys(drafts).length>0||form!==null;
+  const dirty=Object.keys(drafts).length>0||form!==null||tournamentDirty;
   useEffect(()=>{onDirty(dirty);},[dirty,onDirty]);
   useEffect(()=>{void refresh();},[]);
 
@@ -124,6 +126,7 @@ export default function ClubView({user,canWrite,onDirty,onLegacy}:{user:User;can
       </tr>)}</tbody></table>{!filteredPlayers.length&&<div className="empty">Nessun giocatore trovato.</div>}</TableScroller>
       {admin&&Object.keys(drafts).length>0&&<div className="club-save"><span>{Object.keys(drafts).length} righe modificate</span><button className="secondary" disabled={busy} onClick={()=>setDrafts({})}>Annulla</button><button className="primary" disabled={busy||players.some(p=>{const d=drafts[p.id];return !!d&&(!String(d.name??p.name).trim()||!Number.isInteger(d.potential??p.potential)||(d.potential??p.potential)<1||(d.potential??p.potential)>10);})} onClick={()=>void saveTable()}><Save size={16}/>Salva modifiche tabella</button></div>}
     </section>}
+    {loaded&&admin&&<div hidden={tab!=='tournaments'}><ClubTournamentEditor tournaments={tournaments} players={players} onDirty={setTournamentDirty}/></div>}
     {loaded&&tab==='palmares'&&<SeasonHonours players={players}/>}
     {loaded&&tab==='palmares'&&<section className="results-card club-section"><div className="section-heading"><div><h2>Palmarès giocatori</h2><p>Campionati, gironi delle fasi finali ed eliminazione diretta.</p></div><Trophy/></div><div className="honours-gallery" aria-label="Bacheca dei campioni">{sortedPalmares.filter(p=>totalTrophies(p)>0).slice(0,3).map(p=><button type="button" className="honours-card" key={p.id} onClick={()=>setDetail(p.id)} aria-label={`Mostra trofei di ${p.name}`}><Trophy size={26}/><span className="team-mark"><TeamMark name={p.team||p.name} badge={p.badge}/></span><strong>{p.name}</strong><span>{totalTrophies(p)} {totalTrophies(p)===1?'trofeo':'trofei'}</span><small>{[...p.listaCampionatiVinti,...p.listaGironiFFVinti,...p.listaFFElimDirettaVinte].map(tournamentLabel).join(' · ')}</small></button>)}</div><div className="table-scroll"><table><thead><tr><th>Giocatore</th><th>Totale</th><th>Campionati</th><th>Gironi FF</th><th>Eliminazione</th></tr></thead><tbody>{sortedPalmares.map(p=><tr key={p.id}><td>{p.name}</td><td className="points">{totalTrophies(p)}</td><td>{p.NCampionatiVinti}</td><td>{p.NGironiFFVinti}</td><td>{p.NFFElimDirettaVinte}</td></tr>)}</tbody></table></div><label className="club-detail-select">Dettaglio trofei giocatore<select value={detail} onChange={e=>setDetail(e.target.value)}><option value="">Seleziona un giocatore</option>{players.map(p=><option key={p.id} value={p.id}>{p.name}</option>)}</select></label>{chosen&&<div className="club-trophies">{([['Campionati vinti',chosen.NCampionatiVinti,chosen.listaCampionatiVinti],['Gironi FF vinti',chosen.NGironiFFVinti,chosen.listaGironiFFVinti],['Eliminazione diretta',chosen.NFFElimDirettaVinte,chosen.listaFFElimDirettaVinte]] as [string,number,string[]][]).map(([label,count,names])=><div key={label}><strong>{count}</strong><span>{label}</span><p>{names.length?names.map(tournamentLabel).join(', '):'Nessun torneo registrato'}</p></div>)}</div>}</section>}
     {loaded&&tab==='tournaments'&&<section className="results-card club-section"><div className="section-heading"><div><h2>Gestione tornei</h2><p>Archivio italiano e svizzero. Le eliminazioni globali escludono sempre i Campionati.</p></div></div>{(['italiana','svizzero'] as const).map(scope=><div className="club-tournament-group" key={scope}><h3><PortalIcon kind={scope}/> {scope==='italiana'?'Tornei all’italiana':'Tornei svizzeri'} <small>({tournaments.filter(t=>t.scope===scope).length})</small></h3><div className="club-tournament-list">{tournaments.filter(t=>t.scope===scope).map(t=><label key={selectionKey(t)} className="checkbox"><input type="checkbox" disabled={!admin} checked={selected.includes(selectionKey(t))} onChange={e=>setSelected(current=>e.target.checked?[...current,selectionKey(t)]:current.filter(x=>x!==selectionKey(t)))}/><span>{tournamentLabel(t.name)}</span>{t.championship&&<small>Campionato</small>}</label>)}{!tournaments.some(t=>t.scope===scope)&&<div className="empty">Nessun torneo trovato.</div>}</div></div>)}{admin&&<div className="club-delete-actions"><button className="secondary" disabled={!selected.length||busy} onClick={()=>prepareDelete(tournaments.filter(t=>selected.includes(selectionKey(t))))}>Elimina {selected.length} selezionati</button><button className="secondary" disabled={busy||!tournaments.some(t=>t.scope==='italiana'&&!t.championship)} onClick={()=>prepareDelete(tournaments.filter(t=>t.scope==='italiana'&&!t.championship),true,'italiana')}>Cancella tutti gli italiani non Campionati</button><button className="secondary" disabled={busy||!tournaments.some(t=>t.scope==='svizzero'&&!t.championship)} onClick={()=>prepareDelete(tournaments.filter(t=>t.scope==='svizzero'&&!t.championship),true,'svizzero')}>Cancella tutti gli svizzeri non Campionati</button><button className="secondary" disabled={busy||!tournaments.some(t=>!t.championship)} onClick={()=>prepareDelete(tournaments.filter(t=>!t.championship),true,'all')}>Cancella tutti i tornei non Campionati</button></div>}</section>}

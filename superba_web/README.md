@@ -123,7 +123,17 @@ Se il file Streamlit non è presente nella root, impostare `SUPERBA_LEGACY_SOURC
 ## Ambito della migrazione
 
 Il progetto non impone alcuna migrazione dello schema MongoDB. La gestione club può eliminare tornei dalle collezioni italiana e svizzera solo quando un amministratore ne conferma esplicitamente la cancellazione. Le app classiche restano disponibili dalle pagine delle competizioni.
-# Finali: tabelloni per posizione
+## Modifica dei tornei dalla Gestione club
+
+Gli amministratori trovano **Gestione club → Archivio tornei → Modifica un torneo**. Sono selezionabili i tornei all'italiana e le fasi a gironi ancora aperti, compresi i Campionati. I tornei conclusi e le copie archiviate restano esclusi, per non alterare premi già assegnati.
+
+- **Aggiungi ritorno** conserva integralmente l'andata e aggiunge incontri senza risultati, con casa/ospite invertiti e giornate successive per ogni girone.
+- **Passa a sola andata** rimuove soltanto il ritorno. Qualsiasi punteggio non nullo o partita validata nel ritorno blocca il cambio, anche uno 0–0 validato. Calendari incompleti, misti o non riconoscibili non vengono convertiti.
+- **Sostituisci partecipante** permette di scegliere un giocatore dall'anagrafica o inserire manualmente nome e squadra, quindi scegliere lo stemma. La conferma aggiorna tutte le partite del torneo, comprese quelle giocate, preservando risultati e punti; aggiorna anche gli eventuali metadati partecipanti e lo stemma del torneo. Non cambia l'anagrafica, gli altri tornei o i loro stemmi.
+
+Un partecipante già ritirato non può essere sostituito con questa procedura, perché il ritiro ha già trasformato i risultati in esiti a tavolino. Anche l'aggiunta del ritorno è bloccata in presenza di ritirati. I salvataggi verificano la versione del documento e sono registrati nel log con gli eventi `club_calendar_change` e `club_participant_replace`.
+
+## Finali: tabelloni per posizione
 
 In **Fasi finali → Nuovo torneo → Formato**, la formula **Tabelloni per posizione** si aggiunge a eliminazione diretta e fase a gironi.
 Richiede un preliminare completato e validato, con quattro gironi dello stesso numero di partecipanti e senza ritirati.

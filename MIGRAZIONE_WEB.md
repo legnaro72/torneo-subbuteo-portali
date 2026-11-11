@@ -55,6 +55,10 @@ La suite `tests/test_clone_latest.py` verifica su cartelle temporanee entrambi i
 
 `AllineaPortali.py` richiede una cartella Git pulita, compresi i file non tracciati: prima di usarlo occorre sistemare eventuali lavori locali estranei all'allineamento.
 
+## Allineamento della gestione dei tornei
+
+La sincronizzazione trasferisce anche `backend/tournament_admin.py`, `src/ClubTournamentEditor.tsx` e i relativi collegamenti e test: conversione andata/ritorno e sostituzione partecipanti dalla Gestione club. I nomi dei campi, le immagini e le configurazioni vengono adattati al club come gli altri moduli. I test del clonatore eseguono entrambe le operazioni sulle copie temporanee di Piercrew e Tigullio e verificano che Superba non riceva scritture. La disponibilità sugli altri portali richiede l'allineamento e il relativo deploy espliciti.
+
 ## PWA installabile
 
 Ogni portale ha un manifest e icone proprie in `public/`: `pwa-192.png`, `pwa-512.png` e versioni `maskable`, generate dal rispettivo logo. Il service worker `public/sw.js` registra solo una cache per asset statici versione Vite e immagini/audio; lascia passare ogni `/api/*`, login, cookie, sessione e richiesta non-GET. Dopo un nuovo deploy, su Android/Chrome usa il menu del browser → **Installa app**. Se era già aperta una versione precedente, chiudila e riaprila una volta così il nuovo service worker prende il controllo.

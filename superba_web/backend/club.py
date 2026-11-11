@@ -13,7 +13,7 @@ from .club_report import render_club_pdf
 from .badges import badge_for_team, persist_club_badges
 from .models import TeamBadge
 from .security import verify_password
-from .tournaments import version
+from .tournaments import version, is_italiana
 from .activation import activation_state, credential_present, password_flag
 from .audit import INTERNAL, insert as audited_insert, update as audited_update, delete as audited_delete, retry_pending, pending_query, raw
 
@@ -231,9 +231,10 @@ def install(app, current_user, writer, store_dep):
     def club_tournaments(user=Depends(current_user), store=Depends(store_dep)):
         values = []
         for scope, collection in (('italiana', store.tournaments), ('svizzero', store.swiss_tournaments)):
-            for doc in collection.find({}, {'nome_torneo': 1}).sort('nome_torneo', 1):
+            for doc in collection.find({}, {'nome_torneo': 1, 'calendario': 1, '_superba_closed': 1, '_superba_source_id': 1}).sort('nome_torneo', 1):
                 name = str(doc.get('nome_torneo') or '')
                 values.append({'id': str(doc['_id']), 'scope': scope, 'name': name,
+                               'editable': scope == 'italiana' and is_italiana(doc) and not doc.get('_superba_closed') and not doc.get('_superba_source_id') and not name.startswith(('completato_', 'finito_')),
                                'championship': 'campionato' in name.casefold()})
         return values
 
