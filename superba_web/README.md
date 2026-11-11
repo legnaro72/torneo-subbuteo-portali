@@ -123,3 +123,10 @@ Se il file Streamlit non è presente nella root, impostare `SUPERBA_LEGACY_SOURC
 ## Ambito della migrazione
 
 Il progetto non impone alcuna migrazione dello schema MongoDB. La gestione club può eliminare tornei dalle collezioni italiana e svizzera solo quando un amministratore ne conferma esplicitamente la cancellazione. Le app classiche restano disponibili dalle pagine delle competizioni.
+# Finali: tabelloni per posizione
+
+In **Fasi finali → Nuovo torneo → Formato**, la formula **Tabelloni per posizione** si aggiunge a eliminazione diretta e fase a gironi.
+Richiede un preliminare completato e validato, con quattro gironi dello stesso numero di partecipanti e senza ritirati.
+Usa l'ordine delle classifiche del preliminare: per ogni posizione genera due semifinali (girone 1–2 e girone 3–4) e una finale tra i vincitori. L'anteprima mostra gli accoppiamenti prima della creazione.
+Si validano tutte le semifinali prima di generare le finali; dopo tutte le finali si conclude il torneo. Ogni fascia ha il proprio tabellone, vincitore e premio nel palmarès dei gironi FF. Il vincitore della fascia dei primi riceve anche il titolo a eliminazione diretta del torneo. I risultati pari non possono essere validati.
+PDF e celebrazione includono i vincitori delle fasce. Il preliminare viene conservato. Questa formula è disponibile esclusivamente nel portale Superba.

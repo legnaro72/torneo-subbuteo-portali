@@ -47,6 +47,14 @@ Lo script legge esclusivamente il piano creato da **Allinea portali**; non riese
 
 Per un intervento destinato soltanto a un club non eseguire **Allinea portali**: modifica direttamente la sua cartella e fai il normale commit/push. Per una nuova funzione comune, sviluppala e testala in `superba_web`, esegui **Allinea portali**, controlla in GitHub Desktop, poi usa **Deploy Allineamenti**.
 
+## Allineamento della formula «Tabelloni per posizione»
+
+La formula aggiunta a Superba viene trasferita da `ClonaMigrazione.py sync piercrew`, `sync tigullio` o `sync all`: include interfaccia, semifinali/finali per fascia, premi e PDF. Non occorrono nuove variabili d'ambiente o migrazioni dei dati. Il normale workflow `AllineaPortali.py` → revisione → `DeployAllineamenti.py` permette di pubblicarla quando desiderato.
+
+La suite `tests/test_clone_latest.py` verifica su cartelle temporanee entrambi i club: copia dei file, mantenimento delle configurazioni, seconda sincronizzazione senza modifiche e torneo completo per fasce con database simulati distinti. Comando dalla root: `superba_web\.venv\Scripts\python.exe -B -m unittest discover -s tests -p test_clone_latest.py -v`. I test non allineano le cartelle reali dei club.
+
+`AllineaPortali.py` richiede una cartella Git pulita, compresi i file non tracciati: prima di usarlo occorre sistemare eventuali lavori locali estranei all'allineamento.
+
 ## PWA installabile
 
 Ogni portale ha un manifest e icone proprie in `public/`: `pwa-192.png`, `pwa-512.png` e versioni `maskable`, generate dal rispettivo logo. Il service worker `public/sw.js` registra solo una cache per asset statici versione Vite e immagini/audio; lascia passare ogni `/api/*`, login, cookie, sessione e richiesta non-GET. Dopo un nuovo deploy, su Android/Chrome usa il menu del browser → **Installa app**. Se era già aperta una versione precedente, chiudila e riaprila una volta così il nuovo service worker prende il controllo.

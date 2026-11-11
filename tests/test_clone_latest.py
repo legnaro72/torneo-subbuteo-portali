@@ -5,6 +5,7 @@ import shutil
 import sys
 import tempfile
 import unittest
+from uuid import uuid4
 from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -38,7 +39,8 @@ class LatestCloneTests(unittest.TestCase):
                      'src/pdfShare.css', 'src/PlayNow.tsx', 'src/playNowPdf.ts',
                      'backend/play_now_report.py', 'backend/report.py', 'backend/club_report.py',
                      'backend/store.py', 'backend/audit.py', 'backend/quick_results.py',
-                     'src/QuickResults.tsx', 'src/style.css']
+                     'src/QuickResults.tsx', 'src/style.css', 'src/CompetitionArea.tsx',
+                     'src/KnockoutBracket.tsx', 'backend/finals.py', 'tests/test_competitions.py']
             for name in files:
                 target = source/name
                 target.parent.mkdir(parents=True, exist_ok=True)
@@ -69,6 +71,11 @@ class LatestCloneTests(unittest.TestCase):
                 self.assertEqual((destination/'.env').read_text(), 'local credentials')
                 self.assertFalse((destination/'tmp').exists())
                 self.assertIn('playNowEnabled = true', (destination/'src/clubFeatures.ts').read_text())
+                finals_ui = (destination/'src/CompetitionArea.tsx').read_text(encoding='utf-8')
+                self.assertIn('Tabelloni per posizione', finals_ui)
+                self.assertIn('value="ko"', finals_ui)
+                self.assertIn('value="groups"', finals_ui)
+                self.assertNotIn('SUPERBA', finals_ui)
 
     def test_synced_backend_login_and_quick_save_use_club_mappings_and_logs(self):
         import mongomock
@@ -119,6 +126,29 @@ class LatestCloneTests(unittest.TestCase):
                         self.assertEqual(saved.status_code, 200, saved.text)
                         self.assertEqual(saved.json()['matches'][0]['home_goals'], 3)
                         self.assertEqual(store.action_logs.count_documents({'club': configuration['name'], 'action': 'results_quick_save', 'area': 'italiana'}), 1)
+                        domain = importlib.import_module(f'{package}.domain')
+                        groups = [[f'G{g}P{p}' for p in range(1, 5)] for g in range(1, 5)]
+                        calendar = domain.genera_calendario_from_list(groups).to_dict('records')
+                        for row in calendar:
+                            row.update(GolCasa=4-int(row['Casa'][-1]), GolOspite=4-int(row['Ospite'][-1]), Valida=True)
+                        preliminary = store.tournaments.insert_one({'nome_torneo': 'completato_Fasce', 'calendario': calendar}).inserted_id
+                        created = client.post('/api/finals', json={'source_id': str(preliminary), 'mode': 'placement', 'qualifiers': 4, 'request_id': str(uuid4())})
+                        self.assertEqual(created.status_code, 200, created.text)
+                        url = f"/api/finals/{created.json()['id']}"
+                        finals = client.get(url).json()
+                        self.assertEqual(len(finals['matches']), 8)
+                        self.assertEqual([(r['home'], r['away']) for r in finals['matches'][:2]], [('G1P1', 'G2P1'), ('G3P1', 'G4P1')])
+                        for turn in (1, 2):
+                            results = [dict(index=r['index'], home=1, away=0, valid=True) for r in finals['matches'] if r['round'] == turn]
+                            saved = client.patch(url+'/results', json={'version': finals['version'], 'results': results})
+                            self.assertEqual(saved.status_code, 200, saved.text)
+                            advanced = client.post(url+'/advance', json={'version': saved.json()['version']})
+                            self.assertEqual(advanced.status_code, 200, advanced.text)
+                            finals = advanced.json()
+                        self.assertTrue(finals['finished'])
+                        self.assertEqual(finals['winner'], 'G1P1')
+                        self.assertEqual([b['winner'] for b in finals['brackets']], [f'G1P{p}' for p in range(1, 5)])
+                        self.assertEqual(store.action_logs.count_documents({'club': configuration['name'], 'action': 'finals_complete'}), 1)
                         self.assertEqual(mongo['TorneiSubbuteo']['Superba'].count_documents({}), 0)
                         self.assertEqual(mongo['giocatori_subbuteo']['superba_players'].count_documents({}), 0)
                 finally:
