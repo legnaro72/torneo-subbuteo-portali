@@ -88,7 +88,8 @@ def round_name(teams):
 def placement_groups(doc):
     """Use exactly the standings displayed for the preliminary groups."""
     standings = italiana_view(doc)['standings']
-    names = sorted({r['Girone'] for r in standings}, key=lambda name: (int(name.rsplit(' ', 1)[-1]) if name.rsplit(' ', 1)[-1].isdigit() else 999, name))
+    # Keep the calendar's original group order even after a group is renamed.
+    names = list(dict.fromkeys(str(r['Girone']) for r in doc['calendario']))
     return [dict(name=name, teams=[r['Squadra'] for r in standings if r['Girone'] == name]) for name in names]
 
 

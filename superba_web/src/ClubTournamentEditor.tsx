@@ -3,17 +3,20 @@ import {api} from './api';
 import {BadgeEditor, TeamMark, type TeamBadge, type BadgeMap} from './TeamBadges';
 import {tournamentLabel} from './presentation';
 
-type Detail={id:string;name:string;version:string;participants:string[];badges:BadgeMap;return_matches:boolean|null;calendar_block:string;withdrawals:string[]};
+type Detail={id:string;name:string;version:string;groups:string[];participants:string[];badges:BadgeMap;return_matches:boolean|null;calendar_block:string;withdrawals:string[]};
 type Player={id:string;name:string;team:string;badge?:TeamBadge};
 export default function ClubTournamentEditor({tournaments,players,onDirty}:{tournaments:{id:string;name:string;editable?:boolean}[];players:Player[];onDirty:(value:boolean)=>void}){
   const [id,setId]=useState(''),[data,setData]=useState<Detail|null>(null),[original,setOriginal]=useState('');
   const [sourceId,setSourceId]=useState(''),[name,setName]=useState(''),[team,setTeam]=useState('');
+  const [group,setGroup]=useState(''),[groupName,setGroupName]=useState('');
   const [badge,setBadge]=useState<TeamBadge>({kind:'none'}),[badgeOpen,setBadgeOpen]=useState(false);
   const [busy,setBusy]=useState(false),[error,setError]=useState(''),[notice,setNotice]=useState(''),[dirty,setDirty]=useState(false);
-  useEffect(()=>{onDirty(dirty);return()=>onDirty(false);},[dirty,onDirty]);
+  const groupDirty=!!group&&groupName!==group;
+  useEffect(()=>{onDirty(dirty||groupDirty);return()=>onDirty(false);},[dirty,groupDirty,onDirty]);
   const label=team.trim()?`${team.trim()} - ${name.trim()}`:name.trim();
   function reset(){setOriginal('');setSourceId('');setName('');setTeam('');setBadge({kind:'none'});setDirty(false);}
-  async function load(value:string){if(dirty&&!window.confirm('Abbandonare la sostituzione non salvata?'))return;setId(value);setData(null);reset();setError('');setNotice('');if(!value)return;setBusy(true);try{setData(await api<Detail>(`/club/tournaments/${value}/manage`));}catch(e){setError(String(e instanceof Error?e.message:e));}finally{setBusy(false);}}
+  async function load(value:string){if((dirty||groupDirty)&&!window.confirm('Abbandonare le modifiche non salvate?'))return;setId(value);setData(null);reset();setGroup('');setGroupName('');setError('');setNotice('');if(!value)return;setBusy(true);try{setData(await api<Detail>(`/club/tournaments/${value}/manage`));}catch(e){setError(String(e instanceof Error?e.message:e));}finally{setBusy(false);}}
+  async function renameGroup(){if(!data||!groupName.trim()||!window.confirm(`Rinominare ${group} in ${groupName.trim()} in tutto il torneo?`))return;setBusy(true);setError('');setNotice('');try{setData(await api<Detail>(`/club/tournaments/${data.id}/group`,'PATCH',{version:data.version,original:group,name:groupName.trim()}));setGroup('');setGroupName('');setNotice('Nome del girone aggiornato in tutto il torneo.');}catch(e){setError(String(e instanceof Error?e.message:e));}finally{setBusy(false);}}
   async function save(kind:'calendar'|'participant'){
     if(!data)return;
     const confirmation=kind==='calendar'?(data.return_matches?'Rimuovere tutte le partite di ritorno senza risultati? Le partite di andata restano invariate.':'Aggiungere le partite di ritorno con casa e ospite invertiti? I risultati esistenti restano invariati.'):`Sostituire ${original} con ${label} in tutte le partite, anche quelle già giocate? Il nuovo partecipante eredita risultati e punti.`;
@@ -27,6 +30,7 @@ export default function ClubTournamentEditor({tournaments,players,onDirty}:{tour
     {error&&<div className="alert error" role="alert">{error} <button type="button" disabled={busy} onClick={()=>void load(id)}>Ricarica torneo</button></div>}{notice&&<div className="alert success" role="status">{notice}</div>}
     {data&&<><h3>Formula del calendario</h3><p>{data.return_matches===null?'Calendario non standard':data.return_matches?'Andata e ritorno':'Solo andata'}</p>{data.calendar_block&&<p>{data.calendar_block}</p>}
       <button className="secondary" disabled={busy||dirty||data.return_matches===null||!!data.calendar_block||(!data.return_matches&&!!data.withdrawals.length)} onClick={()=>void save('calendar')}>{data.return_matches?'Passa a sola andata':'Aggiungi ritorno'}</button>{!data.return_matches&&!!data.withdrawals.length&&<p>Il ritorno non può essere aggiunto in presenza di ritirati.</p>}
+      {!!data.groups&&data.groups.length>1&&<section className="group-rename"><h3>Rinomina un girone</h3><p>Il nuovo nome compare nelle partite, nelle classifiche e nei PDF del torneo.</p><div className="creation-options"><label>Girone da rinominare<select disabled={busy||dirty} value={group} onChange={e=>{if(groupDirty&&!window.confirm('Abbandonare il nome non salvato?'))return;setGroup(e.target.value);setGroupName(e.target.value);}}><option value="">Scegli un girone…</option>{data.groups.map(g=><option key={g}>{g}</option>)}</select></label>{group&&<label>Nuovo nome del girone<input disabled={busy||dirty} maxLength={160} value={groupName} onChange={e=>setGroupName(e.target.value)}/></label>}</div><button className="secondary" disabled={busy||dirty||!groupDirty||!groupName.trim()} onClick={()=>void renameGroup()}>Salva nome girone</button></section>}
       <h3>Sostituisci partecipante</h3><p>Il sostituto eredita tutte le partite, i risultati e i punti del partecipante uscente.</p>
       <label>Partecipante da sostituire<select disabled={busy} value={original} onChange={e=>{if(dirty&&!window.confirm('Abbandonare la sostituzione non salvata?'))return;reset();setOriginal(e.target.value);}}><option value="">Scegli il partecipante…</option>{data.participants.map(p=><option key={p} disabled={data.withdrawals.includes(p)} value={p}>{p}{data.withdrawals.includes(p)?' (già ritirato)':''}</option>)}</select></label>
       {original&&<><label>Nuovo giocatore dall’anagrafica<select disabled={busy} value={sourceId} onChange={e=>{const p=players.find(p=>p.id===e.target.value);setSourceId(e.target.value);setName(p?.name||'');setTeam(p?.team||'');setBadge(p?.badge||{kind:'none'});setDirty(true);}}><option value="">Inserimento manuale</option>{players.map(p=><option key={p.id} value={p.id}>{p.name} · {p.team}</option>)}</select></label>

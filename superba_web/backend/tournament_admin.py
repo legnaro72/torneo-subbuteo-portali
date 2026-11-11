@@ -26,6 +26,12 @@ class ParticipantEdit(Input):
     source_id: str | None = None
 
 
+class GroupEdit(Input):
+    version: str = Field(pattern=r'^[a-f0-9]{64}$')
+    original: str = Field(min_length=1, max_length=160)
+    name: Name
+
+
 def legs(doc):
     """Identify legs from pairings and matchdays, never from array order."""
     grouped = defaultdict(list)
@@ -86,6 +92,7 @@ def details(store, doc):
         return_matches = None
         reason = str(error)
     return dict(id=str(doc['_id']), name=doc['nome_torneo'], version=version(doc),
+                groups=list(dict.fromkeys(str(r['Girone']) for r in doc['calendario'])),
                 participants=participants, badges=rendered['badges'], return_matches=return_matches,
                 calendar_block=reason, withdrawals=doc.get('_superba_withdrawals', []))
 
@@ -177,4 +184,22 @@ def install(app, writer, store_dep):
         if roster:
             changes['_superba_participants'] = roster
         saved = save(store, doc, data.version, changes, user=user, action='club_participant_replace')
+        return details(store, saved)
+
+    @app.patch('/api/club/tournaments/{tournament_id}/group')
+    def group(tournament_id: str, data: GroupEdit, user=Depends(admin), store=Depends(store_dep)):
+        doc = load(store, tournament_id)
+        editable(doc)
+        groups = {str(r['Girone']) for r in doc['calendario']}
+        if len(groups) < 2:
+            raise HTTPException(422, 'La rinomina è disponibile solo nei tornei con più gironi.')
+        if data.original not in groups:
+            raise HTTPException(422, 'Girone non trovato.')
+        if data.name.casefold() == 'eliminazione diretta' or any(data.name.casefold() == name.casefold() for name in groups if name != data.original):
+            raise HTTPException(422, 'Nome di girone già utilizzato o riservato.')
+        rows = deepcopy(doc['calendario'])
+        for row in rows:
+            if str(row['Girone']) == data.original:
+                row['Girone'] = data.name
+        saved = save(store, doc, data.version, {'calendario': rows}, user=user, action='club_group_rename')
         return details(store, saved)

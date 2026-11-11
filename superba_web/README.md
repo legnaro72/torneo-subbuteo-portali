@@ -135,6 +135,10 @@ Un partecipante già ritirato non può essere sostituito con questa procedura, p
 
 ## Finali: tabelloni per posizione
 
+Il manuale accessibile dal pulsante **Manuale** è aggiornato a novembre 2026: 31 pagine, con schermate dimostrative delle finali per posizione e delle modifiche ai tornei. Mantiene tema, font e impaginazione delle guide precedenti.
+
+Nella gestione dei tornei, **Rinomina un girone** consente di aggiornare il nome in tutte le partite, nelle classifiche e nei PDF. Compare solo con più gironi; la rinomina conserva l'ordine degli incroci delle finali per posizione. Il salvataggio è registrato con l'evento `club_group_rename`.
+
 In **Fasi finali → Nuovo torneo → Formato**, la formula **Tabelloni per posizione** si aggiunge a eliminazione diretta e fase a gironi.
 Richiede un preliminare completato e validato, con quattro gironi dello stesso numero di partecipanti e senza ritirati.
 Usa l'ordine delle classifiche del preliminare: per ogni posizione genera due semifinali (girone 1–2 e girone 3–4) e una finale tra i vincitori. L'anteprima mostra gli accoppiamenti prima della creazione.

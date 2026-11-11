@@ -6,6 +6,8 @@ The first run saves the original PDF as the immutable September source.
 from io import BytesIO
 from pathlib import Path
 import shutil
+import json
+from manuale_novembre import add_pages, TITLES
 
 from PIL import Image
 from reportlab.pdfgen import canvas
@@ -63,7 +65,7 @@ def footer(c, number):
     c.setFillColor(HexColor(PAPER)); c.rect(0, 0, W, 52, fill=1, stroke=0)
     c.setStrokeColor(HexColor('#dbe2e8')); c.line(34, 44, 561, 44)
     c.setFillColor(HexColor(MUTED)); c.setFont('Helvetica', 8)
-    c.drawString(34, 25, 'Superba · Manuale utente · ottobre 2026')
+    c.drawString(34, 25, 'Superba · Manuale utente · novembre 2026')
     c.drawRightString(561, 25, str(number))
 
 
@@ -199,13 +201,15 @@ def new_pages():
     y=step(c,2,'Sblocca il salvataggio','Controlla tutte le righe: associazioni confermate, nessun duplicato e punteggi da 0 a 20. Nel tabellone a eliminazione diretta il pareggio non è ammesso.',292,y,269)
     y=step(c,3,'Conferma e salva risultati','Il pulsante salva e valida insieme i risultati scelti. Compare Risultati inseriti e salvati. Se un altro utente ha modificato il torneo, ricarica e ripeti la verifica.',292,y,269)
     note(c,'Il salvataggio entra nel log attività','L’inserimento rapido registra chi ha salvato, quando e le modifiche ai risultati. Nello svizzero e nell’eliminazione diretta si opera sul turno attivo; un torneo concluso non consente nuovi inserimenti. La Regia presenta i risultati salvati: non sostituisce questa revisione.',top=179)
-    c.showPage(); c.save(); buf.seek(0)
+    c.showPage()
+    add_pages(c,frame,picture,step,note,text)
+    c.save(); buf.seek(0)
     return PdfReader(buf)
 
 
 # Original page numbers identify stable chapter layouts, not their final position.
-PAGE_ORDER = [1, 2, 3, 6, 10, 11, 12, 13, 14, 17, 18, 4,
-              22, 23, 24, 25, 5, 15, 7, 19, 20, 21, 8, 9, 16]
+PAGE_ORDER = [1, 2, 3, 6, 10, 11, 12, 26, 27, 13, 14, 17, 18, 4,
+              22, 23, 24, 25, 5, 15, 7, 19, 20, 21, 8, 9, 28, 29, 30, 31, 16]
 
 
 def reorder_manual(source, original_titles):
@@ -227,13 +231,14 @@ def reorder_manual(source, original_titles):
                 if action.get('/S')=='/GoTo': destination=action.get('/D')
             if isinstance(destination,ArrayObject) and isinstance(destination[0],NumberObject):
                 destination[0]=NumberObject(new_number[int(destination[0])+1]-1)
-    chapters=[(original_titles[old-3],index) for index,old in enumerate(PAGE_ORDER) if old>=3]
+    # Keep the original 23-row contents layout; new guides follow their chapters.
+    chapters=[(original_titles[old-3],index) for index,old in enumerate(PAGE_ORDER) if 3<=old<=25]
 
     cover=BytesIO(); c=canvas.Canvas(cover,pagesize=(W,H))
     c.setFillColor(HexColor(NAVY));c.rect(0,0,W,H,fill=1,stroke=0)
     text(c,'MANUALE UTENTE',42,786,510,12,GOLD,True)
     text(c,'Il portale dei tornei<br/>Subbuteo',42,746,510,30,'#ffffff',True)
-    text(c,'Organizza, gioca, registra i risultati e condividi.<br/>Edizione aggiornata · ottobre 2026',42,649,510,10.5,'#dbe2e8')
+    text(c,'Organizza, gioca, registra i risultati e condividi.<br/>Edizione aggiornata · novembre 2026',42,649,510,10.5,'#dbe2e8')
     text(c,'Sommario',42,589,510,18,GOLD,True)
     for i,(title,page_index) in enumerate(chapters):
         top=551-i*21
@@ -252,6 +257,8 @@ def reorder_manual(source, original_titles):
         writer.add_annotation(0,Link(rect=(40,top-19,556,top+2),target_page_index=page_index))
         writer.add_outline_item(title,page_index)
 
+    for old in range(26,32):
+        writer.add_outline_item(original_titles[old-3],new_number[old]-1)
     figures=BytesIO();c=canvas.Canvas(figures,pagesize=(W,H))
     frame(c,2,'CONSULTAZIONE','Guide illustrate','Tocca il titolo per raggiungere la guida e le sue schermate.')
     for i,(title,page_index) in enumerate(chapters):
@@ -272,12 +279,20 @@ def reorder_manual(source, original_titles):
         if PAGE_ORDER[index]==7:
             c.setFillColor(HexColor(PAPER));c.rect(34,55,527,25,fill=1,stroke=0)
             text(c,f'Condivisione dei PDF su WhatsApp: guida a pagina {new_number[19]}.',34,70,527,9)
+        if PAGE_ORDER[index]==12:
+            text(c,f'<b>Terza formula: Tabelloni per posizione.</b><br/>Quattro gironi iniziali, semifinali e finali per fascia: guida illustrata alle pagine {new_number[26]}-{new_number[27]}.',317,245,244,10.5)
+        if PAGE_ORDER[index]==9:
+            text(c,f'Modifica dei tornei aperti: calendario, partecipanti e nomi dei gironi alle pagine {new_number[28]}-{new_number[31]}.',34,85,527,9)
         c.save();overlay.seek(0);page.merge_page(PdfReader(overlay).pages[0])
     return writer
 
 
 def main():
     ASSETS.mkdir(exist_ok=True)
+    crop=json.loads((ASSETS/'novembre-crop.json').read_text())
+    with Image.open(ASSETS/'novembre-sostituzione.png') as im:
+        im.crop((0,crop['top'],im.width,im.height)).save(ASSETS/'novembre-sostituzione-dettaglio.png')
+        im.crop((0,crop['confirmation'],im.width,im.height)).save(ASSETS/'novembre-conferma-dettaglio.png')
     with Image.open(ASSETS/'risultati-salvataggio.png') as im:
         im.crop((30,1360,750,1540)).save(ASSETS/'risultati-salva-dettaglio.png')
     with Image.open(ASSETS/'risultati-schermo.png') as im:
@@ -349,9 +364,11 @@ def main():
             c.setFillColor(HexColor(PAPER));c.rect(317,H-315,244,45,fill=1,stroke=0)
             text(c,'Mostra titolo dell’applicazione, versione <b>2.0</b>, descrizione <b>Inserimento Gioca Ora e Inserimento rapido</b>, data di rilascio e autore <b>Max Ferrando alias Legnaro72</b> con il logo.',317,H-272,244,10.5)
         c.save();overlay.seek(0);writer.pages[page_index].merge_page(PdfReader(overlay).pages[0])
-    writer=reorder_manual(writer,titles)
-    writer.add_metadata({'/Title':'Superba - Manuale utente - ottobre 2026','/Author':'Legnaro 72',
-                         '/Subject':'Guida aggiornata: inserimento rapido e dettatura da smartphone, Gioca ora, PDF, WhatsApp e Modalità Regia'})
+    titles[9]='Finali: tre formule per proseguire'
+    titles[6]='Archivio, eliminazioni e modifiche'
+    writer=reorder_manual(writer,titles+TITLES)
+    writer.add_metadata({'/Title':'Superba - Manuale utente - novembre 2026','/Author':'Legnaro 72',
+                         '/Subject':'Finali per posizione, calendario, sostituzione partecipanti e nomi dei gironi'})
     with TARGET.open('wb') as out: writer.write(out)
     shutil.copy2(TARGET,ROOT.parent/'superba_web/backend/manuale-utente.pdf')
     print(f'Updated {TARGET}: {len(writer.pages)} pages')

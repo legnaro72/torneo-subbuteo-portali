@@ -166,6 +166,12 @@ class LatestCloneTests(unittest.TestCase):
                         self.assertEqual(len(calendar), 2)
                         self.assertEqual(calendar[0]['home_goals'], 3)
                         self.assertEqual(store.action_logs.count_documents({'club': configuration['name'], 'action': 'club_participant_replace'}), 1)
+                        multi = store.tournaments.insert_one({'nome_torneo': 'Due gironi', 'calendario': domain.genera_calendario_from_list([['A','B'],['C','D']]).to_dict('records')}).inserted_id
+                        multi_url = f'/api/club/tournaments/{multi}'
+                        multi_data = client.get(multi_url+'/manage').json()
+                        renamed = client.patch(multi_url+'/group', json={'version': multi_data['version'], 'original': 'Girone 1', 'name': 'Oro'})
+                        self.assertEqual(renamed.status_code, 200, renamed.text)
+                        self.assertEqual(renamed.json()['groups'], ['Oro', 'Girone 2'])
                         self.assertEqual(mongo['TorneiSubbuteo']['Superba'].count_documents({}), 0)
                         self.assertEqual(mongo['giocatori_subbuteo']['superba_players'].count_documents({}), 0)
                 finally:

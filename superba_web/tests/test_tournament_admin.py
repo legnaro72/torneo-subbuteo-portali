@@ -130,6 +130,31 @@ class TournamentAdminTests(unittest.TestCase):
         self.assertEqual(self.client.patch(self.url+'/participant', json=payload).status_code, 409)
         self.assertEqual(self.client.patch(self.url+'/calendar', json={'version': data['version'], 'return_matches': True}).status_code, 409)
 
+    def test_group_rename_preserves_matches_and_rejects_duplicates(self):
+        data = self.detail()
+        self.assertEqual(data['groups'], ['Girone 1', 'Girone 2'])
+        payload = {'version': data['version'], 'original': 'Girone 1', 'name': 'girone 2'}
+        self.assertEqual(self.client.patch(self.url+'/group', json=payload).status_code, 422)
+        result = self.client.patch(self.url+'/group', json={**payload, 'name': '  Fascia Oro  '})
+        self.assertEqual(result.status_code, 200, result.text)
+        self.assertEqual(result.json()['groups'], ['Fascia Oro', 'Girone 2'])
+        rows = self.store.tournaments.find_one({'_id': self.ident})['calendario']
+        self.assertEqual(rows, [{**r, 'Girone': 'Fascia Oro' if r['Girone']=='Girone 1' else r['Girone']} for r in self.rows])
+        self.assertEqual(self.store.action_logs.count_documents({'action': 'club_group_rename'}), 1)
+        self.assertEqual(self.client.patch(self.url+'/group', json={**payload, 'original': 'Fascia Oro', 'name': 'Nuovo'}).status_code, 409)
+        self.store.tournaments.update_one({'_id': self.ident}, {'$set': {'calendario': [r for r in rows if r['Girone']=='Fascia Oro']}})
+        data = self.detail()
+        self.assertEqual(self.client.patch(self.url+'/group', json={'version': data['version'], 'original': 'Fascia Oro', 'name': 'Unico'}).status_code, 422)
+
+    def test_group_names_do_not_change_placement_pairing_order(self):
+        from backend.finals import placement_groups
+        rows = genera_calendario_from_list([['A','B'],['C','D'],['E','F'],['G','H']]).to_dict('records')
+        for r in rows:
+            r.update(GolCasa=1, GolOspite=0, Valida=True)
+            if r['Girone']=='Girone 2':
+                r['Girone']='Zaffiro'
+        self.assertEqual([g['name'] for g in placement_groups({'calendario':rows,'_id':self.ident,'nome_torneo':'Test'})], ['Girone 1','Zaffiro','Girone 3','Girone 4'])
+
 
 if __name__ == '__main__':
     unittest.main()
