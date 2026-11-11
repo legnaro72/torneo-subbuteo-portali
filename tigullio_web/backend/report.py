@@ -243,6 +243,10 @@ def render_knockout_pdf(data):
         pdf.set_font('Helvetica', 'B', 13)
         pdf.multi_cell(190, 12, printable('CAMPIONE: ' + data['winner']), border=1, fill=True, align='C', new_x='LMARGIN', new_y='NEXT')
         pdf.ln(8)
+    for bracket in data.get('brackets', []):
+        if bracket.get('winner'):
+            pdf.set_font('Helvetica', 'B', 11)
+            pdf.multi_cell(190, 8, printable(f"{bracket['label']}: {bracket['winner']}"), new_x='LMARGIN', new_y='NEXT')
     rounds = sorted({row['round'] for row in data['matches']})
     for round_number in rounds:
         matches = [row for row in data['matches'] if row['round'] == round_number]
@@ -253,7 +257,10 @@ def render_knockout_pdf(data):
         pdf.cell(190, 10, printable(matches[0]['round_name'].upper()), border=1, fill=True, align='C', new_x='LMARGIN', new_y='NEXT')
         pdf.ln(4)
         for index, match in enumerate(matches, 1):
-            pdf.ensure_space(14)
+            pdf.ensure_space(22 if match.get('placement') else 14)
+            if match.get('placement'):
+                pdf.set_font('Helvetica', 'B', 10)
+                pdf.cell(190, 7, printable(f"Tabellone {match['placement']}° classificati"), new_x='LMARGIN', new_y='NEXT')
             pdf.set_fill_color(*(248, 249, 250) if index % 2 else (255, 255, 255))
             pdf.set_text_color(20, 30, 40)
             pdf.set_font('Helvetica', '', 10)

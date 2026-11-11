@@ -158,6 +158,67 @@ class CompetitionTests(unittest.TestCase):
         self.assertIsNotNone(self.store.tournaments.find_one({'nome_torneo':'completato_Test'}))
         self.assertEqual(self.store.action_logs.count_documents({'action': 'finals_create', 'area': 'finali'}), 1)
 
+    def test_placement_brackets_full_flow(self):
+        from copy import deepcopy
+        from backend.finals import placement_groups
+        groups = [[f'G{g}P{p}' for p in range(1, 5)] for g in range(1, 5)]
+        calendar = genera_calendario_from_list(groups).to_dict('records')
+        for row in calendar:
+            row.update(GolCasa=4-int(row['Casa'][-1]), GolOspite=4-int(row['Ospite'][-1]), Valida=True)
+        for group in groups:
+            for team in group:
+                self.store.players.insert_one({'Giocatore': team, 'Squadra': team})
+        ident = self.store.tournaments.insert_one({'nome_torneo': 'completato_Quattro', 'calendario': calendar}).inserted_id
+        original = deepcopy(self.store.tournaments.find_one({'_id': ident}))
+        self.assertEqual([g['teams'] for g in placement_groups(original)], groups)
+        payload = {'source_id': str(ident), 'mode': 'placement', 'qualifiers': 4, 'request_id': str(uuid4())}
+        created = self.client.post('/api/finals', json=payload)
+        self.assertEqual(created.status_code, 200, created.text)
+        self.assertEqual(self.client.post('/api/finals', json=payload).json(), created.json())
+        url = f"/api/finals/{created.json()['id']}"
+        data = self.client.get(url).json()
+        self.assertEqual(len(data['matches']), 8)
+        listed = next(r for r in self.client.get('/api/finals').json() if r['id'] == data['id'])
+        self.assertTrue(listed['placement'])
+        self.assertEqual(listed['mode'], 'ko')
+        for p in range(1, 5):
+            matches = [r for r in data['matches'] if r['placement'] == p]
+            self.assertEqual([(r['home'], r['away']) for r in matches], [(f'G1P{p}', f'G2P{p}'), (f'G3P{p}', f'G4P{p}')])
+        self.assertEqual(self.client.post(url+'/advance', json={'version': data['version']}).status_code, 422)
+        for turn in (1, 2):
+            updates = [dict(index=r['index'], home=2, away=0, valid=True) for r in data['matches'] if r['round'] == turn]
+            saved = self.client.patch(url+'/results', json={'version': data['version'], 'results': updates})
+            self.assertEqual(saved.status_code, 200, saved.text)
+            advanced = self.client.post(url+'/advance', json={'version': saved.json()['version']})
+            self.assertEqual(advanced.status_code, 200, advanced.text)
+            data = advanced.json()
+            if turn == 1:
+                self.assertEqual([(r['home'], r['away']) for r in data['matches'] if r['round'] == 2], [(f'G1P{p}', f'G3P{p}') for p in range(1, 5)])
+        self.assertTrue(data['finished'])
+        self.assertEqual(data['winner'], 'G1P1')
+        self.assertEqual([b['winner'] for b in data['brackets']], [f'G1P{p}' for p in range(1, 5)])
+        self.assertEqual(self.store.players.find_one({'Giocatore': 'G1P1'})['NFFElimDirettaVinte'], 1)
+        for p in range(1, 5):
+            player = self.store.players.find_one({'Giocatore': f'G1P{p}'})
+            self.assertEqual(player['NGironiFFVinti'], 1)
+            if p > 1:
+                self.assertNotIn('NFFElimDirettaVinte', player)
+        self.assertEqual(self.client.post(url+'/advance', json={'version': data['version']}).status_code, 409)
+        self.assertEqual(self.client.get(url+'/export.pdf').status_code, 200)
+        self.assertEqual(self.store.tournaments.find_one({'_id': ident}), original)
+
+    def test_placement_rejects_incompatible_groups(self):
+        response = self.client.post('/api/finals', json={'source_id': self.source_id, 'mode': 'placement', 'qualifiers': 4, 'request_id': str(uuid4())})
+        self.assertEqual(response.status_code, 422)
+        for sizes, withdrawn, invalid in [([4, 4, 4, 3], False, False), ([4]*4, True, False), ([4]*4, False, True)]:
+            calendar = genera_calendario_from_list([[f'G{g}P{p}' for p in range(n)] for g, n in enumerate(sizes)]).to_dict('records')
+            for row in calendar:
+                row.update(GolCasa=1, GolOspite=0, Valida=True)
+            calendar[0]['Valida'] = not invalid
+            ident = self.store.tournaments.insert_one({'nome_torneo': 'completato_Incompatibile', 'calendario': calendar, '_piercrew_withdrawals': ['G0P0'] if withdrawn else []}).inserted_id
+            response = self.client.post('/api/finals', json={'source_id': str(ident), 'mode': 'placement', 'qualifiers': 4, 'request_id': str(uuid4())})
+            self.assertEqual(response.status_code, 422, response.text)
+
     def test_reader_cannot_create_or_change_competitions(self):
         self.client.post('/api/auth/logout')
         self.client.post('/api/auth/login',json={'username':'Bruno','password':''})

@@ -30,9 +30,10 @@ def main():
                         destination = action.get('/D')
                 if isinstance(destination, ArrayObject) and isinstance(destination[0], NumberObject):
                     destination[0] = NumberObject(int(destination[0]) + 1)
-        writer.add_metadata({'/Title': f'{club} - Manuale utente - ottobre 2026',
+        metadata = PdfReader(source).metadata
+        writer.add_metadata({'/Title': str(metadata.title or 'Superba - Manuale utente').replace('Superba', club, 1),
                              '/Author': 'Legnaro 72',
-                             '/Subject': 'Guida comune aggiornata con inserimento rapido e dettatura da smartphone'})
+                             '/Subject': str(metadata.subject or 'Guida comune aggiornata')})
         temporary = target.with_suffix('.updated.pdf')
         with temporary.open('wb') as output:
             writer.write(output)
